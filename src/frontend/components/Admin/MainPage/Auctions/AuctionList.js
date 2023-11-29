@@ -11,36 +11,36 @@ const auctions = [
   {
     id: 2,
     imageUrl: "/photos/loginpage.png",
-    auctionName: "Others Auction-1",
+    auctionName: "Others Auction-2",
   },
 
   {
     id: 3,
     imageUrl: "/photos/loginpage.png",
-    auctionName: "Others Auction-1",
+    auctionName: "Others Auction-3",
   },
 
   {
     id: 4,
     imageUrl: "/photos/loginpage.png",
-    auctionName: "Others Auction-1",
+    auctionName: "Others Auction-4",
   },
   {
     id: 5,
     imageUrl: "/photos/loginpage.png",
-    auctionName: "Others Auction-1",
+    auctionName: "Others Auction-5",
   },
 
   {
     id: 6,
     imageUrl: "/photos/loginpage.png",
-    auctionName: "Others Auction-1",
+    auctionName: "Others Auction-6",
   },
 
   {
     id: 7,
     imageUrl: "/photos/loginpage.png",
-    auctionName: "Others Auction-1",
+    auctionName: "Others Auction-7",
   },
 ];
 
