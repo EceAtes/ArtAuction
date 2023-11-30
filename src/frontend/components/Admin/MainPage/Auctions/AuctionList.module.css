@@ -1,8 +1,24 @@
 /* AuctionList */
+
+.listHeaderContainer {
+  display: flex;
+  align-items: center;
+}
+
 .listHeader {
   font-size: 2rem;
   margin-top: 10px;
-  text-align: left;
+  color: #484848;
+}
+
+.filterButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
   color: #484848;
 }
 
@@ -16,9 +32,10 @@
 }
 
 .mainContainer {
-  margin-top: 20px;
+  margin: 20px;
   padding: 20px;
   background-color: #e7e3f0;
+  border-radius: 10px;
 }
 
 /* Auction */
@@ -40,11 +57,33 @@
   text-align: left;
 }
 
+.imageContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.starsContainer {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .imageContainer img {
-  max-width: 100%;
+  width: 90%;
   height: 100px;
   border-radius: 5%;
-  
+}
+
+.auctionFilterButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  color: #484848;
 }
 
 .moreButton {
@@ -57,7 +96,7 @@
   transition: background-color 0.4s ease;
   background-color: #444;
   border: 2px solid transparent;
-  text-align: left; 
+  text-align: left;
   display: block;
 }
 

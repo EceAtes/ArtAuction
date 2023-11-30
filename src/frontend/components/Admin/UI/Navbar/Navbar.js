@@ -1,6 +1,8 @@
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 import { useRouter } from "next/router";
+import LogoutIcon from "@mui/icons-material/Logout";
+import NotificationsIcon from '@mui/icons-material/Notifications';
 const Navbar = (props) => {
   const router = useRouter();
   return (
@@ -19,21 +21,21 @@ const Navbar = (props) => {
         </li>
         <li className={styles.navItem}>
           <Link href="/" passHref legacyBehavior>
-            <a
-              className={styles.navLink}
-            >
-              Proposals
+            <a className={styles.navLink}>Proposals</a>
+          </Link>
+        </li>
+        <li className={styles.navItem}>
+          <Link href="/" passHref legacyBehavior>
+            <a className={styles.navLink}>
+            <NotificationsIcon fontSize="small"></NotificationsIcon>
             </a>
           </Link>
         </li>
         <li className={styles.navItem}>
           <Link href="/" passHref legacyBehavior>
-            <a className={styles.navLink}>Notifications</a>
-          </Link>
-        </li>
-        <li className={styles.navItem}>
-          <Link href="/" passHref legacyBehavior>
-            <a className={styles.navLink}>Logout</a>
+            <a className={styles.navLink}>
+              <LogoutIcon fontSize="small"></LogoutIcon>
+            </a>
           </Link>
         </li>
       </ul>
