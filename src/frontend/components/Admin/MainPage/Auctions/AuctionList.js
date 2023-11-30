@@ -47,7 +47,6 @@ const auctions = [
 
 const AuctionList = (props) => {
   return (
-    <>
       <div className={styles.mainContainer}>
         <div className={styles.listHeaderContainer}>
           <h1 className={styles.listHeader}>Auctions</h1>
@@ -69,7 +68,7 @@ const AuctionList = (props) => {
           ))}
         </div>
       </div>
-    </>
+  
   );
 };
 

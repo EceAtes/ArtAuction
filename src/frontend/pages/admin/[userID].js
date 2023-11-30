@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "../../components/Admin/MainPage/AdminMainPage.module.css";
 import AuctionList from "@/components/Admin/MainPage/Auctions/AuctionList";
 import SearchIcon from "@mui/icons-material/Search";
+import PeopleList from "@/components/Admin/MainPage/People/PeopleList";
 const AdminMainPage = (props) => {
   const [search, setSearch] = useState("");
 
@@ -35,6 +36,8 @@ const AdminMainPage = (props) => {
           </form>
         </div>
         <AuctionList></AuctionList>
+
+        <PeopleList></PeopleList>
       </div>
     </>
   );
