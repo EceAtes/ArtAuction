@@ -1,5 +1,6 @@
 package com.example.artauction.serviceImpl;
 
+import com.example.artauction.POJO.Admin;
 import com.example.artauction.POJO.Artist;
 import com.example.artauction.POJO.Collector;
 import com.example.artauction.POJO.User;
@@ -79,7 +80,10 @@ public class UserServiceImpl implements UserService {
         } else if (requestMap.get("accountType").equals("Collector")){
             System.out.println("ENTERED Collector");
             user = new Collector(0, "", "");
-        } else {
+        } else if (requestMap.get("accountType").equals("Admin")){
+            System.out.println("ENTERED Admin");
+            user = new Admin(requestMap.get("specialization"));
+        }else {
             throw new IllegalArgumentException("Invalid account type: " + requestMap.get("accountType"));
         }
         user.setName(requestMap.get("name"));

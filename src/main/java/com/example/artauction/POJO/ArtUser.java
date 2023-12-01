@@ -26,4 +26,7 @@ public class ArtUser extends User{
     @Column(name = "country", nullable = false)
     private String country;
 
+    @Column(name = "highlighter_adminID")
+    private Integer highlighterAdminId;
+
 }

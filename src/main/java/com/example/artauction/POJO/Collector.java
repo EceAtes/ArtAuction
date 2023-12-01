@@ -17,7 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Collector extends ArtUser{
 
     public Collector(int tokens, String bio, String country) {
-        super(tokens, bio, country);
+        super(tokens, bio, country, null);
     }
 
     @Column(name = "art_tag")
