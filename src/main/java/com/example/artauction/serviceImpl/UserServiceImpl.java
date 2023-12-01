@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
             user = new Collector(0, "", "");
         } else if (requestMap.get("accountType").equals("Admin")){
             System.out.println("ENTERED Admin");
-            user = new Admin(requestMap.get("specialization"));
+            user = new Admin(requestMap.get("specialization"), null);
         }else {
             throw new IllegalArgumentException("Invalid account type: " + requestMap.get("accountType"));
         }

@@ -18,7 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Artist extends ArtUser{
 
     public Artist(int tokens, String bio, String country) {
-        super(tokens, bio, country, null);
+        super(tokens, bio, country, null,null,null);
     }
 
     @Column(name = "art_specialization")

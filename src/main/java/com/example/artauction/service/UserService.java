@@ -11,4 +11,6 @@ public interface UserService {
     ResponseEntity<String> signUp(Map<String, String> requestMap);
 
     ResponseEntity<List<UserWrapper>> getAllUser();
+
+
 }

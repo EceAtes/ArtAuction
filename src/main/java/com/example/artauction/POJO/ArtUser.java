@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -26,7 +28,20 @@ public class ArtUser extends User{
     @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "highlighter_adminID")
-    private Integer highlighterAdminId;
+    @ManyToOne
+    private Admin highlighterAdmin;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "follows",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private List<ArtUser> followers;
+
+    @ManyToMany(mappedBy = "followers")
+    private List<ArtUser> followedUsers;
+
 
 }
