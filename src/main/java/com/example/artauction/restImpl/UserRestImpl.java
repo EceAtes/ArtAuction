@@ -3,11 +3,14 @@ package com.example.artauction.restImpl;
 import com.example.artauction.rest.UserRest;
 import com.example.artauction.service.UserService;
 import com.example.artauction.utils.ArtAuctionUtils;
+import com.example.artauction.wrapper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,5 +27,15 @@ public class UserRestImpl implements UserRest {
             e.printStackTrace();
         }
         return ArtAuctionUtils.getResponseEntity("An error has occurred in sign up attempt (Rest Impl)", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<UserWrapper>> getAllUser() {
+        try {
+            return userService.getAllUser();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<List<UserWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
