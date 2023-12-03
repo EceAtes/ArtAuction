@@ -35,12 +35,12 @@ public class ArtUser extends User{
     @ManyToMany
     @JoinTable(
             name = "follows",
-            joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "followed_id")
+            joinColumns = @JoinColumn(name = "followed_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
     private List<ArtUser> followers;
 
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ArtUser> followedUsers;
 
 

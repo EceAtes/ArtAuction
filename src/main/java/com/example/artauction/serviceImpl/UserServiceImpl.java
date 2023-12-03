@@ -1,9 +1,6 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.Admin;
-import com.example.artauction.POJO.Artist;
-import com.example.artauction.POJO.Collector;
-import com.example.artauction.POJO.User;
+import com.example.artauction.POJO.*;
 import com.example.artauction.dao.UserDao;
 import com.example.artauction.service.UserService;
 import com.example.artauction.utils.ArtAuctionUtils;
@@ -12,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
