@@ -27,6 +27,6 @@ public class ArtUserRestImpl implements ArtUserRest {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ArtAuctionUtils.getResponseEntity("An error has occured while trying to follow", HttpStatus.INTERNAL_SERVER_ERROR);
+        return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to follow", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

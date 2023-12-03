@@ -21,7 +21,7 @@ public class Admin extends User{
     @Column(name = "specialization", nullable = false)
     private String specialization;
 
-    @OneToMany(mappedBy = "highlighterAdmin")
+    @OneToMany(mappedBy = "highlighterAdmin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ArtUser> highlightedUsers;
 
 }
