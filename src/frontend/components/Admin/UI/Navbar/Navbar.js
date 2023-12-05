@@ -10,7 +10,7 @@ const Navbar = (props) => {
       <div className={styles.navbarName}>ArtAuctions</div>
       <ul className={styles.navList}>
         <li className={styles.navItem}>
-          <Link href="/" passHref legacyBehavior>
+          <Link href="/admin/1" passHref legacyBehavior>
             <a className={styles.navLink}>Home</a>
           </Link>
         </li>
