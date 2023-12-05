@@ -15,7 +15,7 @@ const Navbar = (props) => {
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link href="/" passHref legacyBehavior>
+          <Link href="/admin/exhibitions/1" passHref legacyBehavior> 
             <a className={styles.navLink}>Exhibitions</a>
           </Link>
         </li>
