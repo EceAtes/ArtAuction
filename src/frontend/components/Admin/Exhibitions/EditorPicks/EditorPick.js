@@ -19,7 +19,9 @@ const EditorPick = (props) => {
           </div>
 
           <div className={styles.starAndButtonContainer}>
+            <button className={styles.starButton}>
               <StarIcon className={styles.starIcon} />
+            </button>
             <button className={styles.moreButton}>More</button>
           </div>
         </div>
@@ -40,7 +42,9 @@ const EditorPick = (props) => {
           </div>
 
           <div className={styles.starAndButtonContainer}>
+            <button className={styles.starButton}>
               <StarIcon className={styles.starIcon} />
+            </button>
 
             <button className={styles.moreButton}>More</button>
           </div>
