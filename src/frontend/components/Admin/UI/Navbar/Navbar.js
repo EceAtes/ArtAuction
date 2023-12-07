@@ -20,7 +20,7 @@ const Navbar = (props) => {
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link href="/" passHref legacyBehavior>
+          <Link href="/admin/proposals/1" passHref legacyBehavior>
             <a className={styles.navLink}>Proposals</a>
           </Link>
         </li>
