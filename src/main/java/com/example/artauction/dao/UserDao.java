@@ -1,11 +1,12 @@
 package com.example.artauction.dao;
 
-import com.example.artauction.POJO.User;
-import com.example.artauction.wrapper.UserWrapper;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import com.example.artauction.POJO.User;
+import com.example.artauction.wrapper.UserWrapper;
 
 public interface UserDao extends JpaRepository<User, Integer> {
 
@@ -13,8 +14,6 @@ public interface UserDao extends JpaRepository<User, Integer> {
     User findByEmailId(@Param("email")String email);
 
     List<UserWrapper> getAllUsers();
-
-
 }
 
 

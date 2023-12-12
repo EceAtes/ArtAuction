@@ -11,6 +11,6 @@ public class ArtAuctionUtils {
 
     public static ResponseEntity<String> getResponseEntity(String message, HttpStatus httpStatus){
         return new ResponseEntity<String>("{\"message\": \""+ message + "\"}", httpStatus);
-
     }
+
 }

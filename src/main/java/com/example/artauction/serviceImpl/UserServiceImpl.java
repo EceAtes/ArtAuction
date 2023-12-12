@@ -1,21 +1,25 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.*;
-import com.example.artauction.dao.UserDao;
-import com.example.artauction.service.UserService;
-import com.example.artauction.utils.ArtAuctionUtils;
-import com.example.artauction.wrapper.UserWrapper;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.example.artauction.POJO.Admin;
+import com.example.artauction.POJO.Artist;
+import com.example.artauction.POJO.Collector;
+import com.example.artauction.POJO.User;
+import com.example.artauction.dao.UserDao;
+import com.example.artauction.service.UserService;
+import com.example.artauction.utils.ArtAuctionUtils;
+import com.example.artauction.wrapper.UserWrapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -51,6 +55,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<Object> signIn(Map<String, String> requestMap) {
+        log.info("Inside signin {}", requestMap);
+        try {
+            if (validateSignIn(requestMap)) {
+                User user = userDao.findByEmailId(requestMap.get("email"));
+                if (!Objects.isNull(user)) {
+                    if(requestMap.get("password").equals(user.getPassword())){
+                        return new ResponseEntity<>(user, HttpStatus.OK);
+                    }
+                    else{
+                        return new ResponseEntity<>("Wrong password.", HttpStatus.UNAUTHORIZED);
+                    }
+                }                    
+                else {
+                    return new ResponseEntity<>("Email is not registered.", HttpStatus.NOT_FOUND);
+                }
+            }
+            else {
+                return new ResponseEntity<>("Invalid sign in data", HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Some error occurred in sign in (Service Impl)", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
     public ResponseEntity<List<UserWrapper>> getAllUser() {
         try { //ypu can check user status here
             return new ResponseEntity<>(userDao.getAllUsers(), HttpStatus.OK);
@@ -68,6 +99,12 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    private boolean validateSignIn(Map<String, String> requestMap){
+        if(requestMap.containsKey("email") && requestMap.containsKey("password")){
+            return true;
+        }
+        return false;
+    }
 
     private User getUserFromRequest(Map<String, String> requestMap){
         User user;
@@ -89,4 +126,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(requestMap.get("password"));
         return user;
     }
+
+
 }
