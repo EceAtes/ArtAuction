@@ -1,4 +1,5 @@
 import styles from "./Exhibition.module.css";
+
 const ExhibitionAuction = (props) => {
   return (
     <div className={styles.auctionContainer}>

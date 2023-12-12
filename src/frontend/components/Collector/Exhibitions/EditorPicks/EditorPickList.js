@@ -35,18 +35,24 @@ const editorPicks = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend aliquam tristique. In ut lectus est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel elementum ex. Praesent porta ornare eros in condimentum. In hac habitasse platea dictumst. Suspendisse vulputate vestibulum lacus, sit amet aliquam tortor.    ",
     imageUrl: "/photos/signuppage.png",
   },
-  
 ];
 
 const EditorPickList = (props) => {
   return (
     <div className={styles.mainContainer}>
+      <h2 className={styles.headingText}>
+        Discover carefully selected art auctions organized by our dedicated
+        editors, showcasing their favourite pieces from the world of beautiful
+        art
+      </h2>
+
       <div className={styles.listHeaderContainer}>
         <h1 className={styles.listHeader}>Editors' Pick</h1>
       </div>
 
       <div className={styles.editorPickListContainer}>
-        {editorPicks.map((editorPick) => (
+
+      {editorPicks.map((editorPick) => (
           <EditorPick
             key={editorPick.id}
             title={editorPick.title}

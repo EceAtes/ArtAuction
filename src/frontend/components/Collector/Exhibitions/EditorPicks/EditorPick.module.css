@@ -6,6 +6,13 @@
   border-radius: 10px;
 }
 
+.headingText {
+  text-align: center;
+  color: #484848;
+  font-size: 2rem;
+  padding: 10px 100px;
+}
+
 .listHeaderContainer {
   display: flex;
   align-items: center;
@@ -13,7 +20,7 @@
 
 .listHeader {
   font-size: 2rem;
-  margin-top: 10px;
+  margin-top: 20px;
   color: #484848;
 }
 
@@ -25,8 +32,7 @@
   justify-content: center;
 }
 
-/*Editor Pick */
-
+/* EditorPick */
 .editorPickContainer {
   display: flex;
   flex-wrap: wrap;
@@ -62,13 +68,6 @@
   color: #484848;
 }
 
-.personNameTitle {
-  display: flex;
-  font-size: 2rem;
-  color: #000;
-  font-weight: bold;
-}
-
 .editorPickDescription {
   font-size: 1rem;
   text-align: justify;
@@ -83,37 +82,13 @@
   color: #484848;
 }
 
-.personType {
-  font-size: 1.2rem;
-  text-align: left;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  font-style: italic;
-  color: #484848;
-}
-
-.starAndButtonContainer {
+.moreButtonContainer {
   flex: 0.3;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: flex-end;
   justify-content: space-between;
   height: 100%;
-}
-
-.starIcon {
-  display: block;
-  color: #9a2fae;
-  font-size: 5rem;
-}
-
-.starButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
 }
 
 .moreButton {
@@ -133,4 +108,30 @@
   background-color: #fff;
   color: #444;
   border-color: #444;
+}
+
+.personType {
+  font-size: 1.2rem;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-style: italic;
+  color: #484848;
+}
+
+.personNameTitle {
+  display: flex;
+  font-size: 2rem;
+  color: #000;
+  font-weight: bold;
+}
+
+.seeProfileButtonContainer {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
 }
