@@ -4,5 +4,5 @@ import com.example.artauction.POJO.ArtUser;
 import com.example.artauction.POJO.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ArtUserDAo extends JpaRepository<ArtUser, Integer> {
+public interface ArtUserDao extends JpaRepository<ArtUser, Integer> {
 }

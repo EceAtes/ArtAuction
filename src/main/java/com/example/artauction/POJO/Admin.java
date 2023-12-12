@@ -24,4 +24,16 @@ public class Admin extends User{
     @OneToMany(mappedBy = "highlighterAdmin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ArtUser> highlightedUsers;
 
+    @OneToMany(mappedBy = "highlighter_admin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Auction> highlightedAuctions;
+
+    @OneToMany(mappedBy = "verifier_admin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Auction> verifiedAuctions;
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "specialization='" + specialization + '\'' +
+                '}';
+    }
 }

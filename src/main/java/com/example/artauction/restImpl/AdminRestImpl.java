@@ -19,12 +19,32 @@ public class AdminRestImpl implements AdminRest {
     AdminService adminService;
 
     @Override
-    public ResponseEntity<String> highlight(Map<String, Integer> requestMap) {
+    public ResponseEntity<String> highlightArtUser(Map<String, Integer> requestMap) {
         try{
             return adminService.highlight_artuser(requestMap);
         }catch (Exception e){
             e.printStackTrace();
         }
         return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to highlight user", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> highlightAuction(Map<String, Integer> requestMap) {
+        try{
+            return adminService.highlight_auction(requestMap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to highlight auction", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> verifyAuction(Map<String, String> requestMap) {
+        try{
+            return adminService.verify_auction(requestMap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to verify auction", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

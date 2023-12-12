@@ -9,7 +9,13 @@ import java.util.Map;
 
 @RequestMapping(path = "/admin")
 public interface AdminRest {
-    @PatchMapping(path= "/highlight")
-    public ResponseEntity<String> highlight(@RequestBody(required = true) Map<String, Integer> requestMap);
+    @PatchMapping(path= "/highlight_user")
+    public ResponseEntity<String> highlightArtUser(@RequestBody(required = true) Map<String, Integer> requestMap);
+
+    @PatchMapping(path= "/highlight_auction")
+    public ResponseEntity<String> highlightAuction(@RequestBody(required = true) Map<String, Integer> requestMap);
+
+    @PatchMapping(path= "/verify_auction")
+    public ResponseEntity<String> verifyAuction(@RequestBody(required = true) Map<String, String> requestMap);
 
 }
