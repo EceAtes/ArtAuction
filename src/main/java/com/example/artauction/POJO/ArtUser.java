@@ -19,13 +19,13 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ArtUser extends User{
 
-    @Column(name = "tokens", nullable = false)
+    @Column(name = "tokens")
     private int tokens;
 
-    @Column(name = "bio", nullable = false)
+    @Column(name = "bio")
     private String bio;
 
-    @Column(name = "country", nullable = false)
+    @Column(name = "country")
     private String country;
 
     @ManyToOne

@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "Admin")
 public class Admin extends User{
 
-    @Column(name = "specialization", nullable = false)
+    @Column(name = "specialization")
     private String specialization;
 
     @OneToMany(mappedBy = "highlighterAdmin", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

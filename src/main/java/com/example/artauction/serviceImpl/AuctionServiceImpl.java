@@ -5,6 +5,8 @@ import com.example.artauction.dao.AuctionDao;
 import com.example.artauction.dao.UserDao;
 import com.example.artauction.service.AuctionService;
 import com.example.artauction.utils.ArtAuctionUtils;
+import com.example.artauction.wrapper.AuctionWrapper;
+import com.example.artauction.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -91,5 +95,27 @@ public class AuctionServiceImpl implements AuctionService {
         auction.setBaseBid(Integer.parseInt(requestMap.get("baseBid")));
 
         return auction;
+    }
+
+    @Override
+    public ResponseEntity<List<AuctionWrapper>> getAllAuctions() {
+        try { //ypu can check user status here
+            return new ResponseEntity<>(auctionDao.getAllAuctions(), HttpStatus.OK);
+            //return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<AuctionWrapper>> searchAuctions(String searchedWords) {
+        try {
+            List<AuctionWrapper> searchResults = auctionDao.searchAuctions(searchedWords);
+            return new ResponseEntity<>(searchResults, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

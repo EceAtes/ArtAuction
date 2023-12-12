@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
 import java.io.Serializable;
 import java.sql.Date;
 
-
+@NamedQuery(name = "Auction.getAllAuctions", query = "select new com.example.artauction.wrapper.AuctionWrapper(a.auctionID,a.title, a.auction_status) from Auction a") //also get number of bids (for ordering)
 @Data //default constructor & getter and setters
 @Entity
 @DynamicUpdate
