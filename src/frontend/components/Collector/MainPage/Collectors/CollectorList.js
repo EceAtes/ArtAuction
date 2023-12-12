@@ -1,7 +1,7 @@
 // components/CollectorList.js
 import React from 'react';
 import Collector from './Collector';
-import styles from './Collector.module.css'; // Import the CSS module
+import styles from "./CollectorList.module.css"; // Import the CSS module
 
 const CollectorList = ({ title, collectors }) => (
   <div className={styles['collector-list']}>
