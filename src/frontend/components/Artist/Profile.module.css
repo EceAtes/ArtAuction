@@ -1,0 +1,68 @@
+.containerStyle {
+    display: 'flex';
+    alignItems: 'center';
+    flexDirection: 'column';
+    border: '1px solid #ccc';
+    borderRadius: '10px';
+    padding: '20px';
+    maxWidth: '400px';
+    margin: 'auto';
+  };
+  
+.imageContainerStyle {
+    borderRadius: '50%';
+    overflow: 'hidden';
+    marginBottom: '20px';
+  };
+
+.imageStyle {
+    width: '100%';
+    height: 'auto';
+    borderRadius: '50%';
+  };
+  
+.textContainerStyle {
+    width: '100%';
+  };
+  
+.artistNameStyle {
+    fontWeight: 'bold';
+    margin: '0';
+  };
+  
+.gmailStyle {
+    margin: '5px 0',
+  };
+  
+.tokenNumberStyle {
+    margin: '5px 0'
+  };
+  
+.bioTextStyle {
+    textAlign: 'justify';
+    marginBottom: '10px';
+  };
+  
+.buttonContainerStyle{
+    display: 'flex';
+    gap: '10px';
+  };
+  
+.followButtonStyle {
+    backgroundColor: 'transparent';
+    color: '#800080';
+    border: '1px solid #800080';
+    borderRadius: '5px';
+    padding: '5px 10px';
+    cursor: 'pointer';
+  };
+  
+.uploadButtonStyle {
+    backgroundColor: '#800080';
+    color: '#fff';
+    border: 'none';
+    borderRadius: '5px';
+    padding: '10px';
+    cursor: 'pointer';
+    marginTop: '10px';
+  };
