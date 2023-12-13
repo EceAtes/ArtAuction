@@ -1,10 +1,7 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.ArtUser;
-import com.example.artauction.dao.UserDao;
-import com.example.artauction.service.ArtUserService;
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
+
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +9,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import com.example.artauction.POJO.ArtUser;
+import com.example.artauction.POJO.User;
+import com.example.artauction.dao.ArtUserDao;
+import com.example.artauction.dao.UserDao;
+import com.example.artauction.service.ArtUserService;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class ArtUserServiceImpl implements ArtUserService {
     @Autowired
     UserDao userDao;
+    ArtUserDao artUserDao;
 
     @Override
     @Transactional
@@ -48,4 +55,28 @@ public class ArtUserServiceImpl implements ArtUserService {
         followed_user.getFollowers().add(follower_user);
         return new ResponseEntity<>(follower_user.getName() + " successfully followed " + followed_user, HttpStatus.OK);
     }
+
+
+
+
+    /*
+    @Override
+    public ResponseEntity<List<ArtUser>> findFollowing(Map<String, Integer> requestMap) {
+        log.info("Inside follow map {}", requestMap);
+        User currentUser = userDao.findByUserId(requestMap.get("user_id"));
+        if(Objects.isNull(currentUser)){
+            return new ResponseEntity<List<ArtUser>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<List<ArtUser>>(artUserDao.findFollowing(currentUser.getUser_id()), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ArtUser>> findFollowerUsers(Map<String, Integer> requestMap) {
+        log.info("Inside follow map {}", requestMap);
+        User currentUser = userDao.findByUserId(requestMap.get("user_id"));
+        if(Objects.isNull(currentUser)){
+            return new ResponseEntity<List<ArtUser>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<List<ArtUser>>(artUserDao.findFollowers(currentUser.getUser_id()), HttpStatus.OK);
+    }*/
 }

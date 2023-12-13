@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
+import com.example.artauction.POJO.Artist;
+import com.example.artauction.POJO.User;
 import com.example.artauction.wrapper.UserWrapper;
 
 public interface UserService {
@@ -13,8 +15,8 @@ public interface UserService {
 
     ResponseEntity<Object> signIn(Map<String, String> requestMap);
 
-    ResponseEntity<List<UserWrapper>> getAllUser();
+    ResponseEntity<List<Artist>> getAllArtists();
 
-
+    ResponseEntity<User> getUsersByUserId(Integer currentUserId);
 
 }

@@ -1,15 +1,26 @@
 package com.example.artauction.POJO;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@NamedQuery(name = "Auction.getAuctionsFromPeopleYouFollow",
+            query = "SELECT a FROM Auction a JOIN a.uploaded_by_artist artist WHERE artist IN (:followedUsers)")
 
 @Data //default constructor & getter and setters
 @Entity

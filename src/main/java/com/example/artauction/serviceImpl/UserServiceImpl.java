@@ -14,10 +14,10 @@ import com.example.artauction.POJO.Admin;
 import com.example.artauction.POJO.Artist;
 import com.example.artauction.POJO.Collector;
 import com.example.artauction.POJO.User;
+import com.example.artauction.dao.ArtistDao;
 import com.example.artauction.dao.UserDao;
 import com.example.artauction.service.UserService;
 import com.example.artauction.utils.ArtAuctionUtils;
-import com.example.artauction.wrapper.UserWrapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    ArtistDao artistDao;
+
 
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
@@ -82,9 +86,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<List<UserWrapper>> getAllUser() {
+    public ResponseEntity<List<Artist>> getAllArtists() {
         try { //ypu can check user status here
-            return new ResponseEntity<>(userDao.getAllUsers(), HttpStatus.OK);
+            return new ResponseEntity<>(artistDao.getAllArtists(), HttpStatus.OK);
             //return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
         }catch (Exception e){
             e.printStackTrace();
@@ -127,5 +131,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
+        
+    public ResponseEntity<User> getUsersByUserId(Integer currentUserId) {
+        log.info("Inside signin {}", currentUserId);
+        return new ResponseEntity<User>((User)userDao.findByUserId(currentUserId), HttpStatus.OK);
+    }
 }

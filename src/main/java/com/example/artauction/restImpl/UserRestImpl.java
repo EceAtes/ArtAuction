@@ -7,12 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.artauction.POJO.Artist;
+import com.example.artauction.POJO.User;
 import com.example.artauction.rest.UserRest;
 import com.example.artauction.service.UserService;
 import com.example.artauction.utils.ArtAuctionUtils;
-import com.example.artauction.wrapper.UserWrapper;
 
 @RestController
 public class UserRestImpl implements UserRest {
@@ -41,13 +43,18 @@ public class UserRestImpl implements UserRest {
     }
 
     @Override
-    public ResponseEntity<List<UserWrapper>> getAllUser() {
+    public ResponseEntity<List<Artist>> getAllArtists() {
         try {
-            return userService.getAllUser();
+            return userService.getAllArtists();
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new ResponseEntity<List<UserWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<List<Artist>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<User> getUser(@PathVariable Integer userId) {
+        return userService.getUsersByUserId(userId);
     }
 
 }

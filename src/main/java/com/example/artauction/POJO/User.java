@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.io.Serializable;
 
 @NamedQuery(name = "User.findByEmailId", query = "select u from User u where u.email =:email")
-@NamedQuery(name = "User.getAllUsers", query = "select new com.example.artauction.wrapper.UserWrapper(u.user_id,u.name, u.email) from User u")
+//@NamedQuery(name = "User.getAllUsers", query = "select new com.example.artauction.wrapper.UserWrapper(u.user_id,u.name, u.email) from User u")
 //u.email represent this class' varaibles, :email represents the parameter from UserDao (parameter name and the declaration should be same there)
 @Data //default constructor & getter and setters
 @Entity

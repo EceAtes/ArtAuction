@@ -1,11 +1,12 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.*;
-import com.example.artauction.dao.AuctionDao;
-import com.example.artauction.dao.UserDao;
-import com.example.artauction.service.AuctionService;
-import com.example.artauction.utils.ArtAuctionUtils;
-import lombok.extern.slf4j.Slf4j;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Map;
-import java.util.Objects;
+import com.example.artauction.POJO.Artist;
+import com.example.artauction.POJO.Auction;
+import com.example.artauction.dao.AuctionDao;
+import com.example.artauction.dao.UserDao;
+import com.example.artauction.service.AuctionService;
+import com.example.artauction.utils.ArtAuctionUtils;
+import com.example.artauction.wrapper.AuctionWrapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -52,6 +57,16 @@ public class AuctionServiceImpl implements AuctionService {
             e.printStackTrace();
         }
         return ArtAuctionUtils.getResponseEntity("Some error occurred in auction addition (Service Impl)", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<AuctionWrapper>> getAuctionsFromPeopleYouFollow(Map<String, String> requestMap) {
+        try {
+            return new ResponseEntity<>(auctionDao.getAuctionsFromPeopleYouFollow(requestMap.get("user_id")), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateAddition(Map<String, String> requestMap){
