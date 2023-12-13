@@ -1,8 +1,5 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.ArtUser;
-import com.example.artauction.dao.UserDao;
-import com.example.artauction.service.ArtUserService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+/*
 @Slf4j
 @Service
 public class ArtUserServiceImpl implements ArtUserService {
@@ -49,3 +47,5 @@ public class ArtUserServiceImpl implements ArtUserService {
         return new ResponseEntity<>(follower_user.getName() + " successfully followed " + followed_user, HttpStatus.OK);
     }
 }
+
+*/

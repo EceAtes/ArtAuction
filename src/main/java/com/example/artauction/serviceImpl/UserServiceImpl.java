@@ -1,10 +1,5 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.*;
-import com.example.artauction.dao.UserDao;
-import com.example.artauction.service.UserService;
-import com.example.artauction.utils.ArtAuctionUtils;
-import com.example.artauction.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/*
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -90,3 +86,4 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 }
+*/

@@ -1,12 +1,6 @@
 package com.example.artauction.serviceImpl;
 
-import com.example.artauction.POJO.*;
-import com.example.artauction.dao.AuctionDao;
-import com.example.artauction.dao.UserDao;
-import com.example.artauction.service.AuctionService;
-import com.example.artauction.utils.ArtAuctionUtils;
-import com.example.artauction.wrapper.AuctionWrapper;
-import com.example.artauction.wrapper.UserWrapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
@@ -23,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/*
 @Slf4j
 @Service
 public class AuctionServiceImpl implements AuctionService {
@@ -119,3 +114,5 @@ public class AuctionServiceImpl implements AuctionService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
+*/
