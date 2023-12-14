@@ -20,7 +20,8 @@ public class AuctionDTO {
     private String description;
     private LocalDate endDate; // ya admin cok gec onaylarsa
     private boolean isEnded;
-    private float minimumBidIncrease;
+    private int minimumBidIncrease;
+    private int baseBid;
     private int verifier_admin_ID;
     private int highlighter_admin_ID;
 
