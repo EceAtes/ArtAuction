@@ -48,8 +48,8 @@ public class UserController {
     }
 
     @PostMapping(path = "/signin")
-    public ResponseEntity<UserDTO> signIn(@RequestBody(required = true)String email, String password){
-        return userRepository.login(email, password);
+    public ResponseEntity<UserDTO> signIn(@RequestBody(required = true)Map<String,String> input){
+        return userRepository.login(input.get("email"), input.get("password"));
     }
 
 

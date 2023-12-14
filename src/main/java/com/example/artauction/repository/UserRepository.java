@@ -54,7 +54,6 @@ public class UserRepository {
             System.out.println("Email already registered!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     public ResponseEntity<UserDTO> login(String email, String password){
@@ -62,12 +61,14 @@ public class UserRepository {
         String sqlLogin = "SELECT * FROM `User` WHERE `email` = ? AND `password` = ?";
 
         RowMapper<UserDTO> rowMapper = (rs, rowNum) -> {
-            UserDTO u = new UserDTO();
-            u.setUserID(rs.getInt("userID"));
-            u.setPassword(rs.getString("password"));
-            return u;
+            UserDTO user = new UserDTO();
+            user.setUserID(rs.getInt("userID"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setRole(rs.getString("role"));
+            return user;
         };
-
 
         try{
             UserDTO registeredUserDTO = jdbcTemplate.queryForObject(sqlLogin, new Object[]{email, password}, rowMapper);
@@ -111,13 +112,4 @@ public class UserRepository {
             return null;
         }
     }
-
-   /*
-    public ArtUserDTO getSingleArtUser(int userId){
-        String sql = "SELECT * FROM \"RegisteredUser\" WHERE \"user-id\" = ?";
-        System.out.println("REPODAAA: " + userId);
-        return (ArtUserDTO) jdbcTemplate.queryForObject(sql, new Object[]{userId}, new BeanPropertyRowMapper(ArtUserEntity.class));
-    }
-    */
-
 }
