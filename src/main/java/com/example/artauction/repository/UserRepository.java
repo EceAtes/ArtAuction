@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -109,7 +110,7 @@ public class UserRepository {
             return new ResponseEntity<UserDTO>(jdbcTemplate.queryForObject(sql, new Object[]{userId}, rowMapper), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No such user exists");
-            return null;
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 }

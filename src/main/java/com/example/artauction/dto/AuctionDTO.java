@@ -5,10 +5,12 @@ import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 public class AuctionDTO {
+    private int auctionID;
     private String title;
     private String auction_status; // proposed, verified, 
     private int uploaded_by_artist_ID;

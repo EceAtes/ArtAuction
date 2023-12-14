@@ -1,12 +1,15 @@
 package com.example.artauction.repository;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.artauction.dto.AuctionDTO;
@@ -35,10 +38,43 @@ public class AuctionRepository {
         }
     }
 
-    /*
-    public List<AuctionDTO> getAllAuctions() {
-        return null;
-    }
-    */
 
+    public List<Map<String, Object>> getAllAuctions() {
+        String sql = "SELECT * FROM `Auction`";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        return rows;
+    }
+
+    public ResponseEntity<AuctionDTO> getAuction(int auctionID) {
+        String sql = "SELECT * FROM `Auction` WHERE `auctionID` = ?";
+        RowMapper<AuctionDTO> rowMapper = (rs, rowNum) -> {
+            AuctionDTO auction = new AuctionDTO();
+            auction.setAuctionID(auctionID);
+            auction.setTitle(rs.getString("auctionID"));
+            auction.setAuction_status(rs.getString("auction_status"));
+            auction.setUploaded_by_artist_ID(rs.getInt("uploaded_by_artist_ID"));
+            auction.setType(rs.getString("type"));
+            auction.setSize(rs.getString("size"));
+            auction.setCreationDate(LocalDate.parse(rs.getString("creationDate")));
+            auction.setUploadDate(LocalDate.parse(rs.getString("uploadDate")));
+            auction.setStartDate(LocalDate.parse(rs.getString("startDate")));
+            auction.setDescription(rs.getString("description"));
+            auction.setEndDate(LocalDate.parse(rs.getString("uploadDate")));
+            auction.setEnded(rs.getBoolean("isEnded"));
+            auction.setBaseBid(rs.getInt("baseBid"));
+            auction.setMinimumBidIncrease(rs.getInt("minimumBidIncrease"));
+
+            auction.setVerifier_admin_ID(rs.getObject("verifier_admin_ID") != null ? rs.getInt("verifier_admin_ID") : -1);
+            auction.setHighlighter_admin_ID(rs.getObject("highlighter_admin_id") != null ? rs.getInt("highlighter_admin_id") : -1);          
+
+            return auction;
+        };
+
+        try {
+            return new ResponseEntity<AuctionDTO>(jdbcTemplate.queryForObject(sql, new Object[]{auctionID}, rowMapper), HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No such auction exists");
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 }
