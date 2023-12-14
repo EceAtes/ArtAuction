@@ -37,7 +37,7 @@ public class UserRepository {
             newUser.setUserID(cnt);
 
             String sqlAddArtUser = "INSERT INTO `ArtUser` (`userID`, `tokens`, `bio`, `country`, `highlighter_adminID`) VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sqlAddArtUser, userId, newUser.getTokens(), newUser.getBio(), newUser.getCountry(), newUser.getHighlighter_adminID());
+            jdbcTemplate.update(sqlAddArtUser, userId, 0, "hello world", "world", null);
 
             System.out.println(newUser.getRole());
             if(newUser.getRole().equals("Artist")){
