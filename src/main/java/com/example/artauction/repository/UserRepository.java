@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -37,19 +36,26 @@ public class UserRepository {
             int userId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             newUser.setUserID(cnt);
 
-            String sqlAddArtUser = "INSERT INTO `ArtUser` (`userID`, `tokens`, `bio`, `country`, `highlighter_adminID`) VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sqlAddArtUser, userId, 0, "hello world", "world", null);
+            if(newUser.getRole().equals("Admin")){
+                String sqlAddArtUser = "INSERT INTO `Admin` (`userID`, `specialization`) VALUES (?, ?)";
+                jdbcTemplate.update(sqlAddArtUser, userId, "specialization");
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else{
+                String sqlAddArtUser = "INSERT INTO `ArtUser` (`userID`, `tokens`, `bio`, `country`, `highlighter_adminID`) VALUES (?, ?, ?, ?, ?)";
+                jdbcTemplate.update(sqlAddArtUser, userId, 0, "hello world", "world", null);
 
-            System.out.println(newUser.getRole());
-            if(newUser.getRole().equals("Artist")){
-                String sqlAddArtist = "INSERT INTO `Artist` (`userID`, `art_specialization`) VALUES (?, ?)";
-                jdbcTemplate.update(sqlAddArtist, userId, "art_specialization");
+                System.out.println(newUser.getRole());
+                if(newUser.getRole().equals("Artist")){
+                    String sqlAddArtist = "INSERT INTO `Artist` (`userID`, `art_specialization`) VALUES (?, ?)";
+                    jdbcTemplate.update(sqlAddArtist, userId, "art_specialization");
+                }
+                else if(newUser.getRole().equals("Collector")){
+                    String sqlAddCollector = "INSERT INTO `Collector` (`userID`, art_tag`) VALUES (?, ?)";
+                    jdbcTemplate.update(sqlAddCollector, userId, "art_tag");
+                }
+                return new ResponseEntity<>(HttpStatus.OK);
             }
-            else if(newUser.getRole().equals("Collector")){
-                String sqlAddCollector = "INSERT INTO `Collector` (`userID`, art_tag`) VALUES (?, ?)";
-                jdbcTemplate.update(sqlAddCollector, userId, "art_tag");
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
         }
         else{
             System.out.println("Email already registered!");

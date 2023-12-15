@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.artauction.dto.AdminHomeResponse;
-import com.example.artauction.dto.AuctionDTO;
+import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.AdminRepository;
 import com.example.artauction.repository.AuctionRepository;
 import com.example.artauction.repository.UserRepository;
@@ -21,7 +21,7 @@ import com.example.artauction.repository.UserRepository;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-/*
+
     private AdminRepository adminRepository;
     private AuctionRepository auctionRepository;
     private UserRepository userRepository;
@@ -35,8 +35,8 @@ public class AdminController {
 
     @GetMapping(value= "/home")
     public AdminHomeResponse adminHome(){
-        List<AuctionDTO> auctionList = auctionRepository.getAllAuctions();
-        List<ArtUserDTO> artUserList = userRepository.getAllArtUsers();
+        List<Map<String, Object>> auctionList = auctionRepository.getAllAuctions();
+        List<UserDTO> artUserList = userRepository.getAllArtUsers();
 
         return new AdminHomeResponse(auctionList, artUserList);
     }
@@ -44,31 +44,31 @@ public class AdminController {
     @PatchMapping(path= "/highlight_artuser")
     public ResponseEntity<String> highlightArtUser(@RequestBody(required = true) Map<String, Integer> requestMap){
         try{
-            return adminRepository.highlight_artuser(requestMap);
+            return adminRepository.highlight_artuser(requestMap.get("admin_id"), requestMap.get("artuser_id"));
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to highlight user", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("An error has occurred while trying to highlight user", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping(path= "/highlight_auction")
     public ResponseEntity<String> highlightAuction(@RequestBody(required = true) Map<String, Integer> requestMap){
         try{
-            return adminRepository.highlight_auction(requestMap);
+            return adminRepository.highlight_auction(requestMap.get("admin_id"), requestMap.get("auction_id"));
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to highlight auction", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("An error has occurred while trying to highlight auction", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping(path= "/verify_auction")
-    public ResponseEntity<String> verifyAuction(@RequestBody(required = true) Map<String, String> requestMap){
+    public ResponseEntity<String> verifyAuction(@RequestBody(required = true) Map<String, Integer> requestMap){
         try{
-            return adminRepository.verify_auction(requestMap);
+            return adminRepository.verify_auction(requestMap.get("admin_id"), requestMap.get("auction_id"), requestMap.get("isApproved"));
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ArtAuctionUtils.getResponseEntity("An error has occurred while trying to verify auction", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("An error has occurred while trying to verify auction", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-*/
+
 }

@@ -56,4 +56,8 @@ public class ArtUserRepository {
             return new ArrayList<UserDTO>();
         }
     }
+
+    public List<UserDTO> getAllArtUsers() {
+        return null;
+    }
 }
