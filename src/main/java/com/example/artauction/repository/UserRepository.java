@@ -24,7 +24,7 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public ResponseEntity<HttpStatus> registerArtUser(UserDTO newUser){
+    public ResponseEntity<Integer> registerArtUser(UserDTO newUser){
         Integer cnt = jdbcTemplate.queryForObject(
                 "SELECT count(*) FROM `User` WHERE `email` =  ?", Integer.class, newUser.getEmail()
         );
@@ -39,7 +39,7 @@ public class UserRepository {
             if(newUser.getRole().equals("Admin")){
                 String sqlAddArtUser = "INSERT INTO `Admin` (`userID`, `specialization`) VALUES (?, ?)";
                 jdbcTemplate.update(sqlAddArtUser, userId, "specialization");
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<Integer>(userId,HttpStatus.OK);
             }
             else{
                 String sqlAddArtUser = "INSERT INTO `ArtUser` (`userID`, `tokens`, `bio`, `country`, `highlighter_adminID`) VALUES (?, ?, ?, ?, ?)";
@@ -54,7 +54,7 @@ public class UserRepository {
                     String sqlAddCollector = "INSERT INTO `Collector` (`userID`, art_tag`) VALUES (?, ?)";
                     jdbcTemplate.update(sqlAddCollector, userId, "art_tag");
                 }
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<Integer>(userId,HttpStatus.OK);
             }
         }
         else{

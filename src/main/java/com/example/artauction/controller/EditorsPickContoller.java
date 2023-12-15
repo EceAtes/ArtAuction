@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.AuctionRepository;
 import com.example.artauction.repository.ExhibitionRepository;
@@ -16,6 +16,7 @@ import com.example.artauction.repository.UserRepository;
 
 @RestController
 @RequestMapping("/editors-picks")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EditorsPickContoller {
 
     private AuctionRepository auctionRepository;

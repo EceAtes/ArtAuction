@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.UserRepository;
 
 @RestController
 @RequestMapping("")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private UserRepository userRepository;
 
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/signup")
-    public ResponseEntity<HttpStatus> signUp(@RequestBody(required = true)UserDTO newUser){
+    public ResponseEntity<Integer> signUp(@RequestBody(required = true)UserDTO newUser){
         return userRepository.registerArtUser(newUser);
     }
 
