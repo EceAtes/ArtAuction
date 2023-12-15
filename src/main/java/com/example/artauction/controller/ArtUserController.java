@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.artauction.dto.AuctionDTO;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.ArtUserRepository;
 
@@ -43,4 +44,9 @@ public class ArtUserController {
         return artUserRepository.listFollowers(Integer.parseInt(userID));
     }
 
+/*  @GetMapping(path = "/auctions-from-people-you-follow")
+    public List<AuctionDTO> listAuctionsFromYouFollow(){
+        
+    }
+*/
 }

@@ -119,4 +119,10 @@ public class UserRepository {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    public List<UserDTO> listHighlightedArtUsers() {
+        String sql = "SELECT * FROM `User` JOIN `ArtUser` WHERE `role` = \"Artist\" OR `role` = \"Collector\" AND highlighter_adminID IS NOT NULL";
+        List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
+        return artUsers;
+    }
 }

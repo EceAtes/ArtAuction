@@ -30,7 +30,7 @@ public class AuctionRepository {
         try{
             jdbcTemplate.update(sqlAddAuction, newAuction.getTitle(), "proposed", newAuction.getUploaded_by_artist_ID(), newAuction.getType(),
                                 newAuction.getSize(), newAuction.getCreationDate(), LocalDate.now(), newAuction.getStartDate(), newAuction.getDescription(), newAuction.getEndDate(),
-                                newAuction.isEnded(), newAuction.getBaseBid(), newAuction.getMinimumBidIncrease(), null, null);
+                                0, newAuction.getMinimumBidIncrease(), newAuction.getBaseBid(), null, null);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EmptyResultDataAccessException e){
             System.out.println("Auction creation failed");
@@ -38,6 +38,13 @@ public class AuctionRepository {
         }
     }
 
+    // silinince exhibitiondan da silindi, ok
+    public ResponseEntity<String> deleteAuction(int auctionID){
+        //if waiting verification
+        String sql = "DELETE FROM `auction` WHERE auctionID = ?";
+        jdbcTemplate.update(sql, auctionID);
+        return new ResponseEntity<>("Auction " + auctionID + " deleted", HttpStatus.OK);        
+    }
 
     public List<Map<String, Object>> getAllAuctions() {
         String sql = "SELECT * FROM `Auction`";
@@ -76,5 +83,28 @@ public class AuctionRepository {
             System.out.println("No such auction exists");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    public List<Map<String, Object>> listHighlightedAuctions() {
+        String sql = "SELECT * FROM `Auction` WHERE highlighter_admin_ID IS NOT NULL";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        return rows;
+    }
+
+    public List<Map<String, Object>> listProposedAuctions() {
+        String sql = "SELECT * FROM `Auction` WHERE auction_status = \"proposed\"";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        return rows;
+    }
+
+    public ResponseEntity<String> updateAuction(AuctionDTO updatedAuction) {
+        //if waiting verification
+        String sql = "UPDATE Auction " + 
+                "SET title = ?,  type = ?, size = ?, creationDate = ?, uploadDate = ?, startDate = ?, description = ?, endDate = ?, minimumBidIncrease = ?, baseBid = ? " +
+                "WHERE auctionID = ?";
+        jdbcTemplate.update(sql, updatedAuction.getTitle(), updatedAuction.getType(), updatedAuction.getSize(), updatedAuction.getCreationDate(),
+                            LocalDate.now(), updatedAuction.getStartDate(), updatedAuction.getDescription(), updatedAuction.getEndDate(),
+                            updatedAuction.getMinimumBidIncrease(), updatedAuction.getBaseBid(), updatedAuction.getAuctionID());
+        return new ResponseEntity<>("Auction " + updatedAuction.getAuctionID() + " updated", HttpStatus.OK);        
     }
 }

@@ -123,8 +123,6 @@ create table Exhibition(
     creatorAdminID int not null,
     exhibitionName varchar(50) not null,
     exhibitionDescriptor varchar(50),
-    exStartDate DATE not null,
-    exEndDate DATE not null,
     FOREIGN KEY (creatorAdminID) REFERENCES Admin(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (exhibitionID)
 );

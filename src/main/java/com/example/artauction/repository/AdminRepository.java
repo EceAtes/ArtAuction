@@ -68,7 +68,6 @@ public class AdminRepository {
             else{
                 verify = "UPDATE `auction` SET auction_status = \"approved\", verifier_admin_ID = ? WHERE auctionID = ?";
             }
-            System.out.println(verify); 
             jdbcTemplate.update(verify, adminID, auctionID);
             return new ResponseEntity<>("Auction " + auctionID + " is verified as: " + isApproved, HttpStatus.OK);
         }catch(Exception e){
@@ -76,4 +75,30 @@ public class AdminRepository {
             return new ResponseEntity<>("Sth went wrong when verifying", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-  }
+
+    public ResponseEntity<String> createExhibition(int adminID, String title, String description) {
+        String sqlAddExh = "INSERT INTO `Exhibition` (creatorAdminID, exhibitionName, exhibitionDescriptor) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sqlAddExh, adminID, title, description);
+        return new ResponseEntity<>("Exhibiton created", HttpStatus.OK);
+    }
+
+    // EXHIBITION SILININCE AUCTIONLAR SILINMESIN ELBETTE
+    // silinmiyor, curate'tekiler gidiyor her sey süper
+    public ResponseEntity<String> deleteExhibition(int exhibitionID) {
+        String sqlDelExh = "DELETE FROM `Exhibition` WHERE exhibitionID = ?";
+        jdbcTemplate.update(sqlDelExh, exhibitionID);
+        return new ResponseEntity<>("Exhibiton deleted", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> addAuctionToExhibiton(int exhID, int auctionID) {
+        String sqlAddAuctionToExhibition = "INSERT INTO `Curate` (exhibitionID, auctionID) VALUES (?, ?)";
+        jdbcTemplate.update(sqlAddAuctionToExhibition, exhID, auctionID);
+        return new ResponseEntity<>("Auction " + auctionID + " added to " + exhID, HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> removeAuctionFromExhibition(int exhID, int auctionID) {
+        String sqlDeleteAuctionFromExhibition = "DELETE FROM `Curate` WHERE exhibitionID = ? AND auctionID = ?";
+        jdbcTemplate.update(sqlDeleteAuctionFromExhibition, exhID, auctionID);
+        return new ResponseEntity<>("Auction " + auctionID + " removed from " + exhID, HttpStatus.OK);
+    }
+}
