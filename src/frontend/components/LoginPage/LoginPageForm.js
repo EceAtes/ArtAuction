@@ -2,16 +2,32 @@ import styles from "./LoginPage.module.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { signInApiFunction } from "@/pages/api/user";
 
 const LoginPageForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //api
+    setIsLoading(true);
+
+    console.log(email, password);
+    signInApiFunction(email, password)
+      .then((data) => {
+        console.log("Signin successful ", data);
+        localStorage.setItem("userID", data.userID);
+        localStorage.setItem("role", data.role);
+        router.push(`/${data.role}/${data.userID}`);
+      })
+      .catch((error) => {
+        console.error("Signin failed", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -46,7 +62,7 @@ const LoginPageForm = (props) => {
           />
         </div>
         <button type="submit" className={styles.submitButton}>
-          Login
+          {isLoading ? "Loading..." : "Login"}
         </button>
         <p className={styles.artAuctionText}>
           New to ArtAuctions?{" "}

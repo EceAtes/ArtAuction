@@ -3,52 +3,6 @@ import styles from "./PeopleList.module.css";
 import TuneIcon from "@mui/icons-material/Tune";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-const people = [
-  {
-    id: 1,
-    name: "Test ABC",
-    type: "Collector",
-    description: "you change your mind like a girl changes clothes",
-    imageUrl: "/photos/loginpage.png",
-  },
-
-  {
-    id: 2,
-    name: "Test ABC",
-    type: "Artist",
-    description: "you change your mind like a girl changes clothes",
-    imageUrl: "/photos/loginpage.png",
-  },
-  {
-    id: 3,
-    name: "Test ABC",
-    type: "Artist",
-    description: "you change your mind like a girl changes clothes",
-    imageUrl: "/photos/signuppage.png",
-  },
-  {
-    id: 4,
-    name: "Test ABC",
-    type: "Collector",
-    description: "you change your mind like a girl changes clothes",
-    imageUrl: "/photos/loginpage.png",
-  },
-  {
-    id: 5,
-    name: "Test ABC",
-    type: "Artist",
-    description: "you change your mind like a girl changes clothes",
-    imageUrl: "/photos/signuppage.png",
-  },
-  {
-    id: 6,
-    name: "Test ABC",
-    type: "Artist",
-    description: "you change your mind like a girl changes clothes",
-    imageUrl: "/photos/loginpage.png",
-  },
-];
-
 const PeopleList = (props) => {
   return (
     <div className={styles.mainContainer}>
@@ -63,13 +17,15 @@ const PeopleList = (props) => {
       </div>
 
       <div className={styles.peopleListContainer}>
-        {people.map((person) => (
+        {props.artUsers.map((person) => (
           <Person
-            key={person.id}
+            key={person.userID}
+            userID={person.userID}
             name={person.name}
-            type={person.type}
-            imageUrl={person.imageUrl}
-            description={person.description}
+            role={person.role}
+            imageUrl={"/photos/signuppage.png"}
+            highlighterAdminID={person.highlighter_adminID}
+            bio={person.bio}
           />
         ))}
       </div>

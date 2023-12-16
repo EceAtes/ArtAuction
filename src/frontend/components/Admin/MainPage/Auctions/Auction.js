@@ -1,11 +1,33 @@
 import styles from "./AuctionList.module.css";
+import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import BlurOnIcon from "@mui/icons-material/BlurOn";
 import Modal from "./Modal";
 import { useState } from "react";
+import { capitalize } from "@mui/material";
+import { adminHighlightAuctionApiFunction } from "@/pages/api/admin";
 
 const Auction = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const [isHighlighted, setIsHighlighted] = useState(
+    props.highlighterAdminID == null ? false : true
+  );
+
+  const handleHighlightAuction = (event) => {
+    event.preventDefault();
+
+    const admin_id = parseInt(localStorage.getItem("userID"), 10);
+    const auction_id = parseInt(props.auctionID, 10);
+    console.log(admin_id, auction_id);
+    adminHighlightAuctionApiFunction(admin_id, auction_id)
+      .catch((error) => {
+        console.error("Highlight failed", error.message || error);
+      })
+      .finally(() => {
+        setIsHighlighted(!isHighlighted);
+      });
+  };
 
   const handleOpenModal = (event) => {
     if (isModalOpen) {
@@ -28,8 +50,15 @@ const Auction = (props) => {
       <div className={styles.imageContainer}>
         <img src={props.imageUrl} alt="Auction" />
         <div className={styles.starsContainer}>
-          <button className={styles.auctionFilterButton}>
-            <StarBorderIcon fontSize="large"></StarBorderIcon>
+          <button
+            className={styles.auctionFilterButton}
+            onClick={handleHighlightAuction}
+          >
+            {isHighlighted ? (
+              <StarIcon fontSize="large"></StarIcon>
+            ) : (
+              <StarBorderIcon fontSize="large"></StarBorderIcon>
+            )}
           </button>
           <button
             className={styles.auctionFilterButton}
@@ -39,13 +68,13 @@ const Auction = (props) => {
           </button>
         </div>
       </div>
-      <h3 className={styles.auctionHeader}>{props.auctionName}</h3>
+      <h3 className={styles.auctionHeader}>{capitalize(props.title)}</h3>
       <button className={styles.moreButton}>More</button>
 
       {isModalOpen && (
         <Modal
           availableExhibitions={props.availableExhibitions}
-          id={props.id}
+          id={props.auctionID}
           closeModal={handleCloseModal}
           auctionName={props.auctionName}
         ></Modal>
