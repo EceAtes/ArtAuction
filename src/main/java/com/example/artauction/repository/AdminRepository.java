@@ -79,10 +79,16 @@ public class AdminRepository {
         }
     }
 
-    public ResponseEntity<String> createExhibition(int adminID, String title, String description) {
+    public ResponseEntity<String> createExhibition(int adminID, String title, String description, int auctionId) {
         String sqlAddExh = "INSERT INTO `Exhibition` (creatorAdminID, exhibitionName, exhibitionDescriptor) VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlAddExh, adminID, title, description);
-        return new ResponseEntity<>("Exhibiton created", HttpStatus.OK);
+
+        String sqlExhId = "SELECT LAST_INSERT_ID()";
+        int exhibitionId = jdbcTemplate.queryForObject(sqlExhId, Integer.class);
+
+        String sqlAddAuctionToExhibition = "INSERT INTO `Curate` (exhibitionID, auctionID) VALUES (?, ?)";
+        jdbcTemplate.update(sqlAddAuctionToExhibition, exhibitionId, auctionId);
+        return new ResponseEntity<>("Exhibition created and auction " + auctionId + " added", HttpStatus.OK);
     }
 
     // EXHIBITION SILININCE AUCTIONLAR SILINMESIN ELBETTE

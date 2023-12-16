@@ -89,7 +89,7 @@ public class AdminController {
     @PostMapping(path = "/create_exh")
     public ResponseEntity<String> createExhibition(@RequestBody(required = true) Map<String, String> requestMap){
         try{
-            return adminRepository.createExhibition(Integer.parseInt(requestMap.get("admin_id")), requestMap.get("title"), requestMap.get("description"));
+            return adminRepository.createExhibition(Integer.parseInt(requestMap.get("admin_id")), requestMap.get("title"), requestMap.get("description"), Integer.parseInt(requestMap.get("auction_id")));
         }catch (Exception e){
             e.printStackTrace();
         }
