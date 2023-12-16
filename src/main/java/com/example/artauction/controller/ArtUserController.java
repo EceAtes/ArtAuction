@@ -46,9 +46,9 @@ public class ArtUserController {
         return artUserRepository.listFollowers(Integer.parseInt(userID));
     }
 
-/*  @GetMapping(path = "/auctions-from-people-you-follow")
-    public List<AuctionDTO> listAuctionsFromYouFollow(){
-        
+  @GetMapping(path = "/auctions-from-people-you-follow")
+    public List<AuctionDTO> listAuctionsFromYouFollow(@RequestBody(required = true) Map<String, Integer> requestMap){
+        return artUserRepository.auctionsFromFollow(requestMap);
     }
-*/
+
 }

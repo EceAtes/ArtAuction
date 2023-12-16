@@ -107,4 +107,15 @@ public class AuctionRepository {
                             updatedAuction.getMinimumBidIncrease(), updatedAuction.getBaseBid(), updatedAuction.getAuctionID());
         return new ResponseEntity<>("Auction " + updatedAuction.getAuctionID() + " updated", HttpStatus.OK);        
     }
+
+    //bid yok şu an
+    public List<AuctionDTO> getPopularAuctions(Map<String, Integer> RequestMap){
+        /*String sql = "SELECT A.auctionID, A.title, COUNT(B.bidID) AS NumberOfBids" +
+                "FROM Auction A\n" +
+                "JOIN Offer O On O.auctionID = A.auctionID    \n" +
+                "Bid B ON B.bidID = O.bidID\n" +
+                "GROUP BY A.auctionID, A.title\n" +
+                "ORDER BY NumberOfBids DESC\n"*/
+        return null;
+    }
 }

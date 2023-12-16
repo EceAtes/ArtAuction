@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class AuctionDTO {
-    private int auctionID;
+    private Integer auctionID;
     private String title;
-    private String auction_status; // proposed, verified, 
-    private int uploaded_by_artist_ID;
+    private String auction_status = "proposed";; // proposed, verified,
+    private Integer uploaded_by_artist_ID;
     private String type; // painting, sculpture,... dropdown olsa
     private String size;
     private LocalDate creationDate; //when the artwork is created
@@ -21,11 +21,11 @@ public class AuctionDTO {
     private LocalDate startDate; // bunu kaldırsak mı ki admin onaylayınca baslasın iste
     private String description;
     private LocalDate endDate; // ya admin cok gec onaylarsa
-    private boolean isEnded;
+    private boolean isEnded = false;
     private int minimumBidIncrease;
     private int baseBid;
-    private int verifier_admin_ID;
-    private int highlighter_admin_ID;
+    private Integer verifier_admin_ID;
+    private Integer highlighter_admin_ID;
 
     public AuctionDTO(){
         auction_status = "proposed";

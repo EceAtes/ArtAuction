@@ -2,7 +2,9 @@ package com.example.artauction.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.example.artauction.dto.AuctionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -59,5 +61,19 @@ public class ArtUserRepository {
 
     public List<UserDTO> getAllArtUsers() {
         return null;
+    }
+
+
+    public List<AuctionDTO> auctionsFromFollow(Map<String, Integer> requestMap) {
+        List<AuctionDTO> auctions;
+        String sqlAuctionsFromFollow = "SELECT * FROM `auction` JOIN `follows` ON `auction`.uploaded_by_artist_ID = `follows`.followedID WHERE `follows`.followerID = ?";
+        try{
+            auctions = jdbcTemplate.query(sqlAuctionsFromFollow, new Object[]{requestMap.get("userID")}, new BeanPropertyRowMapper<>(AuctionDTO.class));
+            return auctions;
+        }catch (EmptyResultDataAccessException e) {
+            System.out.println("Something went wrong listing the auctions of user's followers");
+            return new ArrayList<AuctionDTO>();
+
+        }
     }
 }

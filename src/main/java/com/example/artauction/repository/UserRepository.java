@@ -43,7 +43,7 @@ public class UserRepository {
             }
             else{
                 String sqlAddArtUser = "INSERT INTO `ArtUser` (`userID`, `tokens`, `bio`, `country`, `highlighter_adminID`) VALUES (?, ?, ?, ?, ?)";
-                jdbcTemplate.update(sqlAddArtUser, userId, 0, "hello world", "world", null);
+                jdbcTemplate.update(sqlAddArtUser, userId, 100, "hello world", "world", null);
 
                 System.out.println(newUser.getRole());
                 if(newUser.getRole().equalsIgnoreCase("artist")){
@@ -95,7 +95,8 @@ public class UserRepository {
     }
 
     public List<UserDTO> getAllArtUsers() {
-        String sql = "SELECT * FROM `User` JOIN `ArtUser` ON `User`.`userID` = `ArtUser`.`userID` WHERE `role` = 'Artist' OR `role` = 'Collector'";        List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
+        String sql = "SELECT * FROM `User` JOIN `ArtUser` ON `User`.`userID` = `ArtUser`.`userID` WHERE `role` = 'Artist' OR `role` = 'Collector'";
+        List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
         return artUsers;
     }
 

@@ -53,6 +53,10 @@ public class AuctionController {
         return auctionRepository.updateAuction(newAuction);
     }
 
+    @GetMapping("/getPopular")
+    public List<AuctionDTO> getPopularAuction(@RequestBody(required = true)Map<String, Integer> requestMap){
+        return auctionRepository.getPopularAuctions(requestMap);
+    }
 /*
     @GetMapping(path = "/search")
     public ResponseEntity<List<AuctionWrapper>> searchAuctions(@RequestBody(required = true) Map<String, String> requestMap){
