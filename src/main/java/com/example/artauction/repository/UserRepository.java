@@ -36,7 +36,7 @@ public class UserRepository {
             int userId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             newUser.setUserID(cnt);
 
-            if(newUser.getRole().equals("Admin")){
+            if(newUser.getRole().equalsIgnoreCase("admin")){
                 String sqlAddArtUser = "INSERT INTO `Admin` (`userID`, `specialization`) VALUES (?, ?)";
                 jdbcTemplate.update(sqlAddArtUser, userId, "specialization");
                 return new ResponseEntity<Integer>(userId,HttpStatus.OK);
@@ -46,12 +46,12 @@ public class UserRepository {
                 jdbcTemplate.update(sqlAddArtUser, userId, 0, "hello world", "world", null);
 
                 System.out.println(newUser.getRole());
-                if(newUser.getRole().equals("Artist")){
+                if(newUser.getRole().equalsIgnoreCase("artist")){
                     String sqlAddArtist = "INSERT INTO `Artist` (`userID`, `art_specialization`) VALUES (?, ?)";
                     jdbcTemplate.update(sqlAddArtist, userId, "art_specialization");
                 }
-                else if(newUser.getRole().equals("Collector")){
-                    String sqlAddCollector = "INSERT INTO `Collector` (`userID`, art_tag`) VALUES (?, ?)";
+                else if(newUser.getRole().equalsIgnoreCase("collector")){
+                    String sqlAddCollector = "INSERT INTO `Collector` (`userID`, `art_tag`) VALUES (?, ?)";
                     jdbcTemplate.update(sqlAddCollector, userId, "art_tag");
                 }
                 return new ResponseEntity<Integer>(userId,HttpStatus.OK);
@@ -95,8 +95,7 @@ public class UserRepository {
     }
 
     public List<UserDTO> getAllArtUsers() {
-        String sql = "SELECT * FROM `User` JOIN `ArtUser` WHERE `role` = \"Artist\" OR `role` = \"Collector\"";
-        List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
+        String sql = "SELECT * FROM `User` JOIN `ArtUser` ON `User`.`userID` = `ArtUser`.`userID` WHERE `role` = 'Artist' OR `role` = 'Collector'";        List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
         return artUsers;
     }
 

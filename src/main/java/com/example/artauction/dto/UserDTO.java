@@ -15,6 +15,6 @@ public class UserDTO {
     private int tokens;
     private String bio;
     private String country;
-    private int highlighter_adminID;
+    private Integer highlighter_adminID;
     private String role;
 }
