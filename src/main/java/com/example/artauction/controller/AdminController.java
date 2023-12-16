@@ -96,6 +96,16 @@ public class AdminController {
         return new ResponseEntity<>("An error has occurred while trying to create exhibition", HttpStatus.BAD_REQUEST);
     }
 
+    @PatchMapping(path = "/edit_exh")
+    public ResponseEntity<String> updateExhibition(@RequestBody(required = true) Map<String, String> requestMap){
+        try{
+            return adminRepository.updateExhibition(Integer.parseInt(requestMap.get("exhibitionID")), Integer.parseInt(requestMap.get("admin_id")), requestMap.get("title"), requestMap.get("description"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("An error has occurred while trying to update exhibition", HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping(path = "/delete_exh")
     public ResponseEntity<String> deleteExhibition(@RequestBody(required = true) Map<String, Integer> requestMap){
         try{

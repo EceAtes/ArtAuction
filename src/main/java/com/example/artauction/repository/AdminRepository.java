@@ -126,4 +126,12 @@ public class AdminRepository {
 
         return exhibitionDTOList;
     }
+
+    public ResponseEntity<String> updateExhibition(int exhibitionID, int adminID, String title, String description) {
+        String sql = "UPDATE Exhibition " + 
+                    "SET creatorAdminID = ?,  exhibitionName = ?, exhibitionDescriptor = ?" +
+                    "WHERE exhibitionID = ?";
+        jdbcTemplate.update(sql, adminID, title, description, exhibitionID);
+        return new ResponseEntity<>("Exhibition " + exhibitionID + " updated", HttpStatus.OK);        
+    }
 }
