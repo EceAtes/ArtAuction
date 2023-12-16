@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.artauction.dto.ExhibitionDTO;
+
+
 @Repository
 public class AdminRepository {
 
@@ -100,5 +103,27 @@ public class AdminRepository {
         String sqlDeleteAuctionFromExhibition = "DELETE FROM `Curate` WHERE exhibitionID = ? AND auctionID = ?";
         jdbcTemplate.update(sqlDeleteAuctionFromExhibition, exhID, auctionID);
         return new ResponseEntity<>("Auction " + auctionID + " removed from " + exhID, HttpStatus.OK);
+    }
+
+    public List<ExhibitionDTO> addAuctionMenu(int auctionID) {
+        String sql = "SELECT e.exhibitionID, e.exhibitionName, e.exhibitionDescriptor, c.auctionID " +
+                "FROM exhibition e " +
+                "LEFT JOIN curate c ON e.exhibitionID = c.exhibitionID";
+
+        List<ExhibitionDTO> exhibitionDTOList = jdbcTemplate.query(sql, (resultSet, i) -> {
+            ExhibitionDTO exhibitionDTO = new ExhibitionDTO();
+            exhibitionDTO.setExhibitionID(resultSet.getInt("exhibitionID"));
+            exhibitionDTO.setExhibitionName(resultSet.getString("exhibitionName"));
+            exhibitionDTO.setExhibitionDescriptor(resultSet.getString("exhibitionDescriptor"));
+
+            int auctionId = resultSet.getInt("auctionID");
+            if (auctionId > 0) {
+                exhibitionDTO.getAuctions().add(auctionId);
+            }
+            if(exhibitionDTO.getAuctions().contains(auctionID)) {exhibitionDTO.setHasTheAuctionAsked(true);}
+            return exhibitionDTO;
+        });
+
+        return exhibitionDTOList;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.artauction.dto.AdminHomeResponse;
+import com.example.artauction.dto.ExhibitionDTO;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.AdminRepository;
 import com.example.artauction.repository.AuctionRepository;
@@ -104,6 +105,17 @@ public class AdminController {
         }
         return new ResponseEntity<>("An error has occurred while trying to delete exhibition", HttpStatus.BAD_REQUEST);
     }
+
+    @PostMapping(path = "/add_auction_menu")
+    public List<ExhibitionDTO> addAuctionMenu(@RequestBody(required = true) Map<String, Integer> requestMap){
+        try{
+            return adminRepository.addAuctionMenu(requestMap.get("auctionID"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+        
 
     @PostMapping(path = "/add_auction_to_exh")
     public ResponseEntity<String> addAuctionToExhibiton(@RequestBody(required = true) Map<String, Integer> requestMap){

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.example.artauction.dto.ExhibitionDTO;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.AuctionRepository;
 import com.example.artauction.repository.ExhibitionRepository;
@@ -50,7 +52,7 @@ public class EditorsPickContoller {
         return null;
     }
 
-    /*
+
     @GetMapping(path= "/exhibitions")
     public List<ExhibitionDTO> listAllExhibitions(){
         try{
@@ -61,14 +63,15 @@ public class EditorsPickContoller {
         return null;
     }
 
+    
     @GetMapping(path= "/exhibitions/{exhibition_ID}")
-    public ExhibitionDTO listSingleExhibition(@PathVariable String userID){
+    public ExhibitionDTO listSingleExhibition(@PathVariable String exhibition_ID){
         try{
-            return exhibitionRepository.listSingleExhibition();
+            return exhibitionRepository.listSingleExhibition(Integer.parseInt(exhibition_ID));
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
     }
-    */
+    
 }
