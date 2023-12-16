@@ -3,6 +3,7 @@ package com.example.artauction.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.example.artauction.dto.BidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +55,13 @@ public class AuctionController {
     }
 
     @GetMapping("/getPopular")
-    public List<AuctionDTO> getPopularAuction(@RequestBody(required = true)Map<String, Integer> requestMap){
-        return auctionRepository.getPopularAuctions(requestMap);
+    public List<Map<String,Object>> getPopularAuction(){
+        return auctionRepository.getPopularAuctions();
+    }
+
+    @GetMapping("/allBidHistory")
+    public List<Map<String,Object>> getAllBidHistory(@RequestBody(required = true)Map<String, Integer> requestMap){
+        return auctionRepository.getAllBidHistory(requestMap);
     }
 /*
     @GetMapping(path = "/search")
