@@ -89,4 +89,6 @@ public class CollectorRepository {
         List<Map<String,Object>> bids = jdbcTemplate.queryForList(sql, userID, auctionID);
         return bids;
     }
+
+
 }

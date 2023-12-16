@@ -69,7 +69,7 @@ public class AdminRepository {
                 verify = "UPDATE `auction` SET auction_status = \"rejected\", verifier_admin_ID = ? WHERE auctionID = ?";
             }
             else{
-                verify = "UPDATE `auction` SET auction_status = \"approved\", verifier_admin_ID = ? WHERE auctionID = ?";
+                verify = "UPDATE `auction` SET auction_status = \"approved\", verifier_admin_ID = ? WHERE auctionID = ?"; //bunu "ongoing"e mi çevirsek
             }
             jdbcTemplate.update(verify, adminID, auctionID);
             return new ResponseEntity<>("Auction " + auctionID + " is verified as: " + isApproved, HttpStatus.OK);

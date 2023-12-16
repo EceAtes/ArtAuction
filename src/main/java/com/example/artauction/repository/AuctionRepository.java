@@ -135,6 +135,16 @@ public class AuctionRepository {
         List<Map<String,Object>> bids = jdbcTemplate.queryForList(sql, requestMap.get("auctionID"));
         return bids;
     }
+
+    public List<Map<String, Object>> getRecentAuctions() {
+        String sql = "SELECT * " +
+                "FROM `auction` a " +
+                "WHERE auction_status = 'approved' " + //maybe "ongoing"
+                "ORDER BY uploadDate DESC ";
+
+        List<Map<String,Object>> auctions = jdbcTemplate.queryForList(sql);
+        return auctions;
+    }
 }
 
 

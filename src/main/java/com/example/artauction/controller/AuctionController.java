@@ -59,6 +59,11 @@ public class AuctionController {
         return auctionRepository.getPopularAuctions();
     }
 
+    @GetMapping("/getRecent")
+    public List<Map<String,Object>> getRecentAuction(){
+        return auctionRepository.getRecentAuctions();
+    }
+
     @GetMapping("/allBidHistory")
     public List<Map<String,Object>> getAllBidHistory(@RequestBody(required = true)Map<String, Integer> requestMap){
         return auctionRepository.getAllBidHistory(requestMap);
