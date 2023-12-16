@@ -43,7 +43,7 @@ public class UserRepository {
             }
             else{
                 String sqlAddArtUser = "INSERT INTO `ArtUser` (`userID`, `tokens`, `bio`, `country`, `highlighter_adminID`) VALUES (?, ?, ?, ?, ?)";
-                jdbcTemplate.update(sqlAddArtUser, userId, 100, "hello world", "world", null);
+                jdbcTemplate.update(sqlAddArtUser, userId, 100, "hello world", "world", null); //test için 100 ekledim bütün user'lara otomatik olarak bunu sonra silelim
 
                 System.out.println(newUser.getRole());
                 if(newUser.getRole().equalsIgnoreCase("artist")){
