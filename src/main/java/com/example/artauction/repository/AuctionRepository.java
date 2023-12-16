@@ -4,10 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import com.example.artauction.dto.BidDTO;
+import com.example.artauction.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -108,14 +111,40 @@ public class AuctionRepository {
         return new ResponseEntity<>("Auction " + updatedAuction.getAuctionID() + " updated", HttpStatus.OK);        
     }
 
-    //bid yok şu an
-    public List<AuctionDTO> getPopularAuctions(Map<String, Integer> RequestMap){
-        /*String sql = "SELECT A.auctionID, A.title, COUNT(B.bidID) AS NumberOfBids" +
-                "FROM Auction A\n" +
-                "JOIN Offer O On O.auctionID = A.auctionID    \n" +
-                "Bid B ON B.bidID = O.bidID\n" +
-                "GROUP BY A.auctionID, A.title\n" +
-                "ORDER BY NumberOfBids DESC\n"*/
-        return null;
+
+    public List<Map<String,Object>> getPopularAuctions(){
+        String sql = "SELECT A.auctionID, A.title, COUNT(B.bidID) AS NumberOfBids " +
+                "FROM `auction` a " +
+                "JOIN `offer` O On O.auctionID = A.auctionID " +
+                "JOIN `bid` B ON B.bidID = O.bidID " +
+                "GROUP BY A.auctionID, A.title " +
+                "ORDER BY NumberOfBids DESC ";
+        List<Map<String,Object>> bids = jdbcTemplate.queryForList(sql);
+        return bids;
+    }
+
+    public List<Map<String,Object>> getAllBidHistory(Map<String, Integer> requestMap) {
+        String sql = "SELECT * FROM `bid` b " +
+                "JOIN `offer` o ON o.bidID = b.bidID " +
+                "JOIN `collector` c ON o.collectorID = c.UserID " +
+                "JOIN `user` u ON c.UserID = u.UserID " +
+                "JOIN `auction` a ON o.auctionID = a.auctionID " +
+                "WHERE a.auctionID = ? " +
+                "ORDER BY b.bidID DESC"; //leading hep birinci sırada
+
+        List<Map<String,Object>> bids = jdbcTemplate.queryForList(sql, requestMap.get("auctionID"));
+        return bids;
+    }
+
+    public List<Map<String, Object>> getRecentAuctions() {
+        String sql = "SELECT * " +
+                "FROM `auction` a " +
+                "WHERE auction_status = 'approved' " + //maybe "ongoing"
+                "ORDER BY uploadDate DESC ";
+
+        List<Map<String,Object>> auctions = jdbcTemplate.queryForList(sql);
+        return auctions;
     }
 }
+
+

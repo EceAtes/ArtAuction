@@ -79,4 +79,16 @@ public class CollectorRepository {
             return false;
         }
     }
+
+
+    public List<Map<String, Object>> seeBidHistory(Integer userID, Integer auctionID) {
+        String sql = "SELECT * " +
+                "FROM `bid` b " +
+                "JOIN `offer` o  ON o.bidID = b.bidID " +
+                "WHERE o.collectorID = ? AND o.auctionID = ?";
+        List<Map<String,Object>> bids = jdbcTemplate.queryForList(sql, userID, auctionID);
+        return bids;
+    }
+
+
 }

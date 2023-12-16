@@ -76,4 +76,32 @@ public class ArtUserRepository {
 
         }
     }
+
+    public List<Map<String, Object>> seeTopCollectors() {
+        String sql = "SELECT U.role, U.name, A.*, COUNT(*) AS Wins " +
+                "FROM `collector` C " +
+                "JOIN `offer` O ON C.userID = O.collectorID " +
+                "JOIN `bid` B ON O.bidID = B.bidID " +
+                "JOIN `user` U ON U.userID = C.userID " +
+                "JOIN `artuser` A ON A.userID = C.userID " +
+                "WHERE B.bid_status = 'Leading' " + //"won" olması lazım ama test için değiştirdim
+                "GROUP BY C.userID " +
+                "ORDER BY Wins DESC ";
+
+        List<Map<String,Object>> collectors = jdbcTemplate.queryForList(sql);
+        return collectors;
+    }
+
+    public List<Map<String, Object>> seeTopArtists() {
+        String sql = "SELECT U.role, U.name, Art.*, Count(*) as compAucCount " +
+                "FROM Artist A " +
+                "NATURAL JOIN User U " +
+                "NATURAL JOIN ArtUser Art " +
+                "JOIN Auction Auc ON Auc.uploaded_by_artist_ID = A.userID " +
+                //"WHERE Auc.isEnded = TRUE " +
+                "GROUP BY A.userID, U.name, Art.bio ";
+
+        List<Map<String,Object>> artists = jdbcTemplate.queryForList(sql);
+        return artists;
+    }
 }

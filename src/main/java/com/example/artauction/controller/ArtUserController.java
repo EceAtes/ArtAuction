@@ -46,9 +46,18 @@ public class ArtUserController {
         return artUserRepository.listFollowers(Integer.parseInt(userID));
     }
 
-  @GetMapping(path = "/auctions-from-people-you-follow")
+    @GetMapping(path = "/auctions-from-people-you-follow")
     public List<AuctionDTO> listAuctionsFromYouFollow(@RequestBody(required = true) Map<String, Integer> requestMap){
         return artUserRepository.auctionsFromFollow(requestMap);
     }
 
+    @GetMapping("/topCollectors")
+    public List<Map<String,Object>> seeTopCollectors(){
+        return artUserRepository.seeTopCollectors();
+    }
+
+    @GetMapping("/topArtists")
+    public List<Map<String,Object>> seeTopArtists(){
+        return artUserRepository.seeTopArtists();
+    }
 }
