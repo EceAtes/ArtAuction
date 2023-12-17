@@ -16,11 +16,13 @@ export const API_ADMIN_REMOVE_AUCTION_FROM_EXHIBITION = `${BASE_URL}admin/remove
 export const API_ADMIN_DELETE_EXHIBITION = `${BASE_URL}admin/delete_exh`;
 export const API_ADMIN_EDIT_EXHIBITION = `${BASE_URL}admin/edit_exh`;
 export const API_ADMIN_PROPOSED_AUCTIONS = `${BASE_URL}admin/proposed_auctions`;
+export const API_ADMIN_VERIFY_AUCTION = `${BASE_URL}admin/verify_auction`;
 
 //EDITOR PICKS
 export const API_EDITOR_PICKS_HIGHLIGHTED_ARTUSERS = `${BASE_URL}editors-picks/highlighted_artusers`;
 export const API_EDITOR_PICKS_HIGHLIGHTED_AUCTIONS = `${BASE_URL}editors-picks/highlighted_auctions`;
 export const API_EDITOR_PICKS_EXHIBITIONS = `${BASE_URL}editors-picks/exhibitions`;
+
 
 //ARTIST URLS
 
