@@ -74,11 +74,12 @@ const ExhibitionList = (props) => {
       </div>
 
       <div className={styles.exhibitionListContainer}>
-        {exhibitions.map((exhibition) => (
+        {props.exhibitions.map((exhibition) => (
           <Exhibition
-            key={exhibition.id}
-            title={exhibition.title}
-            description={exhibition.description}
+            key={exhibition.exhibitionID}
+            id={exhibition.exhibitionID}
+            title={exhibition.exhibitionName}
+            description={exhibition.exhibitionDescriptor}
             auctions={exhibition.auctions}
           />
         ))}

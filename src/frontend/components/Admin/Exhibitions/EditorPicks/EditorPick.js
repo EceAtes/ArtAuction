@@ -1,10 +1,11 @@
+import { capitalize } from "@mui/material";
 import styles from "./EditorPick.module.css";
 import StarIcon from "@mui/icons-material/Star";
 
 const EditorPick = (props) => {
   if (props.type == "auction") {
     return (
-      <>
+      
         <div className={styles.editorPickContainer}>
           <div className={styles.imageContainer}>
             <img src={props.imageUrl} alt="Editor Pick" />
@@ -25,20 +26,19 @@ const EditorPick = (props) => {
             <button className={styles.moreButton}>More</button>
           </div>
         </div>
-      </>
+      
     );
   } else {
     return (
-      <>
         <div className={styles.editorPickContainer}>
           <div className={styles.imageContainer}>
-            <img src={props.imageUrl} alt="Editor Pick" />
+            <img src={props.imageUrl} alt="User Image" />
           </div>
 
           <div className={styles.detailsContainer}>
-            <h3 className={styles.personNameTitle}>{props.title}</h3>
-            <h3 className={styles.personType}>{props.type}</h3>
-            <p className={styles.editorPickDescription}>{props.description}</p>
+            <h3 className={styles.personNameTitle}>{capitalize(props.name) }</h3>
+            <h3 className={styles.personType}>{capitalize(props.role)}</h3>
+            <p className={styles.editorPickDescription}>{props.bio}</p>
           </div>
 
           <div className={styles.starAndButtonContainer}>
@@ -49,7 +49,6 @@ const EditorPick = (props) => {
             <button className={styles.moreButton}>More</button>
           </div>
         </div>
-      </>
     );
   }
 };
