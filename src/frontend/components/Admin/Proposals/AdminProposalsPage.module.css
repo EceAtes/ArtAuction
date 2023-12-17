@@ -8,3 +8,8 @@
     overflow: auto;
     overflow-x: hidden;
   }
+
+  .heading{
+    margin-top: 20px;
+    font-size: 3rem;
+  }

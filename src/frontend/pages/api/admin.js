@@ -9,6 +9,7 @@ import {
   API_ADMIN_DELETE_EXHIBITION,
   API_ADMIN_EDIT_EXHIBITION,
   API_ADMIN_PROPOSED_AUCTIONS,
+  API_ADMIN_VERIFY_AUCTION,
 } from "./base";
 
 //HOME
@@ -188,5 +189,25 @@ export const adminProposedAuctionsApiFunction = async () => {
     return res.json();
   } else {
     throw new Error("home failed!");
+  }
+};
+
+//VERIFY AUCTION 
+export const adminVerifyAuctionApiFunction = async (
+  admin_id,
+  auction_id,
+  isApproved,
+) => {
+  const res = await fetch(API_ADMIN_VERIFY_AUCTION, {
+    method: "PATCH",
+    body: JSON.stringify({ admin_id, auction_id, isApproved }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.text();
+  } else {
+    throw new Error("edit exhibition failed!");
   }
 };
