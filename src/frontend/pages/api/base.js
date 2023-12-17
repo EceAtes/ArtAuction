@@ -37,7 +37,10 @@ export const API_ART_USER_FILTER_PEOPLE = `${BASE_URL}art-user/filter-people`;
 export const API_ART_USER_TOP_COLLECTORS = `${BASE_URL}art-user/topCollectors`;
 export const API_ART_USER_TOP_ARTISTS = `${BASE_URL}art-user/topArtists`;
 export const API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW = `${BASE_URL}art-user/auctions-from-people-you-follow`;
-export const API_ART_USER_SEARCH = `${BASE_URL}art-user/search`;
+export const API_ART_USER_SEARCH = `${BASE_URL}art-user/search`;export const API_ADMIN_ADD_AUCTION_MENU = `${BASE_URL}admin/add_auction_menu`;
+export const API_ADMIN_CREATE_EXHIBITION = `${BASE_URL}admin/create_exh`;
+export const API_ADMIN_ADD_AUCTION_TO_EXHIBITION = `${BASE_URL}admin/add_auction_to_exh`;
+export const API_ADMIN_REMOVE_AUCTION_FROM_EXHIBITION = `${BASE_URL}admin/remove_auction_from_exh`;
 
 //ARTIST URLS
 export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artistInfo`;
