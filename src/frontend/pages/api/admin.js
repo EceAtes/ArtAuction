@@ -1,4 +1,12 @@
-import { API_ADMIN_HOME, API_ADMIN_HIGHLIGHT_ARTUSER, API_ADMIN_HIGHLIGHT_AUCTION } from "./base";
+import {
+  API_ADMIN_HOME,
+  API_ADMIN_HIGHLIGHT_ARTUSER,
+  API_ADMIN_HIGHLIGHT_AUCTION,
+  API_ADMIN_ADD_AUCTION_MENU,
+  API_ADMIN_CREATE_EXHIBITION,
+  API_ADMIN_ADD_AUCTION_TO_EXHIBITION,
+  API_ADMIN_REMOVE_AUCTION_FROM_EXHIBITION,
+} from "./base";
 
 //HOME
 export const adminHomeApiFunction = async () => {
@@ -42,6 +50,81 @@ export const adminHighlightAuctionApiFunction = async (
   const res = await fetch(API_ADMIN_HIGHLIGHT_AUCTION, {
     method: "PATCH",
     body: JSON.stringify({ admin_id, auction_id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("highlight failed!");
+  }
+};
+
+//ADD AUCTION MENU
+export const adminAddAuctionMenuApiFunction = async (auctionID) => {
+  const res = await fetch(API_ADMIN_ADD_AUCTION_MENU, {
+    method: "POST",
+    body: JSON.stringify({ auctionID }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("highlight failed!");
+  }
+};
+
+//CREATE EXHIBITION
+export const adminCreateExhibitionApiFunction = async (
+  admin_id,
+  title,
+  description,
+  auction_id
+) => {
+  const res = await fetch(API_ADMIN_CREATE_EXHIBITION, {
+    method: "POST",
+    body: JSON.stringify({ admin_id, title, description, auction_id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("highlight failed!");
+  }
+};
+
+//ADD AUCTION TO EXHIBITION
+export const adminAddAuctionToExhibitionApiFunction = async (
+  exhibitionID,
+  auctionID
+) => {
+  const res = await fetch(API_ADMIN_ADD_AUCTION_TO_EXHIBITION, {
+    method: "POST",
+    body: JSON.stringify({ exhibitionID, auctionID }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("highlight failed!");
+  }
+};
+
+//REMOVE AUCTION FROM EXHIBITION
+export const adminRemoveAuctionFromExhibitionApiFunction = async (
+  exhibitionID,
+  auctionID
+) => {
+  const res = await fetch(API_ADMIN_REMOVE_AUCTION_FROM_EXHIBITION, {
+    method: "POST",
+    body: JSON.stringify({ exhibitionID, auctionID }),
     headers: {
       "Content-Type": "application/json",
     },

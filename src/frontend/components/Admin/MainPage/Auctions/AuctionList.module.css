@@ -110,12 +110,13 @@
 .modal {
   position: fixed;
   display: flex;
+  padding-bottom: 20px ;
   flex-direction: column;
   z-index: 1000;
   right: 0;
   top: 69px;
   width: 300px;
-  height: 600px;
+  height: auto;
   overflow: auto;
   background-color: #311a5d;
   animation: fadeIn 0.5s ease forwards;
@@ -216,4 +217,22 @@
   to {
     opacity: 1;
   }
+}
+
+.removeButton {
+  margin-top: 10px;
+  padding: 10px 10px;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+  background-color: #f44;
+  border: 2px solid transparent;
+}
+
+.removeButton:hover {
+  background-color: #fff;
+  color: #f44;
+  border-color: #f44;
 }
