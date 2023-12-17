@@ -39,9 +39,8 @@ const Auction = (props) => {
     }
   };
 
-  const handleCloseModal = (event) => {
-    event.preventDefault();
-
+  const handleCloseModal = () => {
+-
     setModalOpen(false);
   };
 
@@ -73,10 +72,10 @@ const Auction = (props) => {
 
       {isModalOpen && (
         <Modal
-          availableExhibitions={props.availableExhibitions}
-          id={props.auctionID}
+          key = {props.auctionID}
+          auctionID={props.auctionID}
           closeModal={handleCloseModal}
-          auctionName={props.auctionName}
+          title={props.title}
         ></Modal>
       )}
     </div>
