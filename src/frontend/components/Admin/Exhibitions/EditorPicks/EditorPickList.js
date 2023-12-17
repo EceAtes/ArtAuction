@@ -12,7 +12,8 @@ const EditorPickList = (props) => {
         {props.highlightedAuctions.map((auction) => (
           <EditorPick
             key={auction.auctionID}
-            id={auction.auctionID}
+            auctionID={auction.auctionID}
+            highlighterAdminID={auction.highlighter_admin_ID}
             title={auction.title}
             type={"auction"}
             imageUrl={"/photos/loginpage.png"}
@@ -22,10 +23,11 @@ const EditorPickList = (props) => {
         {props.highlightedArtUsers.map((artuser) => (
           <EditorPick
             key={artuser.userID}
-            id={artuser.userID}
+            userID={artuser.userID}
             name={artuser.name}
             type={"artuser"}
             role={artuser.role}
+            highlighterAdminID = {artuser.highlighter_adminID}
             imageUrl={"/photos/signuppage.png"}
             bio={artuser.bio}
           />
