@@ -125,4 +125,49 @@ public class UserRepository {
         List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
         return artUsers;
     }
+
+    public ResponseEntity<HttpStatus> verifySale(Map<String, String> requestMap) {
+        String userRole = requestMap.get("userRole");
+        Integer bidID = jdbcTemplate.queryForObject("SELECT bidID FROM offer o NATURAL JOIN bid b WHERE o.auctionID = ? AND b.bid_status = ? ", new Object[]{requestMap.get("auctionID"), "Leading"}, Integer.class);
+        String sql = "";
+        if (userRole.equals("Artist")) {
+            sql = "UPDATE bid b SET b.approver_artist_ID = ? WHERE bidID = ?";
+        } else if (userRole.equals("Admin")) {
+            sql = "UPDATE bid b SET b.approver_admin_ID = ? WHERE bidID = ?";
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        jdbcTemplate.update(sql, requestMap.get("userID"), bidID);
+
+        if(requestMap.get("decision").equals("Reject")){  //leading bid'i geri veriyorum, diğerlerine de lost diyorum
+            String sqlUpdatelosingBids = "UPDATE bid SET bid_status = ? WHERE bidID != ? AND bidID IN " +
+                    "(SELECT bidID FROM (SELECT bidID FROM offer o NATURAL JOIN bid WHERE o.auctionID = ?) AS subquery);";
+            jdbcTemplate.update(sqlUpdatelosingBids, "Lost", bidID, requestMap.get("auctionID"));
+            String sqlUpdateWinningBid = "UPDATE bid SET bid_status = ? WHERE bidID = ?;";
+            jdbcTemplate.update(sqlUpdateWinningBid, "Rejected", bidID);
+            String updateRejectedUser = "UPDATE artuser SET tokens = tokens + (SELECT bidAmount FROM bid WHERE bidID = ? LIMIT 1)";
+            jdbcTemplate.update(updateRejectedUser, bidID); //"ended"?
+            String updateAuction = "UPDATE Auction SET auction_status = ?, isEnded = ? WHERE auctionID = ?;";
+            jdbcTemplate.update(updateAuction, "closed", true, requestMap.get("auctionID")); //"ended"?
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);//technically completed correctly?
+        }
+
+        String sqlToCheck = "SELECT approver_artist_ID, approver_admin_ID FROM bid WHERE bidID = ?";
+        Map<String, Object> result = jdbcTemplate.queryForMap(sqlToCheck, bidID);
+
+        Integer approverArtistID = (Integer) result.get("approver_artist_ID");
+        Integer approverAdminID = (Integer) result.get("approver_admin_ID");
+
+        if (approverArtistID != null && approverAdminID != null) {
+            String sqlUpdatelosingBids = "UPDATE bid SET bid_status = ? WHERE bidID != ? AND bidID IN " +
+                    "(SELECT bidID FROM (SELECT bidID FROM offer o NATURAL JOIN bid WHERE o.auctionID = ?) AS subquery);";
+            jdbcTemplate.update(sqlUpdatelosingBids, "Lost", bidID, requestMap.get("auctionID"));
+            String sqlUpdateWinningBid = "UPDATE bid SET bid_status = ? WHERE bidID = ?;";
+            jdbcTemplate.update(sqlUpdateWinningBid, "Won", bidID);
+            String updateAuction = "UPDATE Auction SET auction_status = ?, isEnded = ? WHERE auctionID = ?;";
+            jdbcTemplate.update(updateAuction, "closed", true, requestMap.get("auctionID"));   //"sold"?
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

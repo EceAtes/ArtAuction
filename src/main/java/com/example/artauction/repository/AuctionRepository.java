@@ -55,6 +55,7 @@ public class AuctionRepository {
         return rows;
     }
 
+    //ongoingde leading bidi ve ended'de winning bid'İ de burdan göndermeliyiz bence ama auctionDTP nasıl olur o zaman bilemedim :/
     public ResponseEntity<AuctionDTO> getAuction(int auctionID) {
         String sql = "SELECT * FROM `Auction` WHERE `auctionID` = ?";
         RowMapper<AuctionDTO> rowMapper = (rs, rowNum) -> {

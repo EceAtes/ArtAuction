@@ -7,13 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.UserRepository;
 
@@ -53,6 +47,12 @@ public class UserController {
     public ResponseEntity<UserDTO> signIn(@RequestBody(required = true)Map<String,String> input){
         return userRepository.login(input.get("email"), input.get("password"));
     }
+
+    @PatchMapping(path = "/verifySale")
+    public ResponseEntity<HttpStatus> verifySale(@RequestBody(required = true)Map<String,String> input){
+        return userRepository.verifySale(input);
+    }
+
 
 
 
