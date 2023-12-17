@@ -1,10 +1,34 @@
 import React from 'react';
 import styles from './AuctionEdit.module.css'
+import { Button } from '@mui/material';
+
+const saveClick =()=> {
+
+}
+const uploadClick = () =>{
+
+}
 
 const EditAuction = () => {
   return (
     <div className={styles.EditAuction}>
       <h1 className={styles.EditAuction}>Edit Auction</h1>
+      <div style={{margin:"30px 0"}}>
+          <input
+            type="file"
+            id="upload"
+            accept=".png"
+            onClick={uploadClick}
+            style={{ display: 'none' }}
+          />
+          <label for="upload" style={{display: "inline-block", backgroundColor: "purple", color: "white", padding: "0.5rem", fontFamily: "sans-serif",
+              borderRadius: "0.3rem", cursor: "pointer", marginTop: "1rem"}}>Upload Artwork</label>
+          <></>
+          <span>
+            No file chosen.
+          </span>
+      </div>
+
       <form className={styles.EditAuction}>
         <div className={styles.EditAuction}>
           <label className={styles.EditAuction} htmlFor="itemName">Artwork Name:</label>
@@ -15,23 +39,17 @@ const EditAuction = () => {
           <label className={styles.EditAuction} htmlFor="category">Category:</label>
           <select className={styles.EditAuction} id="category" name="category">
             {/* Add your category options here */}
-            <option className={styles.EditAuction} value="category1">Category 1</option>
-            <option className={styles.EditAuction} value="category2">Category 2</option>
+            <option className={styles.EditAuction} value="category1">Painting</option>
+            <option className={styles.EditAuction} value="category2">Sculpture</option>
+            <option className={styles.EditAuction} value="category3">Photography</option>
+            <option className={styles.EditAuction} value="category4">Print</option>
           </select>
 
-          <label className={styles.EditAuction} htmlFor="condition">Width:</label>
-          <select className={styles.EditAuction} id="condition" name="condition">
-            {/* Add your condition options here */}
-            <option className={styles.EditAuction} value="new">New</option>
-            <option className={styles.EditAuction} value="used">Used</option>
-          </select>
-
-          <label className={styles.EditAuction} htmlFor="status">Length:</label>
-          <select className={styles.EditAuction} id="status" name="status">
-            {/* Add your status options here */}
-            <option className={styles.EditAuction} value="active">Active</option>
-            <option className={styles.EditAuction} value="inactive">Inactive</option>
-          </select>
+          <label className={styles.EditAuction} htmlFor="priority">Width:</label>
+          <input className={styles.EditAuction} type="number" id="min-bid" name="min-bid" />
+          
+          <label className={styles.EditAuction} htmlFor="priority">Length:</label>
+          <input className={styles.EditAuction} type="number" id="min-bid" name="min-bid" />
 
         </div>
 
@@ -56,7 +74,7 @@ const EditAuction = () => {
           <textarea className={styles.EditAuction} id="description" name="description" rows="4" />
         </div>
 
-        <button className={styles.EditAuction} type="submit">Save</button>
+        <Button variant="contained" color="secondary" onClick={saveClick}>Save</Button>
       </form>
     </div>
   );

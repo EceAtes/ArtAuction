@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Profile.module.css';
+import { Button } from '@mui/material';
 
 const FollowButton = ({ label, pageUrl }) => {
   const openPopup = () => {
@@ -7,9 +8,9 @@ const FollowButton = ({ label, pageUrl }) => {
   };
 
   return (
-    <button className={styles.followButtonStyle} onClick={openPopup}>
+    <Button variant="contained" color= "secondary" onClick={openPopup}>
       {label}
-    </button>
+    </Button>
   );
 };
 
@@ -18,21 +19,32 @@ const Profile = (props) => {
     <div className={styles.containerStyle}>
       <div className={styles.imageContainerStyle}>
         <img
-          src="url-to-your-circular-image.jpg"
+          width="10%"
+          src="/photos/profile.png"
           alt="Artist"
           className={styles.imageStyle}
         />
       </div>
       <div className={styles.textContainerStyle}>
-        <h2 className={styles.artistNameStyle}>{props.name}</h2>
-        <p className={styles.gmailStyle}>{props.gmail}</p>
-        <p className={styles.tokenNumberStyle}>Token Number: {props.tokens}</p>
-        <p className={styles.bioTextStyle}>{props.bio}</p>
+        <div style={{margin: '5% 0'}}>
+          <h2 className={styles.artistNameStyle}>Leonardo DiCaprio</h2>
+        </div>
+        <div style={{margin: '5% 0'}}>
+          <p className={styles.gmailStyle}>leo@gmail.com</p>
+        </div>
+        <div style={{margin: '5% 0'}}>
+          <p className={styles.tokenNumberStyle}>Token Number: 1500</p>
+        </div>
+        <div style={{margin: '5% 0'}}>
+        <div style={{margin: '5% 0'}}>
+          <p className={styles.bioTextStyle}>Hiii, I only date 25 and younger women</p>
+        </div>
+        <div style={{margin: '5% 0'}}></div>
+        </div>
         <div className={styles.buttonContainerStyle}>
-          <FollowButton label="Follow" pageUrl="/follow-page" />
+          <FollowButton label="Follow" pageUrl="/follow-page"/>
           <FollowButton label="Followed" pageUrl="/followed-page" />
         </div>
-        <button className={styles.uploadButtonStyle}>Upload Artwork</button>
       </div>
     </div>
   );
