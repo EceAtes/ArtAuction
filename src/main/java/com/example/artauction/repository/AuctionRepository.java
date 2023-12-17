@@ -61,7 +61,7 @@ public class AuctionRepository {
         RowMapper<AuctionDTO> rowMapper = (rs, rowNum) -> {
             AuctionDTO auction = new AuctionDTO();
             auction.setAuctionID(auctionID);
-            auction.setTitle(rs.getString("auctionID"));
+            auction.setTitle(rs.getString("title"));
             auction.setAuction_status(rs.getString("auction_status"));
             auction.setUploaded_by_artist_ID(rs.getInt("uploaded_by_artist_ID"));
             auction.setType(rs.getString("type"));

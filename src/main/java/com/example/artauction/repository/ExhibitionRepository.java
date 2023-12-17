@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.example.artauction.dto.AuctionDTO;
 import com.example.artauction.dto.ExhibitionDTO;
 
 
@@ -24,23 +26,31 @@ public class ExhibitionRepository {
         String sql = "SELECT e.exhibitionID, e.exhibitionName, e.exhibitionDescriptor, c.auctionID " +
                      "FROM exhibition e " +
                      "LEFT JOIN curate c ON e.exhibitionID = c.exhibitionID";
-
+    
         List<ExhibitionDTO> exhibitionDTOList = jdbcTemplate.query(sql, (resultSet, i) -> {
             ExhibitionDTO exhibitionDTO = new ExhibitionDTO();
             exhibitionDTO.setExhibitionID(resultSet.getInt("exhibitionID"));
             exhibitionDTO.setExhibitionName(resultSet.getString("exhibitionName"));
             exhibitionDTO.setExhibitionDescriptor(resultSet.getString("exhibitionDescriptor"));
-
+    
             int auctionId = resultSet.getInt("auctionID");
             if (auctionId > 0) {
-                exhibitionDTO.getAuctions().add(auctionId);
+                String sqlAuction = "SELECT * FROM `Auction` WHERE `auctionID` = ?";
+                RowMapper<AuctionDTO> rowMapper = (rs, rowNum) -> {
+                    AuctionDTO auction = new AuctionDTO();
+                    auction.setAuctionID(auctionId);
+                    auction.setTitle(rs.getString("title"));
+                    return auction;
+                };
+                AuctionDTO auction = jdbcTemplate.queryForObject(sqlAuction, rowMapper, auctionId);
+                exhibitionDTO.getAuctions().add(auction);
             }
             return exhibitionDTO;
         });
-
+    
         return exhibitionDTOList;
-    } 
-
+    }
+    
     public ExhibitionDTO listSingleExhibition(int exhibitionId ) {
         String sql = "SELECT e.exhibitionID, e.exhibitionName, e.exhibitionDescriptor, c.auctionID " +
                      "FROM exhibition e " +
@@ -55,7 +65,15 @@ public class ExhibitionRepository {
 
             int auctionId = resultSet.getInt("auctionID");
             if (auctionId > 0) {
-                exhibitionDTO.getAuctions().add(auctionId);
+                String sqlAuction = "SELECT * FROM `Auction` WHERE `auctionID` = ?";
+                RowMapper<AuctionDTO> rowMapper = (rs, rowNum) -> {
+                    AuctionDTO auction = new AuctionDTO();
+                    auction.setAuctionID(auctionId);
+                    auction.setTitle(rs.getString("title"));
+                    return auction;
+                };
+                AuctionDTO auction = jdbcTemplate.queryForObject(sqlAuction, rowMapper, auctionId);
+                exhibitionDTO.getAuctions().add(auction);
             }
 
             return exhibitionDTO;

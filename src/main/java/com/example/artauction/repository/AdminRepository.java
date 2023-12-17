@@ -112,24 +112,20 @@ public class AdminRepository {
     }
 
     public List<ExhibitionDTO> addAuctionMenu(int auctionID) {
-        String sql = "SELECT e.exhibitionID, e.exhibitionName, e.exhibitionDescriptor, c.auctionID " +
-                "FROM exhibition e " +
-                "LEFT JOIN curate c ON e.exhibitionID = c.exhibitionID";
+        String sql = "SELECT e.exhibitionID, e.exhibitionName, e.exhibitionDescriptor, " +
+        "CASE WHEN c.auctionID IS NOT NULL THEN true ELSE false END AS hasAuction " +
+        "FROM exhibition e " +
+        "LEFT JOIN curate c ON e.exhibitionID = c.exhibitionID AND c.auctionID = ?";
 
-        List<ExhibitionDTO> exhibitionDTOList = jdbcTemplate.query(sql, (resultSet, i) -> {
-            ExhibitionDTO exhibitionDTO = new ExhibitionDTO();
-            exhibitionDTO.setExhibitionID(resultSet.getInt("exhibitionID"));
-            exhibitionDTO.setExhibitionName(resultSet.getString("exhibitionName"));
-            exhibitionDTO.setExhibitionDescriptor(resultSet.getString("exhibitionDescriptor"));
-
-            int auctionId = resultSet.getInt("auctionID");
-            if (auctionId > 0) {
-                exhibitionDTO.getAuctions().add(auctionId);
-            }
-            if(exhibitionDTO.getAuctions().contains(auctionID)) {exhibitionDTO.setHasTheAuctionAsked(true);}
-            return exhibitionDTO;
+        List<ExhibitionDTO> exhibitionDTOList = jdbcTemplate.query(sql, new Object[]{auctionID}, (resultSet, i) -> {
+        ExhibitionDTO exhibitionDTO = new ExhibitionDTO();
+        exhibitionDTO.setExhibitionID(resultSet.getInt("exhibitionID"));
+        exhibitionDTO.setExhibitionName(resultSet.getString("exhibitionName"));
+        exhibitionDTO.setExhibitionDescriptor(resultSet.getString("exhibitionDescriptor"));
+        boolean hasAuction = resultSet.getBoolean("hasAuction");
+        exhibitionDTO.setHasTheAuctionAsked(hasAuction);
+        return exhibitionDTO;
         });
-
         return exhibitionDTOList;
     }
 
