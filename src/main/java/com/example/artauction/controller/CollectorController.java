@@ -31,6 +31,4 @@ public class CollectorController {
         return collectorRepository.seeBidHistory(requestMap.get("userID"), requestMap.get("auctionID"));
     }
 
-
-
 }

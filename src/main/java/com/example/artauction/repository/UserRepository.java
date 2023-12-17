@@ -140,13 +140,14 @@ public class UserRepository {
         jdbcTemplate.update(sql, requestMap.get("userID"), bidID);
 
         if(requestMap.get("decision").equals("Reject")){  //leading bid'i geri veriyorum, diğerlerine de lost diyorum
+            Integer rejectedUserID = jdbcTemplate.queryForObject("SELECT o.collectorID FROM offer o NATURAL JOIN bid b WHERE o.auctionID = ? AND b.bid_status = ? ", new Object[]{requestMap.get("auctionID"), "Leading"}, Integer.class);
+            String updateRejectedUser = "UPDATE artuser SET tokens = tokens + (SELECT bidAmount FROM bid WHERE bidID = ? LIMIT 1) WHERE userID = ?";
+            jdbcTemplate.update(updateRejectedUser, bidID, rejectedUserID);
             String sqlUpdatelosingBids = "UPDATE bid SET bid_status = ? WHERE bidID != ? AND bidID IN " +
                     "(SELECT bidID FROM (SELECT bidID FROM offer o NATURAL JOIN bid WHERE o.auctionID = ?) AS subquery);";
             jdbcTemplate.update(sqlUpdatelosingBids, "Lost", bidID, requestMap.get("auctionID"));
             String sqlUpdateWinningBid = "UPDATE bid SET bid_status = ? WHERE bidID = ?;";
             jdbcTemplate.update(sqlUpdateWinningBid, "Rejected", bidID);
-            String updateRejectedUser = "UPDATE artuser SET tokens = tokens + (SELECT bidAmount FROM bid WHERE bidID = ? LIMIT 1)";
-            jdbcTemplate.update(updateRejectedUser, bidID); //"ended"?
             String updateAuction = "UPDATE Auction SET auction_status = ?, isEnded = ? WHERE auctionID = ?;";
             jdbcTemplate.update(updateAuction, "closed", true, requestMap.get("auctionID")); //"ended"?
             return new ResponseEntity<>(HttpStatus.ACCEPTED);//technically completed correctly?
@@ -166,6 +167,8 @@ public class UserRepository {
             jdbcTemplate.update(sqlUpdateWinningBid, "Won", bidID);
             String updateAuction = "UPDATE Auction SET auction_status = ?, isEnded = ? WHERE auctionID = ?;";
             jdbcTemplate.update(updateAuction, "closed", true, requestMap.get("auctionID"));   //"sold"?
+            String updateArtist = "UPDATE artuser SET tokens = tokens + (SELECT bidAmount FROM bid WHERE bidID = ? LIMIT 1) WHERE userID = (SELECT uploaded_by_artist_ID FROM auction WHERE auctionID = ? LIMIT 1)";
+            jdbcTemplate.update(updateArtist, bidID, requestMap.get("auctionID"));
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -41,7 +41,7 @@ public class CollectorRepository {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return new ResponseEntity<>(HttpStatus.OK); //not enough tokens etc
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); //not enough tokens etc
     }
 
     private boolean checkPreviousBid(Integer collectorID, Integer auctionID, Integer bidAmount) {
@@ -89,6 +89,5 @@ public class CollectorRepository {
         List<Map<String,Object>> bids = jdbcTemplate.queryForList(sql, userID, auctionID);
         return bids;
     }
-
 
 }
