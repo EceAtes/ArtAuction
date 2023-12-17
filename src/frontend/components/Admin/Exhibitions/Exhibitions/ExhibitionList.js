@@ -1,72 +1,30 @@
 import styles from "./Exhibition.module.css";
-
 import Exhibition from "./Exhibition";
-
-const exhibitions = [
-  {
-    id: 1,
-    title: "New Year Reflections: An Auction Exhibition of Hope and Renewal",
-    description:
-      "Each masterpiece in this exhibition captures the essence of this historic milestone, reflecting the rich heritage and progress of the Turkish Republic. Join us in celebrating this momentous occasion and bidding on these remarkable artworks that encapsulate the spirit of a nation's journey",
-    auctions: [
-      {
-        id: 1,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-1",
-      },
-
-      {
-        id: 2,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-2",
-      },
-
-      {
-        id: 3,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-3",
-      },
-
-      {
-        id: 4,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-4",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "New Year Reflections: An Auction Exhibition of Hope and Renewal",
-    description: "",
-    auctions: [
-      {
-        id: 1,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-1",
-      },
-
-      {
-        id: 2,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-2",
-      },
-
-      {
-        id: 3,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-3",
-      },
-
-      {
-        id: 4,
-        imageUrl: "/photos/loginpage.png",
-        auctionName: "Others Auction-4",
-      },
-    ],
-  },
-];
+import { useState, useEffect } from "react";
+import { adminDeleteExhibitionApiFunc } from "@/pages/api/admin";
 
 const ExhibitionList = (props) => {
+  const [exhibitions, setExhibitions] = useState(props.exhibitions || []);
+
+  const deleteExhibition = (exhibitionID) => {
+    adminDeleteExhibitionApiFunc(exhibitionID)
+      .then(() => {
+        // Remove the deleted exhibition from the state
+        const updatedExhibitions = exhibitions.filter(
+          (exhibition) => exhibition.exhibitionID !== exhibitionID
+        );
+        setExhibitions(updatedExhibitions);
+        console.log(updatedExhibitions);
+      })
+      .catch((error) => {
+        console.error("Error deleting exhibition", error.message);
+      });
+  };
+
+  useEffect(() => {
+    setExhibitions(props.exhibitions || []);
+  }, [props.exhibitions]);
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
@@ -74,13 +32,14 @@ const ExhibitionList = (props) => {
       </div>
 
       <div className={styles.exhibitionListContainer}>
-        {props.exhibitions.map((exhibition) => (
+        {exhibitions.map((exhibition) => (
           <Exhibition
             key={exhibition.exhibitionID}
-            id={exhibition.exhibitionID}
+            exhibitionID={exhibition.exhibitionID}
             title={exhibition.exhibitionName}
             description={exhibition.exhibitionDescriptor}
             auctions={exhibition.auctions}
+            onDelete={deleteExhibition}
           />
         ))}
       </div>
