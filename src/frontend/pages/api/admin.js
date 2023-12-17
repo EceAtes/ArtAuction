@@ -73,7 +73,7 @@ export const adminAddAuctionMenuApiFunction = async (auctionID) => {
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("highlight failed!");
+    throw new Error("add auction menu failed!");
   }
 };
 
@@ -94,7 +94,7 @@ export const adminCreateExhibitionApiFunction = async (
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("highlight failed!");
+    throw new Error("create exhibition failed!");
   }
 };
 
@@ -113,7 +113,7 @@ export const adminAddAuctionToExhibitionApiFunction = async (
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("highlight failed!");
+    throw new Error("add auction to exhibition failed!");
   }
 };
 
@@ -132,6 +132,6 @@ export const adminRemoveAuctionFromExhibitionApiFunction = async (
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("highlight failed!");
+    throw new Error("remove auction from exhibition failed!");
   }
 };
