@@ -54,12 +54,12 @@ public class AuctionController {
         return auctionRepository.updateAuction(newAuction);
     }
 
-    @GetMapping("/getPopular")
+    @GetMapping("/getPopularAuction")
     public List<Map<String,Object>> getPopularAuction(){
         return auctionRepository.getPopularAuctions();
     }
 
-    @GetMapping("/getRecent")
+    @GetMapping("/getRecentAuction")
     public List<Map<String,Object>> getRecentAuction(){
         return auctionRepository.getRecentAuctions();
     }

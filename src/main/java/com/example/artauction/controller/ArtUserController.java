@@ -60,4 +60,5 @@ public class ArtUserController {
     public List<Map<String,Object>> seeTopArtists(){
         return artUserRepository.seeTopArtists();
     }
+
 }
