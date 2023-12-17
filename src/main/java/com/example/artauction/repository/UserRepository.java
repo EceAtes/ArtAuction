@@ -121,7 +121,7 @@ public class UserRepository {
     }
 
     public List<UserDTO> listHighlightedArtUsers() {
-        String sql = "SELECT * FROM `User` JOIN `ArtUser` WHERE `role` = \"Artist\" OR `role` = \"Collector\" AND highlighter_adminID IS NOT NULL";
+        String sql = "SELECT * FROM `User` JOIN `ArtUser` ON `User`.`userID` = `ArtUser`.`userID` WHERE highlighter_adminID IS NOT NULL";
         List<UserDTO> artUsers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDTO.class));
         return artUsers;
     }
