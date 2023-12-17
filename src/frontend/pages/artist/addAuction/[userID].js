@@ -1,8 +1,8 @@
 import React from 'react';
-import Profile from '@/components/Artist/Profile'
-import EditAuction from '@/components/Artist/AuctionEdit';
+import Profile from '@/components/Artist/Profile/Profile'
+import EditAuction from '@/components/Artist/AuctionForms/AuctionEdit';
 
-const addAuction = (props) => {
+const AddAuction = (props) => {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       <div style={{ flex: '0 0 30%', padding: '20px', borderRight: '1px solid #ccc' }}>
@@ -16,4 +16,4 @@ const addAuction = (props) => {
   );
 };
 
-export default addAuction;
+export default AddAuction;

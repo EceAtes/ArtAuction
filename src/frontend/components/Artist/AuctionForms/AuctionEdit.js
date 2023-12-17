@@ -43,6 +43,13 @@ const EditAuction = () => {
             <option className={styles.EditAuction} value="category2">Sculpture</option>
             <option className={styles.EditAuction} value="category3">Photography</option>
             <option className={styles.EditAuction} value="category4">Print</option>
+            <option className={styles.EditAuction} value="category5">Collage</option>
+            <option className={styles.EditAuction} value="category6">Mied Media</option>
+            <option className={styles.EditAuction} value="category7">Print Making</option>
+            <option className={styles.EditAuction} value="category8">Drawig</option>
+            <option className={styles.EditAuction} value="category9">Ceramics</option>
+            <option className={styles.EditAuction} value="category10">Digital Art</option>
+            <option className={styles.EditAuction} value="category11">Other</option>
           </select>
 
           <label className={styles.EditAuction} htmlFor="priority">Width:</label>
