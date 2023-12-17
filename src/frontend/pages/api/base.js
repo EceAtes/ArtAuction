@@ -13,6 +13,9 @@ export const API_ADMIN_ADD_AUCTION_MENU = `${BASE_URL}admin/add_auction_menu`;
 export const API_ADMIN_CREATE_EXHIBITION = `${BASE_URL}admin/create_exh`;
 export const API_ADMIN_ADD_AUCTION_TO_EXHIBITION = `${BASE_URL}admin/add_auction_to_exh`;
 export const API_ADMIN_REMOVE_AUCTION_FROM_EXHIBITION = `${BASE_URL}admin/remove_auction_from_exh`;
+export const API_ADMIN_DELETE_EXHIBITION = `${BASE_URL}admin/delete_exh`;
+export const API_ADMIN_EDIT_EXHIBITION = `${BASE_URL}admin/edit_exh`;
+export const API_ADMIN_PROPOSED_AUCTIONS = `${BASE_URL}admin/proposed_auctions`;
 
 //EDITOR PICKS
 export const API_EDITOR_PICKS_HIGHLIGHTED_ARTUSERS = `${BASE_URL}editors-picks/highlighted_artusers`;

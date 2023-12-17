@@ -21,107 +21,78 @@ const Modal = (props) => {
   const [exhibitions, setExhibitions] = useState([]);
 
   //ADD
-  const submitHandler = (event) => {
-    // first time add
-    console.log(oldExhibitionId);
-    if (oldExhibitionId == null) {
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      const adminId = parseInt(localStorage.getItem("userID"), 10);
+      const auctionId = parseInt(props.auctionID, 10);
+
+      if (oldExhibitionId !== null && exhibitionId !== oldExhibitionId) {
+        await adminRemoveAuctionFromExhibitionApiFunction(
+          oldExhibitionId,
+          auctionId
+        );
+      }
       if (exhibitionId == -1) {
-        const admin_id = parseInt(localStorage.getItem("userID"), 10);
-        const auction_id = parseInt(props.auctionID, 10);
-        adminCreateExhibitionApiFunction(
-          admin_id,
+        console.log("Creating new exhibition");
+        await adminCreateExhibitionApiFunction(
+          adminId,
           newExhibitionName,
           newExhibitionDescription,
-          auction_id
-        )
-          .catch((error) => {
-            console.error("Highlight failed", error.message || error);
-          })
-          .finally(() => {
-            props.closeModal();
-          });
-      } else {
-        const auctionID = parseInt(props.auctionID, 10);
-
-        console.log(auctionID, exhibitionId);
-        adminAddAuctionToExhibitionApiFunction(exhibitionId, auctionID)
-          .catch((error) => {
-            console.error("Highlight failed", error.message || error);
-          })
-          .finally(() => {
-            props.closeModal();
-          });
+          auctionId
+        );
+      } else if (exhibitionId !== null) {
+        console.log("Adding to existing exhibition");
+        await adminAddAuctionToExhibitionApiFunction(exhibitionId, auctionId);
       }
-    } else {
-      // second time, first remove then add
-      const auctionID = parseInt(props.auctionID, 10);
-      adminRemoveAuctionFromExhibitionApiFunction(oldExhibitionId, auctionID)
-        .then(() => {
-          if (exhibitionId == -1) {
-            const admin_id = parseInt(localStorage.getItem("userID"), 10);
-            const auction_id = parseInt(props.auctionID, 10);
-            adminCreateExhibitionApiFunction(
-              admin_id,
-              newExhibitionName,
-              newExhibitionDescription,
-              auction_id
-            )
-              .catch((error) => {
-                console.error("Highlight failed", error.message || error);
-              })
-              .finally(() => {
-                props.closeModal();
-              });
-          } else {
-            const auctionID = parseInt(props.auctionID, 10);
-
-            console.log(auctionID, exhibitionId);
-            adminAddAuctionToExhibitionApiFunction(exhibitionId, auctionID)
-              .catch((error) => {
-                console.error("Highlight failed", error.message || error);
-              })
-              .finally(() => {
-                props.closeModal();
-              });
-          }
-        })
-        .catch((error) => {
-          console.error("Removal failed", error.message || error);
-        });
+    } catch (error) {
+      console.error("Operation failed", error.message || error);
+    } finally {
+      props.closeModal();
+      await fetchData();
     }
   };
 
   //REMOVE
-  const removeHandler = () => {
-    const auctionID = parseInt(props.auctionID, 10);
-    adminRemoveAuctionFromExhibitionApiFunction(oldExhibitionId, auctionID)
-      .catch((error) => {
-        console.error("Highlight failed", error.message || error);
-      })
-      .finally(() => {
-        props.closeModal();
-      });
+  const removeHandler = async () => {
+    try {
+      const auctionId = parseInt(props.auctionID, 10);
+      await adminRemoveAuctionFromExhibitionApiFunction(
+        oldExhibitionId,
+        auctionId
+      );
+    } catch (error) {
+      console.error("Removal failed", error.message || error);
+    } finally {
+      props.closeModal();
+      await fetchData();
+    }
   };
 
   useEffect(() => {
-    adminAddAuctionMenuApiFunction(props.auctionID)
-      .then((data) => {
-        console.log("auction modal menu successful ", data);
-        setExhibitions(data);
-
-        data.forEach((exhibition) => {
-          if (exhibition.hasTheAuctionAsked) {
-            setOldExhibitionId(exhibition.exhibitionID);
-            setOldExhibitionName(exhibition.exhibitionName);
-          }
-        });
-
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("auction modal menu failed", error);
-      });
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await adminAddAuctionMenuApiFunction(props.auctionID);
+      setExhibitions(data);
+
+      const oldExhibition = data.find(
+        (exhibition) => exhibition.hasTheAuctionAsked
+      );
+      if (oldExhibition) {
+        setOldExhibitionId(oldExhibition.exhibitionID);
+        setOldExhibitionName(oldExhibition.exhibitionName);
+      } else {
+        setOldExhibitionId(null);
+        setOldExhibitionName(null);
+      }
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    }
+  };
 
   return (
     <div className={styles.modal}>

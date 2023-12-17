@@ -6,6 +6,9 @@ import {
   API_ADMIN_CREATE_EXHIBITION,
   API_ADMIN_ADD_AUCTION_TO_EXHIBITION,
   API_ADMIN_REMOVE_AUCTION_FROM_EXHIBITION,
+  API_ADMIN_DELETE_EXHIBITION,
+  API_ADMIN_EDIT_EXHIBITION,
+  API_ADMIN_PROPOSED_AUCTIONS,
 } from "./base";
 
 //HOME
@@ -36,7 +39,7 @@ export const adminHighlightArtUserApiFunction = async (
     },
   });
   if (res.ok) {
-    return res.json();
+    return res.text();
   } else {
     throw new Error("highlight failed!");
   }
@@ -55,7 +58,7 @@ export const adminHighlightAuctionApiFunction = async (
     },
   });
   if (res.ok) {
-    return res.json();
+    return res.text();
   } else {
     throw new Error("highlight failed!");
   }
@@ -92,7 +95,7 @@ export const adminCreateExhibitionApiFunction = async (
     },
   });
   if (res.ok) {
-    return res.json();
+    return res.text();
   } else {
     throw new Error("create exhibition failed!");
   }
@@ -111,7 +114,7 @@ export const adminAddAuctionToExhibitionApiFunction = async (
     },
   });
   if (res.ok) {
-    return res.json();
+    return res.text();
   } else {
     throw new Error("add auction to exhibition failed!");
   }
@@ -130,8 +133,60 @@ export const adminRemoveAuctionFromExhibitionApiFunction = async (
     },
   });
   if (res.ok) {
-    return res.json();
+    return res.text();
   } else {
     throw new Error("remove auction from exhibition failed!");
+  }
+};
+
+//DELETE EXHIBITION
+export const adminDeleteExhibitionApiFunc = async (exhibitionID) => {
+  const res = await fetch(API_ADMIN_DELETE_EXHIBITION, {
+    method: "POST",
+    body: JSON.stringify({ exhibitionID }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.text();
+  } else {
+    throw new Error("delete exhibition failed!");
+  }
+};
+
+//EDIT EXHIBITION
+export const adminEditExhibitionApiFunc = async (
+  exhibitionID,
+  admin_id,
+  title,
+  description
+) => {
+  const res = await fetch(API_ADMIN_EDIT_EXHIBITION, {
+    method: "PATCH",
+    body: JSON.stringify({ exhibitionID, admin_id, title, description }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.text();
+  } else {
+    throw new Error("edit exhibition failed!");
+  }
+};
+
+//PROPOSED AUCTIONS  
+export const adminProposedAuctionsApiFunction = async () => {
+  const res = await fetch(API_ADMIN_PROPOSED_AUCTIONS, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("home failed!");
   }
 };
