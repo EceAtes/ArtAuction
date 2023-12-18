@@ -10,6 +10,7 @@ import {
   API_ADMIN_EDIT_EXHIBITION,
   API_ADMIN_PROPOSED_AUCTIONS,
   API_ADMIN_VERIFY_AUCTION,
+  API_ADMIN_GET_ENDED_AUCTIONS,
 } from "./base";
 
 //HOME
@@ -209,5 +210,20 @@ export const adminVerifyAuctionApiFunction = async (
     return res.text();
   } else {
     throw new Error("edit exhibition failed!");
+  }
+};
+
+//GET ENDED AUCTIONS
+export const adminGetEndedAuctionsApiFunction = async () => {
+  const res = await fetch(API_ADMIN_GET_ENDED_AUCTIONS, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("adminGetEndedAuctionsApiFunction failed!");
   }
 };
