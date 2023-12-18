@@ -4,7 +4,7 @@ import {
   adminCreateExhibitionApiFunction,
   adminRemoveAuctionFromExhibitionApiFunction,
 } from "@/pages/api/admin";
-import styles from "./AuctionList.module.css";
+import styles from "./Modal.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState, useEffect } from "react";
 import { capitalize } from "@mui/material";

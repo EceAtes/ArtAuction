@@ -60,12 +60,6 @@ const Proposal = (props) => {
             <b>Creation Date: </b> {props.creationDate}
           </div>
           <div className={styles.info}>
-            <b>Creation Place: </b> {props.creationPlace}
-          </div>
-          <div className={styles.info}>
-            <b>Auction Proposal Date: </b> {props.auctionProposalDate}
-          </div>
-          <div className={styles.info}>
             <b>Auction End Date: </b> {props.auctionEndDate}
           </div>
           <div className={styles.info}>
@@ -80,7 +74,7 @@ const Proposal = (props) => {
           <div className={styles.artistImageContainer}>
             <img src={props.artistImageUrl} alt="Artist" />
             <div className={styles.artistNameAndLinkContainer}>
-              <b>{props.artistName}</b>
+              <b>{capitalize(props.artistName) }</b>
               <a>SEE PROFILE</a>
             </div>
           </div>

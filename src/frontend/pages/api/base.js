@@ -26,6 +26,9 @@ export const API_EDITOR_PICKS_EXHIBITIONS = `${BASE_URL}editors-picks/exhibition
 //AUCTION URLS
 export const API_AUCTION_GET_SINGLE_AUCTION = `${BASE_URL}auction/`;
 
+//ART USERS URLS
+export const API_ART_USER_FILTER_PEOPLE = `${BASE_URL}art-user/filter-people`;
+
 //ARTIST URLS
 
 //COLLECTOR URLS

@@ -38,8 +38,6 @@ const auctionInfoPage = (props) => {
             type={auction.type}
             size={auction.size}
             creationDate={auction.creationDate}
-            creationPlace={auction.creationPlace}
-            auctionProposalDate={auction.startDate}
             auctionEndDate={auction.endDate}
             baseBid={auction.baseBid}
             minimumBidIncrease={auction.minimumBidIncrease}
