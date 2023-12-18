@@ -100,6 +100,17 @@ public class UserRepository {
         return artUsers;
     }
 
+    public ResponseEntity<UserDTO> getSingleArtUser(int userID) {
+        String sql = "SELECT * FROM `User` JOIN `ArtUser` ON `User`.`userID` = `ArtUser`.`userID` WHERE (`role` = 'Artist' OR `role` = 'Collector') AND `User`.userID = ?";
+        try {
+            UserDTO userDTO = jdbcTemplate.queryForObject(sql, new Object[]{userID}, new BeanPropertyRowMapper<>(UserDTO.class));
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No such user exists");
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     public ResponseEntity<UserDTO> getSingleUser(int userId){
         String sql = "SELECT * FROM `User` WHERE `userID` = ?";
         RowMapper<UserDTO> rowMapper = (rs, rowNum) -> {
@@ -172,5 +183,7 @@ public class UserRepository {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 }

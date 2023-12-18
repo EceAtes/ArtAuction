@@ -119,5 +119,20 @@ public class ArtUserRepository {
         List<Map<String, Object>> filtered = jdbcTemplate.queryForList(sql, country, userType, userType, userType);
         return filtered;
     }
-    
+
+    public ResponseEntity<HttpStatus> editInfo(Map<String, String> requestMap) {
+        String updateUser = "UPDATE artuser SET country = ?, bio = ? WHERE userID = ?";
+        String updateName = "UPDATE user SET name = ? WHERE userID = ?";
+
+        try{
+            jdbcTemplate.update(updateUser, requestMap.get("country"), requestMap.get("bio"), requestMap.get("userID"));
+            jdbcTemplate.update(updateName, requestMap.get("name"), requestMap.get("userID"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Something went wrong in user info editing");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }

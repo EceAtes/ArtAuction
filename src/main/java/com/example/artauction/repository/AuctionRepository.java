@@ -151,6 +151,24 @@ public class AuctionRepository {
         List<Map<String,Object>> auctions = jdbcTemplate.queryForList(sql);
         return auctions;
     }
+
+    public List<Map<String, Object>> getPastAuctions(int userID) {
+        String sql = "SELECT * FROM (`Auction` a NATURAL JOIN `Offer` o) NATURAL JOIN `Bid` b WHERE a.auction_status = ? AND o.collectorID = ? ORDER BY a.startDate, b.date DESC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "closed", userID);
+        return rows;
+    }
+
+    public List<Map<String, Object>> getOngoingAuctions(int userID) {
+        String sql = "SELECT * FROM (`Auction` a NATURAL JOIN `Offer` o) NATURAL JOIN `Bid` b WHERE a.auction_status = ? AND o.collectorID = ? ORDER BY a.startDate, b.date DESC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "approved", userID);
+        return rows;
+    }
+
+    public List<Map<String, Object>> getSavedAuctions(int userID) {
+        String sql = "SELECT a.* FROM `Auction` a NATURAL JOIN `Save` s WHERE s.collectorID = ? ";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, userID);
+        return rows;
+    }
 }
 
 

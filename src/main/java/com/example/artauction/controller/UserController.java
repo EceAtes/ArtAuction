@@ -40,6 +40,11 @@ public class UserController {
         return userRepository.getAllArtUsers();
     }
 
+    @GetMapping(path = "/art-users/{userID}")
+    public ResponseEntity<UserDTO> getArtUser(@PathVariable String userID){
+        return userRepository.getSingleArtUser(Integer.parseInt(userID));
+    }
+
     @PostMapping(path = "/signup")
     public ResponseEntity<Integer> signUp(@RequestBody(required = true)UserDTO newUser){
         return userRepository.registerArtUser(newUser);
@@ -54,5 +59,7 @@ public class UserController {
     public ResponseEntity<HttpStatus> verifySale(@RequestBody(required = true)Map<String,String> input){
         return userRepository.verifySale(input);
     }
+
+
 
 }
