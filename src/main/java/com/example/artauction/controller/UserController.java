@@ -60,6 +60,9 @@ public class UserController {
         return userRepository.verifySale(input);
     }
 
-
+    @GetMapping(path = "/filterAuctions")
+    public List<Map<String, Object>> getFilteredAuctions(@RequestBody(required = true)Map<String,String> requestMap){
+        return userRepository.getFilteredAuctions(requestMap);
+    }
 
 }

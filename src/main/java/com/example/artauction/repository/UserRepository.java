@@ -1,6 +1,8 @@
 package com.example.artauction.repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,5 +187,67 @@ public class UserRepository {
     }
 
 
+    public List<Map<String, Object>> getFilteredAuctions(Map<String, String> requestMap) {
+        StringBuilder sqlBuilder = new StringBuilder("SELECT Auction.*" +
+                "FROM Auction " +
+                "WHERE 1=1");
 
+        List<Object> params = new ArrayList<>();
+
+        if (requestMap.get("art_type") != null) {
+            sqlBuilder.append(" AND type = ?");
+            params.add(requestMap.get("art_type"));
+        }
+
+        if (requestMap.get("minBidIncrease") != null) {
+            sqlBuilder.append(" AND minimumBidIncrease BETWEEN ? AND ?");
+            params.add(requestMap.get("minBidIncrease"));
+            params.add(requestMap.get("maxBidIncrease"));
+        }
+
+        if (requestMap.get("minCreationDate") != null) {
+            sqlBuilder.append(" AND creationDate BETWEEN ? AND ?");
+            params.add(requestMap.get("minCreationDate"));
+            params.add(requestMap.get("maxCreationDate"));
+        }
+
+        if (requestMap.get("minStartDate") != null) {
+            sqlBuilder.append(" AND startDate BETWEEN ? AND ?");
+            params.add(requestMap.get("minStartDate"));
+            params.add(requestMap.get("maxStartDate"));
+        }
+
+        if (requestMap.get("minEndDate") != null) {
+            sqlBuilder.append(" AND endDate BETWEEN ? AND ?");
+            params.add(requestMap.get("minEndDate"));
+            params.add(requestMap.get("maxEndDate"));
+        }
+
+        if (requestMap.get("auction_status") != null) {
+            sqlBuilder.append(" AND auction_status = ?");
+            params.add(requestMap.get("auction_status"));
+        }
+
+        if (requestMap.get("isEnded") != null) {
+            sqlBuilder.append(" AND isEnded = ?");
+            params.add(requestMap.get("isEnded"));
+        }
+
+        if (requestMap.get("baseBid") != null) {
+            sqlBuilder.append(" AND baseBid = ?");
+            params.add(requestMap.get("baseBid"));
+        }
+
+        /*if (requestMap.get("minLeadingBid") != null) {
+            sqlBuilder.append(" AND leadingBid BETWEEN ? AND ?");
+            params.add(requestMap.get("minLeadingBid"));
+            params.add(requestMap.get("maxLeadingBid"));
+        }*/
+
+        String sql = sqlBuilder.toString();
+        System.out.println(sql);
+        List<Map<String, Object>> auctions = jdbcTemplate.queryForList(sql, params.toArray());
+        return auctions;
+
+    }
 }

@@ -146,4 +146,14 @@ public class AdminController {
         }
         return null;
     }
+
+    @GetMapping(path = "/get_ended_auctions")
+    public List<Map<String, Object>> getEndedAuctionSales(){
+        try{
+            return auctionRepository.getEndedAuctionSales();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

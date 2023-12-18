@@ -27,5 +27,4 @@ public class ArtistRepository {
         return info;
     }
 
-
 }

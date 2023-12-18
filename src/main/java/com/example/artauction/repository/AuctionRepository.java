@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import com.example.artauction.dto.AuctionDTO;
@@ -167,6 +168,24 @@ public class AuctionRepository {
     public List<Map<String, Object>> getSavedAuctions(int userID) {
         String sql = "SELECT a.* FROM `Auction` a NATURAL JOIN `Save` s WHERE s.collectorID = ? ";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, userID);
+        return rows;
+    }
+
+    @Scheduled(cron = "*/5 * * * * *") // Runs daily at midnight //@Scheduled(cron = "0 0 0 * * *") //Runs every 5 minutes
+    public void updateAuctionStatus() {
+        String sql = "UPDATE Auction SET auction_status = 'ended', isEnded = TRUE WHERE endDate <= CURRENT_DATE AND isEnded = FALSE";
+        jdbcTemplate.update(sql);
+    }
+
+    public List<Map<String, Object>> getEndedAuctionSales() {
+        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND isEnded = ? ORDER BY a.endDate ASC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "ended", true);
+        return rows;
+    }
+
+    public List<Map<String, Object>> getEndedAuctionSales(int artistID) {
+        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND isEnded = ? AND uploaded_by_artist_ID = ? ORDER BY a.endDate ASC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "ended", true, artistID );
         return rows;
     }
 }

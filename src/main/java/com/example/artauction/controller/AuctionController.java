@@ -85,6 +85,7 @@ public class AuctionController {
     public List<Map<String, Object>> getAllBidHistory(@RequestBody(required = true) Map<String, Integer> requestMap) {
         return auctionRepository.getAllBidHistory(requestMap);
     }
+
     /*
      * @GetMapping(path = "/search")
      * public ResponseEntity<List<AuctionWrapper>>
