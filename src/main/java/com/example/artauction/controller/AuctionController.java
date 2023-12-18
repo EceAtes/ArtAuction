@@ -46,6 +46,21 @@ public class AuctionController {
         return auctionRepository.getAllAuctions();
     }
 
+    @GetMapping(path = "pastAuctions/{userID}")
+    public List<Map<String, Object>> getPastAuctions(@PathVariable String userID) {
+        return auctionRepository.getPastAuctions(Integer.parseInt(userID));
+    }
+
+    @GetMapping(path = "ongoingAuctions/{userID}")
+    public List<Map<String, Object>> getOngoingAuctions(@PathVariable String userID) {
+        return auctionRepository.getOngoingAuctions(Integer.parseInt(userID));
+    }
+
+    @GetMapping(path = "savedAuctions/{userID}")
+    public List<Map<String, Object>> getSavedAuctions(@PathVariable String userID) {
+        return auctionRepository.getSavedAuctions(Integer.parseInt(userID));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AuctionDTO> getSingleAuction(@PathVariable String id) {
         return auctionRepository.getAuction(Integer.parseInt(id));
