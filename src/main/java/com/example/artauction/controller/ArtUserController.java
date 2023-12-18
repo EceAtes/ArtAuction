@@ -66,4 +66,8 @@ public class ArtUserController {
         return artUserRepository.filterPeople(requestMap.get("country"), requestMap.get("user_type"));
     }
 
+    @PatchMapping(path = "/editInfo")
+    public ResponseEntity<HttpStatus> editInfo(@RequestBody(required = true)Map<String,String> input){
+        return artUserRepository.editInfo(input);
+    }
 }

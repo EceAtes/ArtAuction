@@ -31,4 +31,13 @@ public class CollectorController {
         return collectorRepository.seeBidHistory(requestMap.get("userID"), requestMap.get("auctionID"));
     }
 
+    @PostMapping("/save")
+    public ResponseEntity<HttpStatus> save(@RequestBody(required = true) Map<String, Integer> requestMap){
+        return collectorRepository.save(requestMap);
+    }
+
+    @PatchMapping("/getTokens")
+    public ResponseEntity<HttpStatus> getTokens(@RequestBody(required = true) Map<String, Integer> requestMap){
+        return collectorRepository.getTokens(requestMap.get("userID"), requestMap.get("tokens"));
+    }
 }

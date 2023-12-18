@@ -90,4 +90,28 @@ public class CollectorRepository {
         return bids;
     }
 
+    public ResponseEntity<HttpStatus> save(Map<String, Integer> requestMap) {
+        String sqlNewSave = "INSERT INTO Save (collectorID, auctionID) VALUES (?,?)";
+        try{
+            jdbcTemplate.update(sqlNewSave, requestMap.get("userID"), requestMap.get("auctionID"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Auction save failed");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<HttpStatus> getTokens(Integer userID, Integer tokens) {
+        String updateUser = "UPDATE artuser SET tokens = ? WHERE userID = ?";
+
+        try{
+            jdbcTemplate.update(updateUser, tokens, userID);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Something went wrong in token addition");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
