@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.artauction.dto.ExhibitionDTO;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.UserRepository;
 
@@ -52,8 +54,5 @@ public class UserController {
     public ResponseEntity<HttpStatus> verifySale(@RequestBody(required = true)Map<String,String> input){
         return userRepository.verifySale(input);
     }
-
-
-
 
 }

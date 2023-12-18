@@ -1,5 +1,7 @@
 package com.example.artauction.controller;
 
+import com.example.artauction.dto.CollectionDTO;
+import com.example.artauction.repository.CollectionRepository;
 import com.example.artauction.repository.CollectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,12 @@ import java.util.Map;
 public class CollectorController {
 
     private CollectorRepository collectorRepository;
+    private CollectionRepository collectionRepository;
 
     @Autowired
-    public CollectorController(CollectorRepository collectorRepository) {
+    public CollectorController(CollectorRepository collectorRepository, CollectionRepository collectionRepository) {
         this.collectorRepository = collectorRepository;
+        this.collectionRepository = collectionRepository;
     }
 
     @PostMapping("/bid")
@@ -30,5 +34,76 @@ public class CollectorController {
     public List<Map<String,Object>> seeBidHistory(@RequestBody(required = true) Map<String, Integer> requestMap){
         return collectorRepository.seeBidHistory(requestMap.get("userID"), requestMap.get("auctionID"));
     }
+
+    @GetMapping(path= "/collections/{user_id}")
+    public List<CollectionDTO> listAllCollectionsOfUser(@PathVariable String user_id){
+        try{
+            return collectionRepository.listAllCollectionsOfUser(Integer.parseInt(user_id));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(path= "/collections/{collection_id}")
+    public CollectionDTO listSingleCollection(@PathVariable String collection_id){
+        try{
+            return collectionRepository.listSingleCollection(Integer.parseInt(collection_id));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @PostMapping(path = "/create_col")
+    public ResponseEntity<String> createCollection(@RequestBody(required = true) Map<String, String> requestMap){
+        try{
+            return collectionRepository.createCollection(Integer.parseInt(requestMap.get("user_id")), requestMap.get("name"), Integer.parseInt(requestMap.get("auction_id")));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("An error has occurred while trying to create collection", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(path = "/delete_col")
+    public ResponseEntity<String> deleteCollection(@RequestBody(required = true) Map<String, Integer> requestMap){
+        try{
+            return collectionRepository.deleteCollection(requestMap.get("collectionID"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("An error has occurred while trying to delete collection", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(path = "/add_auction_menu")
+    public List<Map<String,String>> addAuctionMenuCollection(@RequestBody(required = true) Map<String, Integer> requestMap){
+        try{
+            return collectionRepository.addAuctionMenuCollection(requestMap.get("auctionID"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }       
+
+    @PostMapping(path = "/add_auction_to_col")
+    public ResponseEntity<String> addAuctionToCollection(@RequestBody(required = true) Map<String, Integer> requestMap){
+        try{
+            return collectionRepository.addAuctionToCollection(requestMap.get("collectionID"), requestMap.get("auctionID"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+        
+    @PostMapping(path = "/remove_auction_from_col")
+    public ResponseEntity<String> removeAuctionFromCollection(@RequestBody(required = true) Map<String, Integer> requestMap){
+        try{
+            return collectionRepository.removeAuctionFromCollection(requestMap.get("collectionID"), requestMap.get("auctionID"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
