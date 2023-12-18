@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import com.example.artauction.dto.BidDTO;
-import com.example.artauction.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -32,7 +30,7 @@ public class AuctionRepository {
                                                  + "startDate, description, endDate, isEnded, minimumBidIncrease, baseBid, verifier_admin_ID, highlighter_admin_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try{
             jdbcTemplate.update(sqlAddAuction, newAuction.getTitle(), "proposed", newAuction.getUploaded_by_artist_ID(), newAuction.getType(),
-                                newAuction.getSize(), newAuction.getCreationDate(), LocalDate.now(), newAuction.getStartDate(), newAuction.getDescription(), newAuction.getEndDate(),
+                                newAuction.getSize(), newAuction.getCreationDate(), LocalDate.now(), null, newAuction.getDescription(), newAuction.getEndDate(),
                                 0, newAuction.getMinimumBidIncrease(), newAuction.getBaseBid(), null, null);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EmptyResultDataAccessException e){
@@ -64,6 +62,9 @@ public class AuctionRepository {
             auction.setTitle(rs.getString("title"));
             auction.setAuction_status(rs.getString("auction_status"));
             auction.setUploaded_by_artist_ID(rs.getInt("uploaded_by_artist_ID"));
+            String artistSql = "SELECT name FROM `User` WHERE `userID` = ?";
+            String artistName = jdbcTemplate.queryForObject(artistSql, new Object[]{auction.getUploaded_by_artist_ID()}, String.class);
+            auction.setArtistName(artistName);
             auction.setType(rs.getString("type"));
             auction.setSize(rs.getString("size"));
             auction.setCreationDate(LocalDate.parse(rs.getString("creationDate")));
@@ -82,6 +83,7 @@ public class AuctionRepository {
         };
 
         try {
+            
             return new ResponseEntity<AuctionDTO>(jdbcTemplate.queryForObject(sql, new Object[]{auctionID}, rowMapper), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No such auction exists");
@@ -95,8 +97,12 @@ public class AuctionRepository {
         return rows;
     }
 
+    // end date geçmişse verifylayamaz, auction proposed'ta kalır
     public List<Map<String, Object>> listProposedAuctions() {
-        String sql = "SELECT * FROM `Auction` WHERE auction_status = \"proposed\"";
+        String sql = "SELECT auction.*, user.userID, user.name " +
+                     "FROM auction " +
+                     "JOIN user ON user.userID = auction.uploaded_by_artist_ID " + 
+                     "WHERE auction.auction_status = 'proposed' AND auction.endDate > CURRENT_DATE ";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         return rows;
     }
@@ -111,7 +117,6 @@ public class AuctionRepository {
                             updatedAuction.getMinimumBidIncrease(), updatedAuction.getBaseBid(), updatedAuction.getAuctionID());
         return new ResponseEntity<>("Auction " + updatedAuction.getAuctionID() + " updated", HttpStatus.OK);        
     }
-
 
     public List<Map<String,Object>> getPopularAuctions(){
         String sql = "SELECT A.auctionID, A.title, COUNT(B.bidID) AS NumberOfBids " +

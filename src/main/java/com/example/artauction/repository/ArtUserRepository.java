@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.example.artauction.dto.AuctionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.artauction.dto.AuctionDTO;
 import com.example.artauction.dto.UserDTO;
 
 @Repository
@@ -59,11 +59,6 @@ public class ArtUserRepository {
         }
     }
 
-    public List<UserDTO> getAllArtUsers() {
-        return null;
-    }
-
-
     public List<AuctionDTO> auctionsFromFollow(Map<String, Integer> requestMap) {
         List<AuctionDTO> auctions;
         String sqlAuctionsFromFollow = "SELECT * FROM `auction` JOIN `follows` ON `auction`.uploaded_by_artist_ID = `follows`.followedID WHERE `follows`.followerID = ?";
@@ -106,4 +101,23 @@ public class ArtUserRepository {
         List<Map<String,Object>> artists = jdbcTemplate.queryForList(sql);
         return artists;
     }
+
+    public List<Map<String, Object>> filterPeople(String country, String userType) {
+        String sql =
+        "SELECT ArtUser.*, User.* " +
+        "FROM ArtUser " +
+        "JOIN User ON ArtUser.userID = User.userID " +
+        "WHERE ArtUser.country = ? AND " +
+        "(" +
+        "    (? = 'Artist' AND EXISTS (SELECT 1 FROM Artist WHERE Artist.userID = ArtUser.userID)) " +
+        "    OR " +
+        "    (? = 'Collector' AND EXISTS (SELECT 1 FROM Collector WHERE Collector.userID = ArtUser.userID)) " +
+        "    OR " +
+        "    (? = 'Any') " +
+        ") ";
+        
+        List<Map<String, Object>> filtered = jdbcTemplate.queryForList(sql, country, userType, userType, userType);
+        return filtered;
+    }
+    
 }
