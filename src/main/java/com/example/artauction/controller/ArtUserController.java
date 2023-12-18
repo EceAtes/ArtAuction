@@ -61,7 +61,7 @@ public class ArtUserController {
         return artUserRepository.seeTopArtists();
     }
 
-    @GetMapping("/filter-people")
+    @PatchMapping("/filter-people")
     public List<Map<String, Object>> filterPeople(@RequestBody(required = true) Map<String, String> requestMap){
         return artUserRepository.filterPeople(requestMap.get("country"), requestMap.get("user_type"));
     }

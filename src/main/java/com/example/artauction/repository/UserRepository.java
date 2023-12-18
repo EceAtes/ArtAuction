@@ -141,16 +141,16 @@ public class UserRepository {
         String userRole = requestMap.get("userRole");
         Integer bidID = jdbcTemplate.queryForObject("SELECT bidID FROM offer o NATURAL JOIN bid b WHERE o.auctionID = ? AND b.bid_status = ? ", new Object[]{requestMap.get("auctionID"), "Leading"}, Integer.class);
         String sql = "";
-        if (userRole.equals("Artist")) {
+        if (userRole.equalsIgnoreCase("artist")) {
             sql = "UPDATE bid b SET b.approver_artist_ID = ? WHERE bidID = ?";
-        } else if (userRole.equals("Admin")) {
+        } else if (userRole.equalsIgnoreCase("admin")) {
             sql = "UPDATE bid b SET b.approver_admin_ID = ? WHERE bidID = ?";
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         jdbcTemplate.update(sql, requestMap.get("userID"), bidID);
 
-        if(requestMap.get("decision").equals("Reject")){  //leading bid'i geri veriyorum, diğerlerine de lost diyorum
+        if(requestMap.get("decision").equalsIgnoreCase("reject")){  //leading bid'i geri veriyorum, diğerlerine de lost diyorum
             Integer rejectedUserID = jdbcTemplate.queryForObject("SELECT o.collectorID FROM offer o NATURAL JOIN bid b WHERE o.auctionID = ? AND b.bid_status = ? ", new Object[]{requestMap.get("auctionID"), "Leading"}, Integer.class);
             String updateRejectedUser = "UPDATE artuser SET tokens = tokens + (SELECT bidAmount FROM bid WHERE bidID = ? LIMIT 1) WHERE userID = ?";
             jdbcTemplate.update(updateRejectedUser, bidID, rejectedUserID);
