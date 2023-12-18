@@ -7,6 +7,7 @@ import {
   adminHighlightArtUserApiFunction,
   adminHighlightAuctionApiFunction,
 } from "@/pages/api/admin";
+import Link from "next/link";
 
 const EditorPick = (props) => {
   if (props.type == "auction") {
@@ -57,7 +58,13 @@ const EditorPick = (props) => {
               ></StarBorderIcon>
             )}
           </button>
-          <button className={styles.moreButton}>More</button>
+          <Link
+            href={`/admin/information/auctioninfo/${props.auctionID}`}
+            passHref
+            legacyBehavior
+          >
+            <button className={styles.moreButton}>More</button>
+          </Link>
         </div>
       </div>
     );
