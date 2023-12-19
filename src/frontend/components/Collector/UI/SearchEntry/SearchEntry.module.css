@@ -4,10 +4,10 @@
       border: 1px solid #ccc;
       border-radius: 20px; /* Adjust the value to control the roundness of the corners */
       overflow: hidden; 
-      width: 90%;
+      width: 50%;
       position: fixed;
       top: 70px; /* Adjust this value based on your design */
-      left: 50%;
+      left: 70%;
       transform: translateX(-50%);
       text-align: center;
       margin-left: 30px;

@@ -1,9 +1,11 @@
 import React from "react";
+import { useState } from "react";
 import SearchEntry from "@/components/Collector/UI/SearchEntry/SearchEntry";
 import AuctionList from "@/components/Collector/MainPage/Auctions/AuctionList";
 import Navbar from "@/components/Artist/UI/Navbar";
-import CollectorList from "../../components/Collector/MainPage/Collectors/CollectorList";
-import styles from "../../components/Collector/MainPage/CollectorMainPage.module.css";
+import CollectorList from "@/components/Collector/MainPage/Collectors/CollectorList";
+/*import styles from "../../components/Collector/MainPage/CollectorMainPage.module.css";*/
+import styles from "@/components/Admin/Exhibitions/AdminExhibitionsPage.module.css";
 
 export default function ArtistMainPage() {
   const [searchValue, setSearchValue] = useState('');
@@ -96,11 +98,14 @@ const handleSearch = (value) => {
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main style={{flex: "1", flexDirection:"column", height:"100%"}}>
       <Navbar/>
+      <div>
       <SearchEntry onSearch={handleSearch} />
-      
-      <div className="AuctionDiv">
+
+      </div>
+
+      <div className={styles.container}>
         <AuctionList auctions={filteredAuctions} title={"Auctions From People You Follow"} />
         <AuctionList auctions={filteredAuctions} title={"Popular Auctions"} />
         <AuctionList auctions={filteredAuctions} title={"Recent Auctions"} />

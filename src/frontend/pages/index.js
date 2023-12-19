@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.formSection}>
-        <ListMyArtWork/>
+        <ArtistMainPage/>
       </div>
     </div>
   );
