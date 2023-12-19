@@ -19,6 +19,7 @@ const ApproveAuction = (props) => {
         console.error("verify failed", error);
       })
       .finally(() => {
+        router.reload();
       });
   };
 
@@ -69,13 +70,16 @@ const ApproveAuction = (props) => {
           <div className={styles.info}>
             <b>Minimum Bid Increase: </b> {props.minimumBidIncrease} tokens
           </div>
+          <div className={styles.info}>
+            <b>Leading Bid: </b> {props.leadingBid} tokens
+          </div>
         </div>
         <div className={styles.artistAndButtonsContainer}>
           <h4 className={styles.artistHeader}>BY ARTIST</h4>
           <div className={styles.artistImageContainer}>
             <img src={props.artistImageUrl} alt="Artist" />
             <div className={styles.artistNameAndLinkContainer}>
-              <b>{/*capitalize(props.artistName) */}</b>
+              <b>{capitalize(props.artistName)}</b>
               <a>SEE PROFILE</a>
             </div>
           </div>
