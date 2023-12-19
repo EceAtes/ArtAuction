@@ -2,47 +2,47 @@ import styles from "./ProposalList.module.css";
 import TuneIcon from "@mui/icons-material/Tune";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Proposal from "./Proposal";
-
-const auctions = [
-  {
-    id: 1,
-    title: "My Work-1",
-    imageUrl: "/photos/loginpage.png",
-    type: "Oil Painting",
-    size: "70x20 cm",
-    creationDate: "11.11.2023",
-    creationPlace: "Ankara, Turkey",
-    auctionProposalDate: "11.11.2023",
-    auctionEndDate: "18.11.2023",
-    startingBid: 100,
-    minimumBidIncrease: 40,
-    description:
-      "test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ",
-    artistId: 1,
-    artistName: "Ali veli",
-    artistImageUrl: "/photos/signuppage.png",
-  },
-  {
-    id: 2,
-    title: "My Work-1",
-    imageUrl: "/photos/loginpage.png",
-    type: "Oil Painting",
-    size: "70x20 cm",
-    creationDate: "11.11.2023",
-    creationPlace: "Ankara, Turkey",
-    auctionProposalDate: "11.11.2023",
-    auctionEndDate: "18.11.2023",
-    startingBid: 100,
-    minimumBidIncrease: 40,
-    description:
-      "test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test",
-    artistId: 1,
-    artistName: "Ali veli",
-    artistImageUrl: "/photos/signuppage.png",
-  },
-];
+import { useState } from "react";
+import SortModal from "./SortModal";
 
 const ProposalList = (props) => {
+  const [auctions, setAuctions] = useState(props.proposedAuctions);
+  const [isSortModalOpen, setSortModalOpen] = useState(false);
+  const [isFilterModalOpen, setFilterModalOpen] = useState(false); //havent done
+  const handleSortModalOpen = (event) => {
+    setSortModalOpen(!isSortModalOpen);
+  };
+
+  const handleSortModalClose = () => {
+    setSortModalOpen(false);
+  };
+
+  const handleSortFunction = (event, choice) => {
+    event.preventDefault();
+    let sortedAuctions = [...auctions];
+
+    switch (choice) {
+      case "1": // Name Ascending
+        sortedAuctions.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "2": // Name Descending
+        sortedAuctions.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "3": // Date Ascending
+        sortedAuctions.sort(
+          (a, b) => new Date(a.creationDate) - new Date(b.creationDate)
+        );
+        break;
+      case "4": // Date Descending
+        sortedAuctions.sort(
+          (a, b) => new Date(b.creationDate) - new Date(a.creationDate)
+        );
+        break;
+    }
+
+    setAuctions(sortedAuctions);
+    setSortModalOpen(false);
+  };
   return (
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
@@ -50,7 +50,7 @@ const ProposalList = (props) => {
         <button className={styles.filterButton}>
           <TuneIcon fontSize="medium"></TuneIcon>
         </button>
-        <button className={styles.filterButton}>
+        <button className={styles.filterButton} onClick={handleSortModalOpen}>
           <FilterListIcon fontSize="medium"></FilterListIcon>
         </button>
       </div>
@@ -58,25 +58,29 @@ const ProposalList = (props) => {
       <div className={styles.proposalListContainer}>
         {auctions.map((auction) => (
           <Proposal
-            id={auction.id}
-            key={auction.id}
+            auctionID={auction.auctionID}
+            key={auction.auctionID}
             title={auction.title}
-            imageUrl={auction.imageUrl}
+            imageUrl={"/photos/loginpage.png"}
             type={auction.type}
             size={auction.size}
             creationDate={auction.creationDate}
-            creationPlace={auction.creationPlace}
-            auctionProposalDate={auction.auctionProposalDate}
-            auctionEndDate={auction.auctionEndDate}
-            startingBid={auction.startingBid}
+            auctionEndDate={auction.endDate}
+            baseBid={auction.baseBid}
             minimumBidIncrease={auction.minimumBidIncrease}
             description={auction.description}
-            artistId={auction.artistId}
-            artistName={auction.artistName}
-            artistImageUrl={auction.artistImageUrl}
+            artistId={auction.uploaded_by_artist_ID}
+            artistName={auction.name}
+            artistImageUrl={"/photos/signuppage.png"}
           />
         ))}
       </div>
+      {isSortModalOpen && (
+        <SortModal
+          closeModal={handleSortModalClose}
+          submitHandler={handleSortFunction}
+        ></SortModal>
+      )}
     </div>
   );
 };

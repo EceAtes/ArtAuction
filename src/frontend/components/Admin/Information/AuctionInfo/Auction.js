@@ -1,42 +1,6 @@
 import { capitalize } from "@mui/material";
-import styles from "./ProposalList.module.css";
-import { useRouter } from "next/router";
-import { adminVerifyAuctionApiFunction } from "@/pages/api/admin";
-const Proposal = (props) => {
-  const router = useRouter();
-
-  const approveAuction = (event) => {
-    event.preventDefault();
-    const admin_id = parseInt(localStorage.getItem("userID"), 10);
-
-    adminVerifyAuctionApiFunction(admin_id, props.auctionID, 1)
-      .then((data) => {
-        console.log("verify successful ", data);
-      })
-      .catch((error) => {
-        console.error("verify failed", error);
-      })
-      .finally(() => {
-        router.reload();
-      });
-  };
-
-  const rejectAuction = (event) => {
-    event.preventDefault();
-    const admin_id = parseInt(localStorage.getItem("userID"), 10);
-
-    adminVerifyAuctionApiFunction(admin_id, props.auctionID, 0)
-      .then((data) => {
-        console.log("verify successful ", data);
-      })
-      .catch((error) => {
-        console.error("verify failed", error);
-      })
-      .finally(() => {
-        router.reload();
-      });
-  };
-
+import styles from "./AuctionInfo.module.css";
+const AuctionInfo = (props) => {
   return (
     <div className={styles.proposalContainer}>
       <h3 className={styles.proposalHeader}>{props.title}</h3>
@@ -59,6 +23,8 @@ const Proposal = (props) => {
           <div className={styles.info}>
             <b>Creation Date: </b> {props.creationDate}
           </div>
+        
+    
           <div className={styles.info}>
             <b>Auction End Date: </b> {props.auctionEndDate}
           </div>
@@ -78,15 +44,6 @@ const Proposal = (props) => {
               <a>SEE PROFILE</a>
             </div>
           </div>
-
-          <div className={styles.buttonsContainer}>
-            <button className={styles.approveButton} onClick={approveAuction}>
-              Approve
-            </button>
-            <button className={styles.rejectButton} onClick={rejectAuction}>
-              Reject
-            </button>
-          </div>
         </div>
       </div>
       <div className={styles.auctionDescriptionContainer}>
@@ -97,4 +54,4 @@ const Proposal = (props) => {
   );
 };
 
-export default Proposal;
+export default AuctionInfo;

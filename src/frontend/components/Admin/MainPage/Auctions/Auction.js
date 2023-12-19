@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { useState } from "react";
 import { capitalize } from "@mui/material";
 import { adminHighlightAuctionApiFunction } from "@/pages/api/admin";
+import Link from "next/link";
 
 const Auction = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -31,17 +32,14 @@ const Auction = (props) => {
 
   const handleOpenModal = (event) => {
     if (isModalOpen) {
-      event.preventDefault();
       setModalOpen(false);
     } else {
-      event.preventDefault();
       setModalOpen(true);
     }
   };
 
-  const handleCloseModal = (event) => {
-    event.preventDefault();
-
+  const handleCloseModal = () => {
+    
     setModalOpen(false);
   };
 
@@ -69,14 +67,17 @@ const Auction = (props) => {
         </div>
       </div>
       <h3 className={styles.auctionHeader}>{capitalize(props.title)}</h3>
+      <Link href={`/admin/information/auctioninfo/${props.auctionID}`} passHref legacyBehavior>
       <button className={styles.moreButton}>More</button>
+      </Link>
+      
 
       {isModalOpen && (
         <Modal
-          availableExhibitions={props.availableExhibitions}
-          id={props.auctionID}
+          key={props.auctionID}
+          auctionID={props.auctionID}
           closeModal={handleCloseModal}
-          auctionName={props.auctionName}
+          title={props.title}
         ></Modal>
       )}
     </div>

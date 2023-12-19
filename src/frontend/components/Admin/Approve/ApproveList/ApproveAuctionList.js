@@ -1,15 +1,14 @@
-import Auction from "./Auction";
-import styles from "./AuctionList.module.css";
 import TuneIcon from "@mui/icons-material/Tune";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
+import styles from "./ApproveAuctionList.module.css"
 import SortModal from "./SortModal";
+import ApproveAuction from "./ApproveAuction";
 
-const AuctionList = (props) => {
-  const [auctions, setAuctions] = useState(props.auctions);
+const ApproveAuctionList = (props) => {
+  const [auctions, setAuctions] = useState(props.approveAuctions);
   const [isSortModalOpen, setSortModalOpen] = useState(false);
   const [isFilterModalOpen, setFilterModalOpen] = useState(false); //havent done
-
   const handleSortModalOpen = (event) => {
     setSortModalOpen(!isSortModalOpen);
   };
@@ -18,7 +17,7 @@ const AuctionList = (props) => {
     setSortModalOpen(false);
   };
 
-  const handleSortFunction = (event,choice) => {
+  const handleSortFunction = (event, choice) => {
     event.preventDefault();
     let sortedAuctions = [...auctions];
 
@@ -44,11 +43,10 @@ const AuctionList = (props) => {
     setAuctions(sortedAuctions);
     setSortModalOpen(false);
   };
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
-        <h1 className={styles.listHeader}>Auctions</h1>
+        <h1 className={styles.listHeader}>Auction Approve</h1>
         <button className={styles.filterButton}>
           <TuneIcon fontSize="medium"></TuneIcon>
         </button>
@@ -57,18 +55,27 @@ const AuctionList = (props) => {
         </button>
       </div>
 
-      <div className={styles.auctionListContainer}>
+      <div className={styles.proposalListContainer}>
         {auctions.map((auction) => (
-          <Auction
+          <ApproveAuction
             auctionID={auction.auctionID}
             key={auction.auctionID}
-            imageUrl={"/photos/loginpage.png"}
             title={auction.title}
-            highlighterAdminID={auction.highlighter_admin_ID}
+            imageUrl={"/photos/loginpage.png"}
+            type={auction.type}
+            size={auction.size}
+            creationDate={auction.creationDate}
+            auctionEndDate={auction.endDate}
+            baseBid={auction.baseBid}
+            minimumBidIncrease={auction.minimumBidIncrease}
+            description={auction.description}
+            artistId={auction.uploaded_by_artist_ID}
+            artistName={auction.name}
+            leadingBid = {auction.leadingBid}
+            artistImageUrl={"/photos/signuppage.png"}
           />
         ))}
       </div>
-
       {isSortModalOpen && (
         <SortModal
           closeModal={handleSortModalClose}
@@ -79,4 +86,4 @@ const AuctionList = (props) => {
   );
 };
 
-export default AuctionList;
+export default ApproveAuctionList;

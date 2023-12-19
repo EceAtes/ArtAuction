@@ -1,0 +1,197 @@
+
+/* ProposalList */
+
+.mainContainer {
+    margin: 20px;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+  }
+  
+  .listHeaderContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .listHeader {
+    font-size: 2rem;
+    margin-top: 10px;
+    color: #484848;
+  }
+  
+  .filterButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #484848;
+  }
+  
+  .proposalListContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    justify-content: center;
+  }
+  
+  /* Proposal */
+  .proposalContainer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #efefef;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .proposalHeader {
+    display: flex;
+    align-items: flex-start;
+    color: #224e81;
+    text-align: left;
+    font-size: 1.5rem;
+  }
+  
+  .detailsContainer {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+  }
+  
+  .imageContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .imageContainer img {
+    width: 90%;
+    height: 200px;
+    border-radius: 5%;
+  }
+  
+  .informationContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info {
+    text-align: left;
+    margin-top: 5px;
+    font-size: 1rem;
+  }
+  
+  .artistHeader {
+    color: #82888c;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  
+  .artistAndButtonsContainer {
+    flex: 1;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .artistImageContainer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .artistImageContainer img {
+    width: auto;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 50%;
+  }
+  
+  .artistNameAndLinkContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .artistNameAndLinkContainer a {
+    color: #9a2fae;
+  }
+  
+  .artistNameAndLinkContainer a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .approveButton {
+    margin-top: 15px;
+    padding: 10px 10px;
+    width: 150px;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+    background-color: #1f7720;
+    border: 2px solid transparent;
+  }
+  
+  .approveButton:hover {
+    background-color: #fff;
+    color: #1f7720;
+    border-color: #1f7720;
+  }
+  
+  .rejectButton {
+    margin-top: 10px;
+    padding: 10px 10px;
+    width: 150px;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+    background-color: #b4493f;
+    border: 2px solid transparent;
+  }
+  
+  .rejectButton:hover {
+    background-color: #fff;
+    color: #b4493f;
+    border-color: #b4493f;
+  }
+  
+  .auctionDescriptionContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .auctionDescriptionHeader {
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .auctionDescription {
+    text-align: justify;
+  }
+  

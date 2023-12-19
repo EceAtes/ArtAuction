@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Exhibition.module.css";
 const ExhibitionAuction = (props) => {
   return (
@@ -6,7 +7,13 @@ const ExhibitionAuction = (props) => {
         <img src={props.imageUrl} alt="Auction" />
       </div>
       <h3 className={styles.auctionHeader}>{props.auctionName}</h3>
-      <button className={styles.moreButton}>More</button>
+      <Link
+        href={`/admin/information/auctioninfo/${props.auctionID}`}
+        passHref
+        legacyBehavior
+      >
+        <button className={styles.moreButton}>More</button>
+      </Link>
     </div>
   );
 };

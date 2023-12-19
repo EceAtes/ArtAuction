@@ -47,6 +47,11 @@ const Navbar = (props) => {
           </Link>
         </li>
         <li className={styles.navItem}>
+          <Link href={`/${role}/approve/${userID}`} passHref legacyBehavior>
+            <a className={styles.navLink}>Approve</a>
+          </Link>
+        </li>
+        <li className={styles.navItem}>
           <Link href="/" passHref legacyBehavior>
             <a className={styles.navLink}>
               <NotificationsIcon fontSize="small"></NotificationsIcon>

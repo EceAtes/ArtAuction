@@ -1,15 +1,17 @@
 import { capitalize } from "@mui/material";
-import styles from "./ProposalList.module.css";
+import styles from "./ApproveAuctionList.module.css";
 import { useRouter } from "next/router";
 import { adminVerifyAuctionApiFunction } from "@/pages/api/admin";
-const Proposal = (props) => {
+import { verifySaleApiFunction } from "@/pages/api/user";
+const ApproveAuction = (props) => {
   const router = useRouter();
 
   const approveAuction = (event) => {
     event.preventDefault();
     const admin_id = parseInt(localStorage.getItem("userID"), 10);
 
-    adminVerifyAuctionApiFunction(admin_id, props.auctionID, 1)
+    console.log("Admin", admin_id, props.auctionID, "Accept");
+    verifySaleApiFunction("Admin", admin_id, props.auctionID, "Accept")
       .then((data) => {
         console.log("verify successful ", data);
       })
@@ -25,7 +27,7 @@ const Proposal = (props) => {
     event.preventDefault();
     const admin_id = parseInt(localStorage.getItem("userID"), 10);
 
-    adminVerifyAuctionApiFunction(admin_id, props.auctionID, 0)
+    verifySaleApiFunction("Admin", admin_id, props.auctionID, "Reject")
       .then((data) => {
         console.log("verify successful ", data);
       })
@@ -68,13 +70,16 @@ const Proposal = (props) => {
           <div className={styles.info}>
             <b>Minimum Bid Increase: </b> {props.minimumBidIncrease} tokens
           </div>
+          <div className={styles.info}>
+            <b>Leading Bid: </b> {props.leadingBid} tokens
+          </div>
         </div>
         <div className={styles.artistAndButtonsContainer}>
           <h4 className={styles.artistHeader}>BY ARTIST</h4>
           <div className={styles.artistImageContainer}>
             <img src={props.artistImageUrl} alt="Artist" />
             <div className={styles.artistNameAndLinkContainer}>
-              <b>{capitalize(props.artistName) }</b>
+              <b>{capitalize(props.artistName)}</b>
               <a>SEE PROFILE</a>
             </div>
           </div>
@@ -97,4 +102,4 @@ const Proposal = (props) => {
   );
 };
 
-export default Proposal;
+export default ApproveAuction;
