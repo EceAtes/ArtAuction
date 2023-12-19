@@ -178,15 +178,29 @@ public class AuctionRepository {
     }
 
     public List<Map<String, Object>> getEndedAuctionSales() {
-        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND isEnded = ? ORDER BY a.endDate ASC";
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "ended", true);
+        String sql = "SELECT a.*, " +
+                "(SELECT b.bidAmount FROM `Bid` b " +
+                "JOIN `Offer` o ON o.bidID = b.bidID " +
+                "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid " +
+                "FROM `Auction` a " +
+                "WHERE a.auction_status = ? AND a.isEnded = ?";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "Leading", "ended", true);
         return rows;
     }
 
+    //i think it works, ama bendeki ended olanların hiçbirinde bid yoktu
     public List<Map<String, Object>> getEndedAuctionSales(int artistID) {
-        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND isEnded = ? AND uploaded_by_artist_ID = ? ORDER BY a.endDate ASC";
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "ended", true, artistID );
+        String sql = "SELECT a.*, u.name, " +
+                "(SELECT b.bidAmount FROM `Bid` b " +
+                "JOIN `Offer` o ON o.bidID = b.bidID " +
+                "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid " +
+                "FROM `Auction` a " +
+                "JOIN `User` u ON u.userID = a.uploaded_by_artist_ID " +
+                "WHERE a.auction_status = ? AND a.isEnded = ? AND a.uploaded_by_artist_ID = ?";
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,  "Leading", "ended", true , artistID);
         return rows;
+
     }
 }
 
