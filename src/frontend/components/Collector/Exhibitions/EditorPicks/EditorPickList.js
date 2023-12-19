@@ -1,68 +1,39 @@
 import EditorPick from "./EditorPick";
 import styles from "./EditorPick.module.css";
 
-const editorPicks = [
-  {
-    id: 1,
-    title: "Test ABC",
-    type: "auction",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend aliquam tristique. In ut lectus est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel elementum ex. Praesent porta ornare eros in condimentum. In hac habitasse platea dictumst. Suspendisse vulputate vestibulum lacus, sit amet aliquam tortor.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend aliquam tristique. In ut lectus est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel elementum ex. Praesent porta ornare eros in condimentum. In hac habitasse platea dictumst. Suspendisse vulputate vestibulum lacus, sit amet aliquam tortor.  ",
-    imageUrl: "/photos/loginpage.png",
-  },
-
-  {
-    id: 2,
-    title: "Test ABC",
-    type: "auction",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend aliquam tristique. In ut lectus est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel elementum ex. Praesent porta ornare eros in condimentum. In hac habitasse platea dictumst. Suspendisse vulputate vestibulum lacus, sit amet aliquam tortor.    ",
-    imageUrl: "/photos/loginpage.png",
-  },
-  {
-    id: 3,
-    title: "Test ABC",
-    type: "auction",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend aliquam tristique. In ut lectus est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel elementum ex. Praesent porta ornare eros in condimentum. In hac habitasse platea dictumst. Suspendisse vulputate vestibulum lacus, sit amet aliquam tortor.    ",
-    imageUrl: "/photos/loginpage.png",
-  },
-  {
-    id: 4,
-    title: "Test Person",
-    type: "artist",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend aliquam tristique. In ut lectus est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel elementum ex. Praesent porta ornare eros in condimentum. In hac habitasse platea dictumst. Suspendisse vulputate vestibulum lacus, sit amet aliquam tortor.    ",
-    imageUrl: "/photos/signuppage.png",
-  },
-];
-
 const EditorPickList = (props) => {
   return (
     <div className={styles.mainContainer}>
-      <h2 className={styles.headingText}>
-        Discover carefully selected art auctions organized by our dedicated
-        editors, showcasing their favourite pieces from the world of beautiful
-        art
-      </h2>
-
-      <div className={styles.listHeaderContainer}>
-        <h1 className={styles.listHeader}>Editors' Pick</h1>
-      </div>
-
-      <div className={styles.editorPickListContainer}>
-
-      {editorPicks.map((editorPick) => (
-          <EditorPick
-            key={editorPick.id}
-            title={editorPick.title}
-            type={editorPick.type}
-            imageUrl={editorPick.imageUrl}
-            description={editorPick.description}
-          />
-        ))}
-      </div>
+    <div className={styles.listHeaderContainer}>
+      <h1 className={styles.listHeader}>Editors' Pick</h1>
     </div>
+
+    <div className={styles.editorPickListContainer}>
+      {props.highlightedAuctions.map((auction) => (
+        <EditorPick
+          key={auction.auctionID}
+          auctionID={auction.auctionID}
+          highlighterAdminID={auction.highlighter_admin_ID}
+          title={auction.title}
+          type={"auction"}
+          imageUrl={"/photos/loginpage.png"}
+          description={auction.description}
+        />
+      ))}
+      {props.highlightedArtUsers.map((artuser) => (
+        <EditorPick
+          key={artuser.userID}
+          userID={artuser.userID}
+          name={artuser.name}
+          type={"artuser"}
+          role={artuser.role}
+          highlighterAdminID = {artuser.highlighter_adminID}
+          imageUrl={"/photos/signuppage.png"}
+          bio={artuser.bio}
+        />
+      ))}
+    </div>
+  </div>
   );
 };
 

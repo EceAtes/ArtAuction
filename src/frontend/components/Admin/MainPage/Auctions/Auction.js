@@ -39,7 +39,6 @@ const Auction = (props) => {
   };
 
   const handleCloseModal = () => {
-    
     setModalOpen(false);
   };
 
@@ -67,10 +66,13 @@ const Auction = (props) => {
         </div>
       </div>
       <h3 className={styles.auctionHeader}>{capitalize(props.title)}</h3>
-      <Link href={`/admin/information/auctioninfo/${props.auctionID}`} passHref legacyBehavior>
-      <button className={styles.moreButton}>More</button>
+      <Link
+        href={`/admin/information/auctioninfo/${props.auctionID}`}
+        passHref
+        legacyBehavior
+      >
+        <button className={styles.moreButton}>More</button>
       </Link>
-      
 
       {isModalOpen && (
         <Modal

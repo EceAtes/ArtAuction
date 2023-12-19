@@ -1,3 +1,4 @@
+import { capitalize } from "@mui/material";
 import styles from "./EditorPick.module.css";
 
 const EditorPick = (props) => {
@@ -32,9 +33,9 @@ const EditorPick = (props) => {
           </div>
 
           <div className={styles.detailsContainer}>
-            <h3 className={styles.personNameTitle}>{props.title}</h3>
-            <h3 className={styles.personType}>{props.type}</h3>
-            <p className={styles.editorPickDescription}>{props.description}</p>
+            <h3 className={styles.personNameTitle}>{capitalize(props.name)}</h3>
+            <h3 className={styles.personType}>{capitalize(props.role)}</h3>
+            <p className={styles.editorPickDescription}>{props.bio}</p>
           </div>
 
           <div className={styles.seeProfileButtonContainer}>

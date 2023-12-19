@@ -18,7 +18,7 @@ export const API_ADMIN_DELETE_EXHIBITION = `${BASE_URL}admin/delete_exh`;
 export const API_ADMIN_EDIT_EXHIBITION = `${BASE_URL}admin/edit_exh`;
 export const API_ADMIN_PROPOSED_AUCTIONS = `${BASE_URL}admin/proposed_auctions`;
 export const API_ADMIN_VERIFY_AUCTION = `${BASE_URL}admin/verify_auction`;
-export const API_ADMIN_GET_ENDED_AUCTIONS =`${BASE_URL}admin/get_ended_auctions`; 
+export const API_ADMIN_GET_ENDED_AUCTIONS = `${BASE_URL}admin/get_ended_auctions`;
 
 //EDITOR PICKS URLS
 export const API_EDITOR_PICKS_HIGHLIGHTED_ARTUSERS = `${BASE_URL}editors-picks/highlighted_artusers`;
@@ -27,11 +27,16 @@ export const API_EDITOR_PICKS_EXHIBITIONS = `${BASE_URL}editors-picks/exhibition
 
 //AUCTION URLS
 export const API_AUCTION_GET_SINGLE_AUCTION = `${BASE_URL}auction/`;
+export const API_AUCTION_GET_POPULAR_AUCTIONS = `${BASE_URL}auction/getPopularAuction`;
+export const API_AUCTION_GET_RECENT_AUCTIONS = `${BASE_URL}auction/getRecentAuction`;
 
 //ART USERS URLS
 export const API_ART_USER_FILTER_PEOPLE = `${BASE_URL}art-user/filter-people`;
+export const API_ART_USER_TOP_COLLECTORS = `${BASE_URL}art-user/topCollectors`;
+export const API_ART_USER_TOP_ARTISTS = `${BASE_URL}art-user/topArtists`;
+export const API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW = `${BASE_URL}art-user/auctions-from-people-you-follow`;
 
 //ARTIST URLS
-export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artist`; 
+export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artist`;
 
 //COLLECTOR URLS
