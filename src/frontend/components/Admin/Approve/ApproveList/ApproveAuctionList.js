@@ -46,7 +46,7 @@ const ApproveAuctionList = (props) => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
-        <h1 className={styles.listHeader}>Auction Proposals</h1>
+        <h1 className={styles.listHeader}>Auction Approve</h1>
         <button className={styles.filterButton}>
           <TuneIcon fontSize="medium"></TuneIcon>
         </button>
@@ -71,6 +71,7 @@ const ApproveAuctionList = (props) => {
             description={auction.description}
             artistId={auction.uploaded_by_artist_ID}
             artistName={auction.name}
+            leadingBid = {auction.leadingBid}
             artistImageUrl={"/photos/signuppage.png"}
           />
         ))}
