@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './CollectorList.module.css'; // Import the CSS module
 
 const Collector = ({ name, profilePicture, description }) => (
-  <div className={styles['collector-box']}>
-    <img className={styles['profile-picture']} src={profilePicture} alt={`Profile of ${name}`} />
-    <div className={styles['collector-info']}>
+  <div className={styles.collectorBox}>
+    <img className={styles.profilePicture} src={profilePicture} alt={`Profile of ${name}`} />
+    <div className={styles.collectorInfo}>
       <h3>{name}</h3>
       <p>{description}</p>
-      <button className = {styles['button']}>See Profile</button>
+      <button className = {styles.button}>See Profile</button>
     </div>
   </div>
 );
