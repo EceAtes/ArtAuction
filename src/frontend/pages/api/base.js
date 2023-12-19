@@ -32,5 +32,6 @@ export const API_AUCTION_GET_SINGLE_AUCTION = `${BASE_URL}auction/`;
 export const API_ART_USER_FILTER_PEOPLE = `${BASE_URL}art-user/filter-people`;
 
 //ARTIST URLS
+export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artist`; 
 
 //COLLECTOR URLS
