@@ -1,0 +1,44 @@
+/* ArtworkModal.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: #311a5d;
+  /*background-color:white;*/
+  color: white;
+  /*overflow-y: auto;*/
+  width: 60%; /* Set the width to cover the entire modal overlay */
+  padding: 20px;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.modalTopContent {
+  margin-top: 75px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.modalBottomContent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2 columns with equal width */
+  gap: 10px; /* Adjust the gap between grid items */
+}
+
+.modalButton {
+  margin-top: 30px;
+  background-color: #754ed1;
+  height: 50px;
+  width: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}

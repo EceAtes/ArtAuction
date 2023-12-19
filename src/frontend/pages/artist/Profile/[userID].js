@@ -1,38 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Auction from '@/components/Artist/AuctionForms/Auction';
 import Profile from "@/components/Artist/Profile/Profile"
 import Navbar from '@/components/Artist/UI/Navbar';
 import styles from "../../../components/Admin/Exhibitions/AdminExhibitionsPage.module.css";
 import AuctionProposeList from '@/components/Artist/Profile/AuctionList';
-import { artistGetOngoingAuctionsApiFunction } from '@/pages/api/artist';
+import { artistGetArtistInfoApiFunction } from '@/pages/api/artist';
+import { auctionGetAllBidHistiory } from '@/pages/api/auction';
 
-const [auctions, setAuctions] = useState([]);
-const [profile, setProfile]= useState([]);
-
-const [artistID, setArtistID]= useState;
-
-  useEffect(() => {
-    setArtistID(localStorage.getItem("userID"));
-    artistGetOngoingAuctionsApiFunction(artistID)
-      .then((data) => {
-        console.log("Admin approve auctions success", data);
-        setAuctions(data);
-      })
-      .catch((error) => {
-        console.error("Admin proposed auctions failed", error);
-      });
-
-      artistGetProfile(artistID)
-      .then((data) => {
-        console.log("Admin approve auctions success", data);
-        setProfile(data);
-      })
-      .catch((error) => {
-        console.error("Admin proposed auctions failed", error);
-      });
-  }, []);
-
-
+import { useEffect, useState } from 'react';
 /*const auctions= [
   {
     id: 1,
@@ -87,17 +62,33 @@ const profile ={
 };*/
 
 const AuctionView = () => {
+const [artisInfo, setArtist] = useState([]);
+
+useEffect(() => {
+  const artistID = parseInt(localStorage.getItem("userID"), 10);
+  console.log(artistID);
+
+  artistGetArtistInfoApiFunction(artistID)
+    .then((data) => {
+      console.log("Artist Info Success", data);
+      setArtist(data); // Use setArtisInfo instead of setArtist
+    })
+    .catch((error) => {
+      console.error("Admin Info failed", error);
+    });
+}, []); // Use [artisInfo] if you want to run the effect when artisInfo changes
+
+
   return (
     <div>
       <Navbar></Navbar>
       <div className={styles.container}>
           <div style={{ display: 'flex', height: '100%' }}>
             <div style={{ flex: '0 0 20%', padding: '20px', borderRight: '1px solid #ccc' }}>
-              <Profile props={profile}/>
+             {artisInfo.length > 0 ? ( <Profile info={artisInfo[0]}/>) : (<h1>no profile</h1>) }
             </div>
-
             <div style={{ flex: '1', padding: '20px' }}>
-              <AuctionProposeList auctions={auctions}/>
+              <AuctionProposeList auctions={artisInfo}/>
             </div>
           </div>
       </div>

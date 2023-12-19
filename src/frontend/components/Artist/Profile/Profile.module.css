@@ -1,0 +1,73 @@
+.containerStyle {
+  display: 'flex';
+  alignItems: 'center';
+  flexDirection: 'column';
+  border: '1px solid #ccc';
+  borderRadius: '10px';
+  padding: '20px';
+  width: 100%;
+  margin: 'auto';
+};
+
+.imageContainerStyle {
+  borderRadius: '50%';
+  overflow: 'hidden';
+  height: 100px;
+  width:50px;
+  marginBottom: '20px';
+
+};
+
+.imageStyle {
+  width: 100%;
+  height: 50px;
+  borderRadius: '50%';
+};
+
+.textContainerStyle {
+  width: 100%;
+  height: 60%;
+};
+
+.artistNameStyle {
+  fontWeight: 'bold';
+  margin-bottom: 300px;
+};
+
+.gmailStyle {
+  marginBottom: '30px',
+};
+
+.tokenNumberStyle {
+  marginBottom:"30px";
+};
+
+.bioTextStyle {
+  textAlign: 'justify';
+  marginBottom: '30px';
+};
+
+.buttonContainerStyle{
+  display: 'flex';
+  gap: '10px';
+  margin:"30px 0";
+};
+
+.followButtonStyle {
+  backgroundColor: 'transparent';
+  color: '#800080';
+  border: '1px solid #800080';
+  borderRadius: '5px';
+  padding: '5px 10px';
+  cursor: 'pointer';
+};
+
+.uploadButtonStyle {
+  backgroundColor: '#800080';
+  color: '#fff';
+  border: 'none';
+  borderRadius: '5px';
+  padding: '10px';
+  cursor: 'pointer';
+  marginTop: '10px';
+};
