@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.formSection}>
-        <AuctionView/>
+        <ListMyArtWork/>
       </div>
     </div>
   );
