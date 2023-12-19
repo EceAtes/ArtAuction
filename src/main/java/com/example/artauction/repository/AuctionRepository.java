@@ -146,8 +146,8 @@ public class AuctionRepository {
     public List<Map<String, Object>> getRecentAuctions() {
         String sql = "SELECT * " +
                 "FROM `auction` a " +
-                "WHERE auction_status = 'approved' " + //maybe "ongoing"
-                "ORDER BY uploadDate DESC ";
+                "WHERE auction_status = 'ongoing' OR auction_status = 'approved' " +
+                "ORDER BY uploadDate DESC";
 
         List<Map<String,Object>> auctions = jdbcTemplate.queryForList(sql);
         return auctions;
@@ -178,13 +178,14 @@ public class AuctionRepository {
     }
 
     public List<Map<String, Object>> getEndedAuctionSales() {
-        String sql = "SELECT a.*, " +
+        String sql = "SELECT a.*, u.name, " +
                 "(SELECT b.bidAmount FROM `Bid` b " +
                 "JOIN `Offer` o ON o.bidID = b.bidID " +
                 "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid " +
                 "FROM `Auction` a " +
-                "WHERE a.auction_status = ? AND a.isEnded = ?";
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "Leading", "ended", true);
+                "JOIN `User` u ON u.userID = a.uploaded_by_artist_ID " +
+                "WHERE (a.auction_status = ? OR a.auction_status = ?) AND a.isEnded = ?";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "Leading", "ended", "artist_ok", true);
         return rows;
     }
 
@@ -196,9 +197,9 @@ public class AuctionRepository {
                 "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid " +
                 "FROM `Auction` a " +
                 "JOIN `User` u ON u.userID = a.uploaded_by_artist_ID " +
-                "WHERE a.auction_status = ? AND a.isEnded = ? AND a.uploaded_by_artist_ID = ?";
+                "WHERE (a.auction_status = ? OR a.auction_status = ?) AND a.isEnded = ? AND a.uploaded_by_artist_ID = ?";
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,  "Leading", "ended", true , artistID);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,  "Leading", "ended", "admin_ok", true , artistID);
         return rows;
 
     }

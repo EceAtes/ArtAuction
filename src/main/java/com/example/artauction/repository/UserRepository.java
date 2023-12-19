@@ -161,8 +161,8 @@ public class UserRepository {
             jdbcTemplate.update(sqlUpdatelosingBids, "Lost", bidID, requestMap.get("auctionID"));
             String sqlUpdateWinningBid = "UPDATE bid SET bid_status = ? WHERE bidID = ?;";
             jdbcTemplate.update(sqlUpdateWinningBid, "Rejected", bidID);
-            String updateAuction = "UPDATE Auction SET auction_status = ?, isEnded = ? WHERE auctionID = ?;";
-            jdbcTemplate.update(updateAuction, "closed", true, requestMap.get("auctionID")); //"ended"?
+            String updateAuction = "UPDATE Auction SET auction_status = ? WHERE auctionID = ?;";
+            jdbcTemplate.update(updateAuction, "closed", requestMap.get("auctionID")); //"ended"?
             return new ResponseEntity<>(HttpStatus.ACCEPTED);//technically completed correctly?
         }
 
@@ -178,21 +178,40 @@ public class UserRepository {
             jdbcTemplate.update(sqlUpdatelosingBids, "Lost", bidID, requestMap.get("auctionID"));
             String sqlUpdateWinningBid = "UPDATE bid SET bid_status = ? WHERE bidID = ?;";
             jdbcTemplate.update(sqlUpdateWinningBid, "Won", bidID);
-            String updateAuction = "UPDATE Auction SET auction_status = ?, isEnded = ? WHERE auctionID = ?;";
-            jdbcTemplate.update(updateAuction, "closed", true, requestMap.get("auctionID"));   //"sold"?
+            String updateAuction = "UPDATE Auction SET auction_status = ? WHERE auctionID = ?;";
+            jdbcTemplate.update(updateAuction, "closed", requestMap.get("auctionID"));   //"sold"?
             String updateArtist = "UPDATE artuser SET tokens = tokens + (SELECT bidAmount FROM bid WHERE bidID = ? LIMIT 1) WHERE userID = (SELECT uploaded_by_artist_ID FROM auction WHERE auctionID = ? LIMIT 1)";
             jdbcTemplate.update(updateArtist, bidID, requestMap.get("auctionID"));
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        else if(approverArtistID != null){
+            String updateAuction = "UPDATE Auction SET auction_status = ? WHERE auctionID = ?;";
+            jdbcTemplate.update(updateAuction, "artist_ok", requestMap.get("auctionID"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else if(approverAdminID != null){
+            String updateAuction = "UPDATE Auction SET auction_status = ? WHERE auctionID = ?;";
+            jdbcTemplate.update(updateAuction, "admin_ok", requestMap.get("auctionID"));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     public List<Map<String, Object>> getFilteredAuctions(Map<String, String> requestMap) {
-        StringBuilder sqlBuilder = new StringBuilder("SELECT Auction.*" +
-                "FROM Auction " +
+        StringBuilder sqlBuilder = new StringBuilder("SELECT a.*, leadingBid " +
+                "FROM (" +
+                "SELECT a.*, " +
+                "(SELECT b.bidAmount " +
+                "FROM `Bid` b " +
+                "JOIN `Offer` o ON o.bidID = b.bidID " +
+                "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid " +
+                "FROM `Auction` a " +
+                ") a " +
                 "WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
+        params.add("Leading");
 
         if (requestMap.get("art_type") != null) {
             sqlBuilder.append(" AND type = ?");
@@ -238,11 +257,21 @@ public class UserRepository {
             params.add(requestMap.get("baseBid"));
         }
 
-        /*if (requestMap.get("minLeadingBid") != null) {
+        if (requestMap.get("minLeadingBid") != null) {
             sqlBuilder.append(" AND leadingBid BETWEEN ? AND ?");
             params.add(requestMap.get("minLeadingBid"));
             params.add(requestMap.get("maxLeadingBid"));
-        }*/
+        }
+
+        if(requestMap.get("userType").equals("Artist")){
+            sqlBuilder.append(" AND uploaded_by_artist_ID = ?");
+            params.add(requestMap.get("userID"));
+        }
+
+        if(requestMap.get("userType").equals("Collector")){
+            sqlBuilder.append(" AND auctionID IN (SELECT offer.auctionID FROM offer WHERE collectorID = ?)");
+            params.add(requestMap.get("userID"));
+        }
 
         String sql = sqlBuilder.toString();
         System.out.println(sql);
