@@ -63,16 +63,6 @@ const ProposedAuction = (props) => {
             
           </div>
         </div>
-        <div className={styles.artistAndButtonsContainer}>
-          <h4 className={styles.artistHeader}>BOUGHT BY</h4>
-          <div className={styles.artistImageContainer}>
-            <img src={props.collectorImageUrl} alt="Collector" />
-            <div className={styles.collectorNameAndLinkContainer}>
-              <b>{props.collectorName}</b>
-              <a>SEE PROFILE</a>
-            </div>
-          </div>
-        </div>
       </div>
       <div className={styles.auctionDescriptionContainer}>
         <h3 className={styles.auctionDescriptionHeader}>Auction Description</h3>
