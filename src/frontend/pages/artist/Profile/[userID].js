@@ -3,6 +3,7 @@ import Auction from '@/components/Artist/AuctionForms/Auction';
 import Profile from "@/components/Artist/Profile/Profile"
 import Navbar from '@/components/Artist/UI/Navbar';
 import styles from "../../../components/Admin/Exhibitions/AdminExhibitionsPage.module.css";
+import AuctionProposeList from '@/components/Artist/Profile/AuctionList';
 
 const AuctionView = () => {
   return (
@@ -15,7 +16,7 @@ const AuctionView = () => {
             </div>
 
             <div style={{ flex: '1', padding: '20px' }}>
-              <Auction />
+              <AuctionProposeList />
             </div>
           </div>
       </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './Profile.module.css';
 import { Button } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 const FollowButton = ({ label, pageUrl }) => {
   const openPopup = () => {
@@ -12,6 +14,10 @@ const FollowButton = ({ label, pageUrl }) => {
       {label}
     </Button>
   );
+};
+
+const uploadArtwork = ({ label, pageUrl }) => {
+  window.open(pageUrl, '_blank', 'width=600,height=400');
 };
 
 const Profile = (props) => {
@@ -45,6 +51,9 @@ const Profile = (props) => {
           <FollowButton label="Follow" pageUrl="/follow-page"/>
           <FollowButton label="Followed" pageUrl="/followed-page" />
         </div>
+        <IconButton aria-label="upload" size="large" color='secondary'>
+          <AddCircleRoundedIcon size="large" onClick={uploadArtwork}/>
+        </IconButton>
       </div>
     </div>
   );

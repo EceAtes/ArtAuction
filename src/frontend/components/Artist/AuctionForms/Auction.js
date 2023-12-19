@@ -10,7 +10,7 @@ const approveBid =()=>{
 BOUGHT BY vs. EDIT/DELETE ICONS
 LEADING BID VE BID HISTORY HEP GÖZÜKSÜN
 */
-const Proposal = (props) => {
+const ProposedAuction = (props) => {
   return (
     <div className={styles.proposalContainer}>
       <h3 className={styles.proposalHeader}>{props.title}</h3>
@@ -34,9 +34,6 @@ const Proposal = (props) => {
             <b>Creation Date: </b> {props.creationDate}
           </div>
           <div className={styles.info}>
-            <b>Creation Place: </b> {props.creationPlace}
-          </div>
-          <div className={styles.info}>
             <b>Auction Proposal Date: </b> {props.auctionProposalDate}
           </div>
           <div className={styles.info}>
@@ -55,9 +52,15 @@ const Proposal = (props) => {
                 color: 'purple',
                 marginTop: '40px',
             }}>Leading Bid: </b> {props.leadingBid} tokens
-            <Button variant="contained" color="secondary" onClick={approveBid}>
-                Decide on Bid
+            <div>
+            <Button variant="contained" color="error" onClick={approveBid}>
+                Reject
             </Button>
+            <Button variant="contained" color="success" onClick={approveBid}>
+                Accept
+            </Button>
+            </div>
+            
           </div>
         </div>
         <div className={styles.artistAndButtonsContainer}>
@@ -86,4 +89,4 @@ const Proposal = (props) => {
   );
 };
 
-export default Proposal;
+export default ProposedAuction;

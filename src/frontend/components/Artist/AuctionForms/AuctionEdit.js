@@ -61,8 +61,6 @@ const EditAuction = () => {
         </div>
 
         <div className={styles.EditAuction}>
-          <label className={styles.EditAuction} htmlFor="startDate">Start Date:</label>
-          <input  className={styles.EditAuction}type="date" id="startDate" name="startDate" />
 
           <label className={styles.EditAuction} htmlFor="endDate">End Date:</label>
           <input className={styles.EditAuction} type="date" id="endDate" name="endDate" />
