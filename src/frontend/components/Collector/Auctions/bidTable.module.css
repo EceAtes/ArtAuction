@@ -1,0 +1,28 @@
+
+.bidTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .bidTable th, .bidTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Center the text in cells */
+  }
+  
+  .bidTable thead {
+    background-color: #e95793;
+    color: white; /* Set text color in the header */
+  }
+  
+  /* Optional: Add hover effect on rows */
+  .bidTable tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Optional: Style the first row differently (if needed) */
+  .bidTable tbody tr:first-child {
+    font-weight: bold;
+    background-color: #eee;
+  }

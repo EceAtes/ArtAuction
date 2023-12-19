@@ -1,0 +1,72 @@
+
+.collectorProfileContainer {
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%; /* 100% of the viewport height */
+  width: 100%; /* 100% of the viewport width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.contentContainer{
+  height: auto; /* Adjust as needed */
+  width: 100%;
+  display: flex;
+  flex-direction: row; /* Adjust if you want a column layout */
+  justify-content: space-between;
+  overflow: visible;
+  margin-top: 20px;
+  padding: 20px; /* Add padding as needed */
+}
+
+.collectorBox{
+  width: 400px;
+  background-color: pink;
+  flex: 0 0 auto;
+  height: 300px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin-right: 10px; /* Increase the margin to create more space */
+  margin-left: 10px;
+  margin-top: 50px;  /* Adjust the top margin based on your layout */
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.profilePicture {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.collectorInfo {
+  font-size: 14px;
+}
+
+.button {
+  padding: 8px 12px;
+  background-color: #e95793;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.button:hover {
+  background-color: #fff;
+  color: #e95793;
+  border: 2px solid #e95793;
+}  
+
+.auction{
+  width: 70%;
+}
