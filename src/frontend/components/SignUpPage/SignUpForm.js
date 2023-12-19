@@ -1,14 +1,53 @@
 import styles from "./SignUp.module.css";
 import { useState } from "react";
+import { signUpApiFunction } from "@/pages/api/user";
+import AlertModal from "./AlertModal";
+import { useRouter } from "next/router";
+
 const SignUpForm = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userRole, setUserRole] = useState("artist");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+  const [isFailureModalVisible, setIsFailureModalVisible] = useState(false);
+
+  const router = useRouter(); // Initialize useRouter
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //api
+    setIsLoading(true);
+
+    console.log(name, email, password, userRole);
+
+    signUpApiFunction(name, email, password, userRole)
+      .then((data) => {
+        console.log("Signup successful ", data);
+        setIsSuccessModalVisible(true);
+      })
+      .catch((error) => {
+        console.error("Signup failed", error);
+        setIsFailureModalVisible(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const closeSuccessModal = () => {
+    router.push('/'); // Navigate to the main page
+
+  };
+
+  const closeErrorModal = () => {
+    setIsSuccessModalVisible(false);
+    setIsFailureModalVisible(false);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setUserRole("artist");
+    setIsLoading(false);
   };
 
   return (
@@ -59,8 +98,8 @@ const SignUpForm = (props) => {
               className={styles.radioInput}
               name="userType"
               value="artist"
-              checked={userType === "artist"}
-              onChange={(e) => setUserType(e.target.value)}
+              checked={userRole === "artist"}
+              onChange={(e) => setUserRole(e.target.value)}
             />
             Artist
           </label>
@@ -70,18 +109,31 @@ const SignUpForm = (props) => {
               className={styles.radioInput}
               name="userType"
               value="collector"
-              checked={userType === "collector"}
-              onChange={(e) => setUserType(e.target.value)}
+              checked={userRole === "collector"}
+              onChange={(e) => setUserRole(e.target.value)}
             />
             Collector
           </label>
         </div>
         <div className={styles.buttonWrapper}>
           <button type="submit" className={styles.submitButton}>
-            Create Account
+            {isLoading ? "Loading..." : "Create Account"}
           </button>
         </div>
       </form>
+      {isSuccessModalVisible && (
+        <AlertModal
+          message="User Created Successfully"
+          onClose={closeSuccessModal}
+        />
+      )}
+
+      {isFailureModalVisible && (
+        <AlertModal
+          message="There was an issue creating the user. Please try again later."
+          onClose={closeErrorModal}
+        />
+      )}
     </>
   );
 };

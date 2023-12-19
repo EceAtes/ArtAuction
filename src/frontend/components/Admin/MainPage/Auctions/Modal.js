@@ -1,14 +1,97 @@
-import styles from "./AuctionList.module.css";
+import {
+  adminAddAuctionMenuApiFunction,
+  adminAddAuctionToExhibitionApiFunction,
+  adminCreateExhibitionApiFunction,
+  adminRemoveAuctionFromExhibitionApiFunction,
+} from "@/pages/api/admin";
+import styles from "./Modal.module.css";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { capitalize } from "@mui/material";
 
 const Modal = (props) => {
-  const [exhibitionId, setExhibitionId] = useState("");
+  const [exhibitionId, setExhibitionId] = useState();
+
+  const [oldExhibitionId, setOldExhibitionId] = useState(null);
+  const [oldExhibitionName, setOldExhibitionName] = useState(null);
+
   const [newExhibitionName, setNewExhibitionName] = useState("");
   const [newExhibitionDescription, setNewExhibitionDescription] = useState("");
 
-  const addToExhibitionHandler = (event) => {
+  const [exhibitions, setExhibitions] = useState([]);
+
+  //ADD
+  const submitHandler = async (event) => {
     event.preventDefault();
+
+    try {
+      const adminId = parseInt(localStorage.getItem("userID"), 10);
+      const auctionId = parseInt(props.auctionID, 10);
+
+      if (oldExhibitionId !== null && exhibitionId !== oldExhibitionId) {
+        await adminRemoveAuctionFromExhibitionApiFunction(
+          oldExhibitionId,
+          auctionId
+        );
+      }
+      if (exhibitionId == -1) {
+        console.log("Creating new exhibition");
+        await adminCreateExhibitionApiFunction(
+          adminId,
+          newExhibitionName,
+          newExhibitionDescription,
+          auctionId
+        );
+      } else if (exhibitionId !== null) {
+        console.log("Adding to existing exhibition");
+        await adminAddAuctionToExhibitionApiFunction(exhibitionId, auctionId);
+      }
+    } catch (error) {
+      console.error("Operation failed", error.message || error);
+    } finally {
+      props.closeModal();
+      await fetchData();
+    }
+  };
+
+  //REMOVE
+  const removeHandler = async () => {
+    try {
+      const auctionId = parseInt(props.auctionID, 10);
+      await adminRemoveAuctionFromExhibitionApiFunction(
+        oldExhibitionId,
+        auctionId
+      );
+    } catch (error) {
+      console.error("Removal failed", error.message || error);
+    } finally {
+      props.closeModal();
+      await fetchData();
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await adminAddAuctionMenuApiFunction(props.auctionID);
+      setExhibitions(data);
+
+      const oldExhibition = data.find(
+        (exhibition) => exhibition.hasTheAuctionAsked
+      );
+      if (oldExhibition) {
+        setOldExhibitionId(oldExhibition.exhibitionID);
+        setOldExhibitionName(oldExhibition.exhibitionName);
+      } else {
+        setOldExhibitionId(null);
+        setOldExhibitionName(null);
+      }
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    }
   };
 
   return (
@@ -19,22 +102,22 @@ const Modal = (props) => {
             <CloseIcon fontSize="large"></CloseIcon>
           </button>
         </div>
-        <h3 className={styles.modalHeader}>Add {props.auctionName} to Exhibition</h3>
+        <h3 className={styles.modalHeader}>
+          Add {capitalize(props.title)} to Exhibition
+        </h3>
 
-
-        <form onSubmit={addToExhibitionHandler}>
-          {props.availableExhibitions.map((exhibition) => (
-            <div className={styles.radioWrapper}>
+        <form onSubmit={submitHandler}>
+          {exhibitions.map((exhibition) => (
+            <div className={styles.radioWrapper} key={exhibition.exhibitionID}>
               <label className={styles.radioLabel}>
                 <input
                   type="radio"
                   className={styles.radioInput}
                   name="exhibition"
-                  value={exhibition.id}
-                  /*checked={userType === "artist"}*/
+                  value={exhibition.exhibitionID}
                   onChange={(e) => setExhibitionId(e.target.value)}
                 />
-                {exhibition.title}
+                {exhibition.exhibitionName}
               </label>
             </div>
           ))}
@@ -46,7 +129,6 @@ const Modal = (props) => {
                 className={styles.radioInput}
                 name="exhibition"
                 value={-1}
-                /*checked={userType === "artist"}*/
                 onChange={(e) => setExhibitionId(e.target.value)}
               />
               {"Create New Exhibition"}
@@ -61,6 +143,7 @@ const Modal = (props) => {
                 id="newExhibitionName"
                 name="newExhibitionName"
                 placeholder="Exhibition Name"
+                required
                 value={newExhibitionName}
                 onChange={(e) => setNewExhibitionName(e.target.value)}
               />
@@ -70,6 +153,7 @@ const Modal = (props) => {
                 id="newExhibitionName"
                 name="newExhibitionName"
                 placeholder="Description"
+                required
                 value={newExhibitionDescription}
                 onChange={(e) => setNewExhibitionDescription(e.target.value)}
               />
@@ -77,10 +161,26 @@ const Modal = (props) => {
           )}
 
           <div className={styles.buttonWrapper}>
-            <button type="submit" className={styles.addButton}>
-              Add
+            <button
+              type="submit"
+              className={styles.addButton}
+              onClick={submitHandler}
+            >
+              Submit
             </button>
           </div>
+
+          {oldExhibitionId && (
+            <div className={styles.buttonWrapper}>
+              <button
+                type="submit"
+                className={styles.removeButton}
+                onClick={removeHandler}
+              >
+                Remove {capitalize(props.title)} from {oldExhibitionName}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
