@@ -15,9 +15,10 @@ const Exhibition = (props) => {
       <div className={styles.auctionListContainer}>
         {props.auctions.map((auction) => (
           <ExhibitionAuction
-            key={auction.id}
-            imageUrl={auction.imageUrl}
-            auctionName={auction.auctionName}
+            key={auction.auctionID}
+            auctionID={auction.auctionID}
+            imageUrl={"/photos/loginpage.png"}
+            auctionName={auction.title}
           />
         ))}
       </div>
