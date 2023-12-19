@@ -23,6 +23,7 @@ const LoginPageForm = (props) => {
         router.push(`/${data.role}/${data.userID}`);
       })
       .catch((error) => {
+        alert(error.message);
         console.error("Signin failed", error);
       })
       .finally(() => {

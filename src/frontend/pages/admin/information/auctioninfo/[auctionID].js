@@ -11,10 +11,10 @@ const auctionInfoPage = (props) => {
   const { auctionID } = router.query;
 
   useEffect(() => {
-    console.log(auctionID);
+    //console.log(auctionID);
 
     if (auctionID) {
-      console.log(auctionID);
+      //console.log(auctionID);
       auctionGetSingleAuctionApiFunction(auctionID)
         .then((data) => {
           console.log("Auction details successful ", data);
