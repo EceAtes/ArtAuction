@@ -1,3 +1,6 @@
+create database artAuction;
+use artAuction;
+
 create table User(
     userID int not null AUTO_INCREMENT,
     name varchar(30) not null,
@@ -30,7 +33,7 @@ create table ArtUser(
     tokens int check (tokens >= 0) not null,
     bio varchar(50) not null,
     country varchar(20) not null,
-    highlighter_adminID boolean DEFAULT FALSE,
+    highlighter_adminID int DEFAULT NULL,
     FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (userID)
 );
@@ -78,20 +81,20 @@ create table Bid(
 );
 
 create table Auction(
-    auctionID int not null auto_increment,
-    title varchar(50) not null,
+    auctionID int NOT NULL AUTO_INCREMENT,
+    title varchar(50) NOT NULL,
     auction_status varchar(10) DEFAULT 'proposed',
-    uploaded_by_artist_ID int not null,
-    type varchar(20) not null,
-    size varchar(20) not null,
-    creationDate DATE CHECK (creationDate < CURRENT_DATE) not null,
-    uploadDate DATE not null, 
+    uploaded_by_artist_ID int NOT NULL,
+    type varchar(20) NOT NULL,
+    size varchar(20) NOT NULL,
+    creationDate DATE NOT NULL,
+    uploadDate DATE NOT NULL, 
     startDate DATE DEFAULT NULL,
-    description varchar(150) not null,
-    endDate DATE CHECK (endDate > CURRENT_DATE) not null,
+    description varchar(150) NOT NULL,
+    endDate DATE NOT NULL,
     isEnded boolean DEFAULT FALSE,
-    minimumBidIncrease int not null,
-    baseBid int not null,
+    minimumBidIncrease int NOT NULL,
+    baseBid int NOT NULL,
     verifier_admin_ID int DEFAULT NULL,
     highlighter_admin_ID int DEFAULT NULL,
     FOREIGN KEY (uploaded_by_artist_ID) REFERENCES Artist(userID),
@@ -142,3 +145,76 @@ create table Collect(
     FOREIGN KEY (auctionID) REFERENCES Auction(auctionID) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (collectionID, auctionID)
 );
+
+-- Inserting Users
+INSERT INTO User (name, email, password, role) VALUES ('Admin1', 'admin1@hotmail.com', '1234', 'admin');
+INSERT INTO User (name, email, password, role) VALUES ('Artist1', 'artist1@hotmail.com', '1234', 'artist');
+INSERT INTO User (name, email, password, role) VALUES ('Artist2', 'artist2@hotmail.com', '1234', 'artist'); 
+INSERT INTO User (name, email, password, role) VALUES ('Artist3', 'artist3@hotmail.com', '1234', 'artist'); 
+INSERT INTO User (name, email, password, role) VALUES ('Collector1', 'collector1@hotmail.com', '1234', 'collector'); 
+INSERT INTO User (name, email, password, role) VALUES ('Collector2', 'collector2@hotmail.com', '1234', 'collector'); 
+INSERT INTO User (name, email, password, role) VALUES ('Collector3', 'collector3@hotmail.com', '1234', 'collector');
+
+
+-- Inserting Admin
+INSERT INTO Admin (userID, specialization) VALUES (1, 'admin');
+
+-- Inserting ArtUser
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (2, 100, 'Passionate artist', 'USA', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (3, 150, 'Art enthusiast', 'Canada', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (4, 250, 'Passionate artist', 'Turkey', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (5, 350, 'Art enthusiast', 'Russia', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (6, 450, 'Passionate collector', 'France', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (7, 550, 'Art enthusiast', 'Spain', null);
+
+-- Inserting Artist
+INSERT INTO Artist (userID, art_specialization) VALUES (2, 'Renaissance Art');
+INSERT INTO Artist (userID, art_specialization) VALUES (3, 'Classical Art');
+INSERT INTO Artist (userID, art_specialization) VALUES (4, 'Contemporary Art');
+
+-- Inserting Collector
+INSERT INTO Collector (userID, art_tag) VALUES (5, 'Renaissance Art');
+INSERT INTO Collector (userID, art_tag) VALUES (6, 'Classical Art');
+INSERT INTO Collector (userID, art_tag) VALUES (7, 'Contemporary Art');
+
+-- Inserting Follows
+INSERT INTO Follows (followerID, followedID) VALUES (3, 2);
+INSERT INTO Follows (followerID, followedID) VALUES (2, 3);
+INSERT INTO Follows (followerID, followedID) VALUES (3, 4);
+INSERT INTO Follows (followerID, followedID) VALUES (4, 5);
+
+
+-- Inserting Collection
+INSERT INTO Collection (collection_name, creator_collectorID) VALUES ('Renaissance Collection', 5);
+INSERT INTO Collection (collection_name, creator_collectorID) VALUES ('Contemporary Collection', 5);
+INSERT INTO Collection (collection_name, creator_collectorID) VALUES ('Classical Collection', 7);
+
+-- Inserting Bid
+INSERT INTO Bid (bidAmount, date) VALUES (500, '2023-12-15');
+INSERT INTO Bid (bidAmount, date) VALUES (600, '2023-12-15');
+INSERT INTO Bid (bidAmount, date) VALUES (700, '2023-12-15');
+
+-- Inserting Auction
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Abstract Artwork', 2, '120x120', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful abstract painting.', '2023-12-21', 50, 200);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Classical Artwork', 3, '200x500', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful classical painting.', '2023-12-21', 50, 400);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
+
+-- Inserting Save
+INSERT INTO Save (collectorID, auctionID) VALUES (5, 1);
+
+-- Inserting Offer
+INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (1, 1, 5);
+INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (2, 2, 6);
+INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (3, 3, 7);
+
+
+-- Inserting Exhibition
+INSERT INTO Exhibition (creatorAdminID, exhibitionName, exhibitionDescriptor) VALUES (1, 'Turkish Republics Centenary Celebration', 'Each masterpiece in thistoneion on');
+
+-- Inserting Curate
+INSERT INTO Curate (exhibitionID, auctionID) VALUES (1, 1);
+INSERT INTO Curate (exhibitionID, auctionID) VALUES (1, 2);
+INSERT INTO Curate (exhibitionID, auctionID) VALUES (1, 3);
+
+-- Inserting Collect
+INSERT INTO Collect (collectionID, auctionID) VALUES (1, 1);
