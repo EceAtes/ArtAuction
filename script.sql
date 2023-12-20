@@ -1,7 +1,7 @@
 create table User(
     userID int not null AUTO_INCREMENT,
     name varchar(30) not null,
-    email varchar(40) not null,
+    email varchar(40) not null unique,
     password varchar(40) not null,
     role varchar(30),
     PRIMARY KEY (userID)
@@ -27,7 +27,7 @@ create table Admin(
 
 create table ArtUser(
     userID int not null,
-    tokens int not null,
+    tokens int check (tokens >= 0) not null,
     bio varchar(50) not null,
     country varchar(20) not null,
     highlighter_adminID boolean DEFAULT FALSE,
@@ -84,11 +84,11 @@ create table Auction(
     uploaded_by_artist_ID int not null,
     type varchar(20) not null,
     size varchar(20) not null,
-    creationDate DATE not null,
+    creationDate DATE CHECK (creationDate < CURRENT_DATE) not null,
     uploadDate DATE not null, 
     startDate DATE DEFAULT NULL,
     description varchar(150) not null,
-    endDate DATE not null,
+    endDate DATE CHECK (endDate > CURRENT_DATE) not null,
     isEnded boolean DEFAULT FALSE,
     minimumBidIncrease int not null,
     baseBid int not null,

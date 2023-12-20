@@ -104,19 +104,22 @@ public class ArtUserRepository {
 
     public List<Map<String, Object>> filterPeople(String country, String userType) {
         String sql =
-        "SELECT ArtUser.*, User.* " +
+        "SELECT ArtUser.*, User.*" +
         "FROM ArtUser " +
         "JOIN User ON ArtUser.userID = User.userID " +
-        "WHERE ArtUser.country = ? AND " +
+        "WHERE " +
         "(" +
-        "    (? = 'Artist' AND EXISTS (SELECT 1 FROM Artist WHERE Artist.userID = ArtUser.userID)) " +
-        "    OR " +
-        "    (? = 'Collector' AND EXISTS (SELECT 1 FROM Collector WHERE Collector.userID = ArtUser.userID)) " +
-        "    OR " +
+        "    (ArtUser.country = ? AND EXISTS (SELECT 1 FROM ArtUser WHERE ArtUser.country = ?)) OR " +
         "    (? = 'Any') " +
-        ") ";
+        ") " +
+        "AND " +
+        "(" +
+        "    (? = 'Artist' AND EXISTS (SELECT 1 FROM Artist WHERE Artist.userID = ArtUser.userID)) OR " +
+        "    (? = 'Collector' AND EXISTS (SELECT 1 FROM Collector WHERE Collector.userID = ArtUser.userID)) OR " +
+        "    (? = 'Any' AND (EXISTS (SELECT 1 FROM Artist WHERE Artist.userID = ArtUser.userID) OR EXISTS (SELECT 1 FROM Collector WHERE Collector.userID = ArtUser.userID))) " +
+        ");";
         
-        List<Map<String, Object>> filtered = jdbcTemplate.queryForList(sql, country, userType, userType, userType);
+        List<Map<String, Object>> filtered = jdbcTemplate.queryForList(sql, country, country, country, userType, userType, userType);
         return filtered;
     }
 
