@@ -29,14 +29,20 @@ export const API_EDITOR_PICKS_EXHIBITIONS = `${BASE_URL}editors-picks/exhibition
 export const API_AUCTION_GET_SINGLE_AUCTION = `${BASE_URL}auction/`;
 export const API_AUCTION_GET_POPULAR_AUCTIONS = `${BASE_URL}auction/getPopularAuction`;
 export const API_AUCTION_GET_RECENT_AUCTIONS = `${BASE_URL}auction/getRecentAuction`;
+export const API_AUCTION_GET_PAST_AUCTIONS = `${BASE_URL}auction/pastAuctions/`;
+export const API_AUCTION_GET_ONGOING_AUCTIONS = `${BASE_URL}auction/ongoingAuctions/`;
+export const API_AUCTION_GET_SAVED_AUCTIONS = `${BASE_URL}auction/savedAuctions/`;
+
 
 //ART USERS URLS
 export const API_ART_USER_FILTER_PEOPLE = `${BASE_URL}art-user/filter-people`;
 export const API_ART_USER_TOP_COLLECTORS = `${BASE_URL}art-user/topCollectors`;
 export const API_ART_USER_TOP_ARTISTS = `${BASE_URL}art-user/topArtists`;
 export const API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW = `${BASE_URL}art-user/auctions-from-people-you-follow`;
+export const API_ART_USER_SEARCH = `${BASE_URL}art-user/search`;
 
 //ARTIST URLS
 export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artist`;
+export const API_ARTIST_GET_ENDED_AUCTIONS = `${BASE_URL}artist/getEndedAuctions/`;
 
 //COLLECTOR URLS

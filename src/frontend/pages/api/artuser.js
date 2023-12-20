@@ -1,6 +1,7 @@
 import {
   API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW,
   API_ART_USER_FILTER_PEOPLE,
+  API_ART_USER_SEARCH,
   API_ART_USER_TOP_ARTISTS,
   API_ART_USER_TOP_COLLECTORS,
 } from "./base";
@@ -56,6 +57,22 @@ export const artUserAuctionsFromPeopleApiFunction = async (userID) => {
   const res = await fetch(API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW, {
     method: "PATCH",
     body: JSON.stringify({ userID }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("get failed!");
+  }
+};
+
+//SEARCH
+export const artUserSearchApiFunction = async (search_key) => {
+  const res = await fetch(API_ART_USER_SEARCH, {
+    method: "PATCH",
+    body: JSON.stringify({ search_key }),
     headers: {
       "Content-Type": "application/json",
     },

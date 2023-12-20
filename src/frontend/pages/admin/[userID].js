@@ -2,11 +2,13 @@ import Navbar from "@/components/Admin/UI/Navbar/Navbar";
 import { useState, useEffect, use } from "react";
 import styles from "../../components/Admin/MainPage/AdminMainPage.module.css";
 import AuctionList from "@/components/Admin/MainPage/Auctions/AuctionList";
-import SearchIcon from "@mui/icons-material/Search";
 import PeopleList from "@/components/Admin/MainPage/People/PeopleList";
 import { adminHomeApiFunction } from "../api/admin";
+import { artUserSearchApiFunction } from "../api/artuser";
+import SearchEntry from "@/components/Admin/MainPage/SearchEntry/SearchEntry";
+import SearchResult from "@/components/Admin/MainPage/SearchEntry/SearchResults";
 const AdminMainPage = (props) => {
-  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
   const [auctionList, setAuctionList] = useState([]);
   const [artUserList, setArtUserList] = useState([]);
 
@@ -22,35 +24,35 @@ const AdminMainPage = (props) => {
       });
   }, []);
 
-  const handleSearch = async (event) => {
+  const handleSearch = async (event, search) => {
     event.preventDefault();
-    //api
+    console.log(search);
+    artUserSearchApiFunction(search)
+      .then((data) => {
+        console.log("Admin search successful ", data);
+        setSearchResult(data);
+      })
+      .catch((error) => {
+        console.error("Admin search failed", error);
+      });
+  };
+
+  const handeCloseSearch = async (event) => {
+    event.preventDefault();
+    setSearchResult(null);
   };
 
   return (
     <>
       <Navbar></Navbar>
       <div className={styles.container}>
-        <p className={styles.searchText}>
-          Search to discover auctions, exhibitions, artists or collectors all
-          around the world
-        </p>
-        <div className={styles.search}>
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              className={styles.formInput}
-              id="text"
-              name="text"
-              placeholder=""
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            ></input>
-            <button type="submit" className={styles.searchButton}>
-              <SearchIcon />
-            </button>
-          </form>
-        </div>
+        <SearchEntry onClick={handleSearch}></SearchEntry>
+        {searchResult != null && (
+          <SearchResult
+            searchResult={searchResult}
+            closeModal={handeCloseSearch}
+          ></SearchResult>
+        )}
         {auctionList.length > 0 ? (
           <AuctionList auctions={auctionList} />
         ) : (
