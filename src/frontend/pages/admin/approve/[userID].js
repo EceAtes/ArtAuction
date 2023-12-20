@@ -24,7 +24,7 @@ const AdminProposalsPage = (props) => {
         {approveAuctions.length > 0 ? (
           <ApproveAuctionList approveAuctions={approveAuctions}></ApproveAuctionList>
         ) : (
-          <h2 className={styles.heading}>No proposed auctions available.</h2>
+          <h2 className={styles.heading}>No auctions to be approved available.</h2>
         )}
       </div>
     </>
