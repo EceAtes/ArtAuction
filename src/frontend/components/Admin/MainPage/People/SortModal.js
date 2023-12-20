@@ -18,7 +18,7 @@ const SortModal = (props) => {
             <CloseIcon fontSize="large"></CloseIcon>
           </button>
         </div>
-        <h3 className={styles.modalHeader}>Sort The Auctions</h3>
+        <h3 className={styles.modalHeader}>Sort The People</h3>
 
         <form onSubmit={submitHandler}>
           <div className={styles.radioWrapper} key={1}>
