@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import SearchEntry from "@/components/Collector/UI/SearchEntry/SearchEntry";
+import SearchResult from "@/components/Collector/UI/SearchEntry/SearchResult";
 import Navbar from "@/components/Collector/UI/Navbar/Navbar";
 /*import styles from "../../components/Collector/MainPage/CollectorMainPage.module.css";*/
 import styles from "@/components/Admin/Exhibitions/AdminExhibitionsPage.module.css";
@@ -13,22 +14,23 @@ import AuctionList from "@/components/Artist/MainPage/Auctions/AuctionList";
 
 import {
   artUserAuctionsFromPeopleApiFunction,
+  artUserSearchApiFunction,
   artUsersGetTopArtistsApiFunction,
   artUsersGetTopCollectorsApiFunction,
 } from "../api/artuser";
 import PeopleList from "@/components/Artist/MainPage/PeopleList/PeopleList";
 
 export default function CollectorMainPage() {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
   const [followedPeopleAuctions, setFollowedPeopleAuctions] = useState([]);
   const [popularAuctions, setPopularAuctions] = useState([]);
   const [recentAuctions, setRecentAuctions] = useState([]);
   const [topCollectors, setTopCollectors] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
 
-  const userID = parseInt(localStorage.getItem("userID"), 10);
-
   useEffect(() => {
+    const userID = parseInt(localStorage.getItem("userID"), 10);
+
     artUserAuctionsFromPeopleApiFunction(userID)
       .then((data) => {
         console.log("followed auctions successful ", data);
@@ -59,10 +61,23 @@ export default function CollectorMainPage() {
       });
   }, []);
 
-  const handleSearch = (value) => {
-    setSearchValue(value);
+  const handleSearch = async (event, search) => {
+    event.preventDefault();
+    console.log(search);
+    artUserSearchApiFunction(search)
+      .then((data) => {
+        console.log("Admin search successful ", data);
+        setSearchResult(data);
+      })
+      .catch((error) => {
+        console.error("Admin search failed", error);
+      });
   };
 
+  const handeCloseSearch = async (event) => {
+    event.preventDefault();
+    setSearchResult(null);
+  };
   return (
     <main
       style={{
@@ -80,9 +95,16 @@ export default function CollectorMainPage() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: "40px",
         }}
       >
-        <SearchEntry onSearch={handleSearch} />
+        <SearchEntry onClick={handleSearch}></SearchEntry>
+        {searchResult != null && (
+          <SearchResult
+            searchResult={searchResult}
+            closeModal={handeCloseSearch}
+          ></SearchResult>
+        )}
       </div>
 
       <div className={styles.container}>
