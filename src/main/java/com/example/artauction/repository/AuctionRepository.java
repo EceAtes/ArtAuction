@@ -153,19 +153,19 @@ public class AuctionRepository {
         return auctions;
     }
 
-    public List<Map<String, Object>> getPastAuctions(int userID) {
+    public List<Map<String, Object>> getPastAuctionsCollector(int userID) {
         String sql = "SELECT * FROM (`Auction` a NATURAL JOIN `Offer` o) NATURAL JOIN `Bid` b WHERE a.auction_status = ? AND o.collectorID = ? ORDER BY a.startDate, b.date DESC";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "closed", userID);
         return rows;
     }
 
-    public List<Map<String, Object>> getOngoingAuctions(int userID) {
+    public List<Map<String, Object>> getOngoingAuctionsCollector(int userID) {
         String sql = "SELECT * FROM (`Auction` a NATURAL JOIN `Offer` o) NATURAL JOIN `Bid` b WHERE a.auction_status = ? AND o.collectorID = ? ORDER BY a.startDate, b.date DESC";
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "approved", userID);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "ongoing", userID);
         return rows;
     }
 
-    public List<Map<String, Object>> getSavedAuctions(int userID) {
+    public List<Map<String, Object>> getSavedAuctionsCollector(int userID) {
         String sql = "SELECT a.* FROM `Auction` a NATURAL JOIN `Save` s WHERE s.collectorID = ? ";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, userID);
         return rows;
@@ -189,7 +189,6 @@ public class AuctionRepository {
         return rows;
     }
 
-    //i think it works, ama bendeki ended olanların hiçbirinde bid yoktu
     public List<Map<String, Object>> getEndedAuctionSales(int artistID) {
         String sql = "SELECT a.*, u.name, " +
                 "(SELECT b.bidAmount FROM `Bid` b " +
@@ -202,6 +201,24 @@ public class AuctionRepository {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,  "Leading", "ended", "admin_ok", true , artistID);
         return rows;
 
+    }
+
+    public List<Map<String, Object>> notApprovedAuctionsArtist(int userID) {
+        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND a.uploaded_by_artist_ID = ? ORDER BY a.startDate DESC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "proposed", userID);
+        return rows;
+    }
+
+    public List<Map<String, Object>> getOngoingAuctionsArtist(int userID) {
+        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND a.uploaded_by_artist_ID = ? ORDER BY a.startDate DESC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "ongoing", userID);
+        return rows;
+    }
+
+    public List<Map<String, Object>> soldAuctionsArtist(int userID) {
+        String sql = "SELECT * FROM `Auction` a WHERE a.auction_status = ? AND a.uploaded_by_artist_ID = ? ORDER BY a.startDate DESC";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, "closed", userID);
+        return rows;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.artauction.controller;
 
 import com.example.artauction.dto.CollectionDTO;
+import com.example.artauction.repository.AuctionRepository;
 import com.example.artauction.repository.CollectionRepository;
 import com.example.artauction.repository.CollectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,13 @@ public class CollectorController {
 
     private CollectorRepository collectorRepository;
     private CollectionRepository collectionRepository;
+    private AuctionRepository auctionRepository;
 
     @Autowired
-    public CollectorController(CollectorRepository collectorRepository, CollectionRepository collectionRepository) {
+    public CollectorController(CollectorRepository collectorRepository, CollectionRepository collectionRepository, AuctionRepository auctionRepository) {
         this.collectorRepository = collectorRepository;
         this.collectionRepository = collectionRepository;
+        this.auctionRepository = auctionRepository;
     }
 
     @PostMapping("/bid")
@@ -114,5 +117,20 @@ public class CollectorController {
     @PatchMapping("/getTokens")
     public ResponseEntity<HttpStatus> getTokens(@RequestBody(required = true) Map<String, Integer> requestMap){
         return collectorRepository.getTokens(requestMap.get("userID"), requestMap.get("tokens"));
+    }
+
+    @GetMapping(path = "pastAuctions/{userID}")
+    public List<Map<String, Object>> getPastAuctionsCollector(@PathVariable String userID) {
+        return auctionRepository.getPastAuctionsCollector(Integer.parseInt(userID));
+    }
+
+    @GetMapping(path = "ongoingAuctions/{userID}")
+    public List<Map<String, Object>> getOngoingAuctionsCollector(@PathVariable String userID) {
+        return auctionRepository.getOngoingAuctionsCollector(Integer.parseInt(userID));
+    }
+
+    @GetMapping(path = "savedAuctions/{userID}")
+    public List<Map<String, Object>> getSavedAuctionsCollector(@PathVariable String userID) {
+        return auctionRepository.getSavedAuctionsCollector(Integer.parseInt(userID));
     }
 }

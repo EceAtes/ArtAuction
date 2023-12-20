@@ -1,0 +1,55 @@
+--DELETE USER IF ARTUSER IS DELETED
+CREATE TRIGGER DeleteUserAfterArtUserDelete
+    ON ArtUser
+    AFTER DELETE
+AS
+BEGIN
+DELETE FROM User
+WHERE UserID IN (SELECT UserID FROM deleted);
+END;
+
+
+--DELETE USER IF ADMIN IS DELETED
+CREATE TRIGGER DeleteUserAfterAdminDelete
+    ON Admin
+    AFTER DELETE
+AS
+BEGIN
+DELETE FROM User
+WHERE UserID IN (SELECT UserID FROM deleted);
+END;
+
+--DELETE ARTUSER IF ARTIST IS DELETED
+CREATE TRIGGER DeleteArtUserAfterArtistDelete
+    ON Artist
+    AFTER DELETE
+AS
+BEGIN
+DELETE FROM User
+WHERE UserID IN (SELECT UserID FROM deleted);
+END;
+
+--DELETE ARTUSER IF COLLECTOR IS DELETED
+CREATE TRIGGER DeleteArtUserAfterArtistDelete
+    ON Collector
+    AFTER DELETE
+AS
+BEGIN
+DELETE FROM User
+WHERE UserID IN (SELECT UserID FROM deleted);
+END;
+
+--CHECK IF THE AUCTION IS NOT SOLD BEFORE DELETE
+CREATE TRIGGER PreventDeleteSoldAuction
+    ON Auction
+    BEFORE DELETE
+AS
+BEGIN
+IF EXISTS (SELECT 1 FROM deleted WHERE AuctionStatus =
+'Sold')
+BEGIN
+        				RAISEERROR('Auction cannot be deleted if its
+status is sold.', 16, 1);
+ROLLBACK;
+END
+END;

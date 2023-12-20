@@ -73,6 +73,7 @@ public class ArtUserRepository {
         }
     }
 
+//Top collectors are individuals with the highest number of successful auction wins.
     public List<Map<String, Object>> seeTopCollectors() {
         String sql = "SELECT C.userID, U.role, U.name, A.bio, COUNT(*) AS Wins " +
                 "FROM `collector` C " +
@@ -80,15 +81,14 @@ public class ArtUserRepository {
                 "JOIN `bid` B ON O.bidID = B.bidID " +
                 "JOIN `user` U ON U.userID = C.userID " +
                 "JOIN `artuser` A ON A.userID = C.userID " +
-                "WHERE B.bid_status = 'Leading' " + //"won" olması lazım ama test için değiştirdim
+                "WHERE B.bid_status = 'Won' " +
                 "GROUP BY C.userID , U.role, U.name, A.bio " +
                 "ORDER BY Wins DESC ";
 
         List<Map<String,Object>> collectors = jdbcTemplate.queryForList(sql);
         return collectors;
     }
-
-    //bitmişleri sayması lazım ama status isimlerini bi tam olarak belirleyelim
+//Top artists are those who have received the highest total number of bids across all their artworks or auctions
     public List<Map<String, Object>> seeTopArtists() {
         String sql = "SELECT A.userID, U.role, U.name, Art.bio, Count(*) as compAucCount " +
                 "FROM Artist A " +

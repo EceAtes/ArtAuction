@@ -18,10 +18,11 @@ public class ArtistRepository {
     }
 
     public List<Map<String, Object>> getArtistInfo(Integer userID) {
-        String sql = "SELECT Aus.*, Au.* " +
+        String sql = "SELECT u.*, Aus.*, Au.* " +
                 "FROM Artist Ar " +
                 "JOIN ArtUser Aus ON Aus.userID = Ar.userID " +
                 "JOIN Auction Au ON Au.uploaded_by_artist_ID = Ar.userID " +
+                "JOIN `User` u ON u.userID = Ar.userID " +
                 "WHERE Ar.userID = ?";
         List<Map<String,Object>> info = jdbcTemplate.queryForList(sql, userID);
         return info;

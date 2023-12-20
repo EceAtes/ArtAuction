@@ -38,4 +38,19 @@ public class ArtistController {
         }
         return null;
     }
+
+    @GetMapping(path = "notApprovedAuctions/{userID}")
+    public List<Map<String, Object>> notApprovedAuctionsArtist(@PathVariable String userID) {
+        return auctionRepository.notApprovedAuctionsArtist(Integer.parseInt(userID));
+    }
+
+    @GetMapping(path = "ongoingAuctions/{userID}")
+    public List<Map<String, Object>> getOngoingAuctionsArtist(@PathVariable String userID) {
+        return auctionRepository.getOngoingAuctionsArtist(Integer.parseInt(userID));
+    }
+
+    @GetMapping(path = "pastAuctions/{userID}")
+    public List<Map<String, Object>> soldAuctionsArtist(@PathVariable String userID) {
+        return auctionRepository.soldAuctionsArtist(Integer.parseInt(userID));
+    }
 }
