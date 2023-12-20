@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.artauction.dto.AuctionDTO;
+import com.example.artauction.dto.SearchResponse;
 import com.example.artauction.dto.UserDTO;
 
 @Repository
@@ -138,4 +139,48 @@ public class ArtUserRepository {
         }
 
     }
+    public SearchResponse search(String searchKey) {
+        SearchResponse results = new SearchResponse();
+    
+        String searchArtist = "SELECT u.userID, u.name " +
+                              "FROM User u " +
+                              "WHERE u.role = 'Artist' AND name LIKE ?";
+
+        List<Map<String, Object>> matchingArtists = jdbcTemplate.queryForList(searchArtist, "%" + searchKey + "%");
+        results.setArtists(matchingArtists);
+    
+        String searchCollector = "SELECT u.userID, u.name " +
+                                 "FROM User u " + 
+                                 "WHERE u.role = 'Collector' AND name LIKE ?";
+
+        List<Map<String, Object>> matchingCollectors = jdbcTemplate.queryForList(searchCollector, "%" + searchKey + "%");
+        results.setCollectors(matchingCollectors);
+    
+        String searchAuction = "SELECT a.*, u.name " +
+                               "FROM Auction a " +
+                               "JOIN User u ON u.userID = a.uploaded_by_artist_ID " +
+                               "WHERE title LIKE ?";
+        
+        List<Map<String, Object>> matchingAuctions = jdbcTemplate.queryForList(searchAuction, "%" + searchKey + "%");
+        results.setAuctions(matchingAuctions);
+    
+        String searchExhibition = "SELECT e.*, u.name " +
+                                  "FROM Exhibition e " +
+                                  "JOIN User u ON u.userID = e.creatorAdminID " + 
+                                  "WHERE exhibitionName LIKE ?";
+        
+        List<Map<String, Object>> matchingExhibitions = jdbcTemplate.queryForList(searchExhibition, "%" + searchKey + "%");
+        results.setExhibitions(matchingExhibitions);
+    
+        String searchCollection = "SELECT * " +
+                                  "FROM Collection c " +
+                                  "JOIN User u ON u.userID = c.creator_collectorID " + 
+                                  "WHERE collection_name LIKE ?";
+        
+        List<Map<String, Object>> matchingCollections = jdbcTemplate.queryForList(searchCollection, "%" + searchKey + "%");
+        results.setCollections(matchingCollections);
+    
+        return results;
+    }
+    
 }

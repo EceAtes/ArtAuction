@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.artauction.dto.AuctionDTO;
+import com.example.artauction.dto.SearchResponse;
 import com.example.artauction.dto.UserDTO;
 import com.example.artauction.repository.ArtUserRepository;
 
@@ -69,5 +70,10 @@ public class ArtUserController {
     @PatchMapping(path = "/editInfo")
     public ResponseEntity<HttpStatus> editInfo(@RequestBody(required = true)Map<String,String> input){
         return artUserRepository.editInfo(input);
+    }
+
+    @PatchMapping("/search")
+    public SearchResponse search(@RequestBody(required = true) Map<String, String> requestMap){
+        return artUserRepository.search(requestMap.get("search_key"));
     }
 }
