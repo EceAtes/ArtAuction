@@ -193,10 +193,17 @@ INSERT INTO Collection (collection_name, creator_collectorID) VALUES ('Classical
 INSERT INTO Bid (bidAmount, date) VALUES (500, '2023-12-15');
 INSERT INTO Bid (bidAmount, date) VALUES (600, '2023-12-15');
 INSERT INTO Bid (bidAmount, date) VALUES (700, '2023-12-15');
+INSERT INTO Bid (bidAmount, date) VALUES (800, '2023-12-15');
+INSERT INTO Bid (bidAmount, date) VALUES (900, '2023-12-15');
+INSERT INTO Bid (bidAmount, date) VALUES (1000, '2023-12-15');
+
 
 -- Inserting Auction
 INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Abstract Artwork', 2, '120x120', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful abstract painting.', '2023-12-21', 50, 200);
 INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Classical Artwork', 3, '200x500', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful classical painting.', '2023-12-21', 50, 400);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 2, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 3, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
 INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
 
 -- Inserting Save
@@ -206,7 +213,9 @@ INSERT INTO Save (collectorID, auctionID) VALUES (5, 1);
 INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (1, 1, 5);
 INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (2, 2, 6);
 INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (3, 3, 7);
-
+INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (4, 4, 7);
+INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (5, 5, 6);
+INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (6, 6, 5);
 
 -- Inserting Exhibition
 INSERT INTO Exhibition (creatorAdminID, exhibitionName, exhibitionDescriptor) VALUES (1, 'Turkish Republics Centenary Celebration', 'Each masterpiece in this exhibition captures the essence of this historic milestone, reflecting the rich heritage and progress of the Turkish Republic. Join us in celebrating this momentous occasion and bidding on these remarkable artworks that encapsulate the spirit of a nation');

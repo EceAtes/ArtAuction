@@ -24,7 +24,7 @@ public class ArtistController {
         this.auctionRepository = auctionRepository;
     }
 
-    @GetMapping("/artistInfo") //includes auction and account data
+    @PatchMapping("/artistInfo") //includes auction and account data
     public List<Map<String,Object>> getArtistInfo(@RequestBody(required = true) Map<String, Integer> requestMap){
         return artistRepository.getArtistInfo(requestMap.get("userID"));
     }
