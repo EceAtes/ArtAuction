@@ -3,17 +3,20 @@ import Navbar from "@/components/Artist/UI/Navbar";
 import styles from "../../../components/Admin/Exhibitions/AdminExhibitionsPage.module.css";
 import ViewMyAuctions from "@/components/Artist/AuctionForms/ViewAuctions";
 import { useRouter } from "next/router";
-import { artistGetEndedAuctionsApiFunction } from "@/pages/api/artist";
 import {
-  auctionGetOngoingAuctionsApiFunction,
-  auctionGetPastAuctionsApiFunction,
-} from "@/pages/api/auction";
+  artistGetEndedAuctionsApiFunction,
+  artistGetNotApprovedAuctionsApiFunction,
+  artistGetOngoingAuctionsApiFunction,
+  artistGetPastAuctionsApiFunction,
+} from "@/pages/api/artist";
 
 const ArtistMyArtworksPage = (props) => {
   const router = useRouter();
   const [endedAuctions, setEndedAuctions] = useState([]);
   const [ongoingAuctions, setOngoingAuctions] = useState([]);
-  const [soldAuctions, setSoldAuctions] = useState([]);
+  const [pastAuctions, setPastAuctions] = useState([]);
+  const [notApprovedAuctions, setNotApprovedAuctions] = useState([]);
+
   const { userID } = router.query;
 
   useEffect(() => {
@@ -23,22 +26,27 @@ const ArtistMyArtworksPage = (props) => {
         .then((data) => {
           console.log("ended auctions successful ", data);
           setEndedAuctions(data);
-          return auctionGetOngoingAuctionsApiFunction(userID);
+          return artistGetOngoingAuctionsApiFunction(userID);
         })
         .then((data) => {
           console.log("ongoing auctions successful ", data);
           setOngoingAuctions(data);
-          return auctionGetPastAuctionsApiFunction(userID);
+          return artistGetPastAuctionsApiFunction(userID);
         })
         .then((data) => {
           console.log("sold Auctions successful ", data);
-          setSoldAuctions(data);
+          setPastAuctions(data);
+          return artistGetNotApprovedAuctionsApiFunction(userID);
+        })
+        .then((data) => {
+          console.log("sold Auctions successful ", data);
+          setNotApprovedAuctions(data);
         })
         .catch((error) => {
           console.error("failed", error.message);
         });
     }
-  }, [userID]); 
+  }, [userID]);
 
   return (
     <div>
@@ -47,7 +55,8 @@ const ArtistMyArtworksPage = (props) => {
         <ViewMyAuctions
           endedAuctions={endedAuctions}
           ongoingAuctions={ongoingAuctions}
-          soldAuctions={soldAuctions}
+          pastAuctions={pastAuctions}
+          notApprovedAuctions= {notApprovedAuctions}
         />
       </div>
     </div>
