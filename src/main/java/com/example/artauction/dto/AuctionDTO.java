@@ -22,8 +22,8 @@ public class AuctionDTO {
     private String description;
     private LocalDate endDate; // if passed, admin cannot verifies
     private boolean isEnded = false;
-    private int minimumBidIncrease;
-    private int baseBid;
+    private Integer minimumBidIncrease;
+    private Integer baseBid;
     private Integer verifier_admin_ID;
     private Integer highlighter_admin_ID;
     private String artistName;

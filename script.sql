@@ -89,7 +89,7 @@ create table Auction(
     size varchar(20) NOT NULL,
     creationDate DATE NOT NULL,
     uploadDate DATE NOT NULL, 
-    startDate DATE DEFAULT NULL,
+    startDate DATE DEFAULT '2000-01-01',
     description varchar(150) NOT NULL,
     endDate DATE NOT NULL,
     isEnded boolean DEFAULT FALSE,
@@ -124,8 +124,8 @@ create table Offer (
 create table Exhibition(
     exhibitionID int not null auto_increment,
     creatorAdminID int not null,
-    exhibitionName varchar(50) not null,
-    exhibitionDescriptor varchar(50),
+    exhibitionName varchar(200) not null,
+    exhibitionDescriptor varchar(600),
     FOREIGN KEY (creatorAdminID) REFERENCES Admin(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (exhibitionID)
 );
@@ -209,7 +209,7 @@ INSERT INTO Offer (auctionID, bidID, collectorID) VALUES (3, 3, 7);
 
 
 -- Inserting Exhibition
-INSERT INTO Exhibition (creatorAdminID, exhibitionName, exhibitionDescriptor) VALUES (1, 'Turkish Republics Centenary Celebration', 'Each masterpiece in thistoneion on');
+INSERT INTO Exhibition (creatorAdminID, exhibitionName, exhibitionDescriptor) VALUES (1, 'Turkish Republics Centenary Celebration', 'Each masterpiece in this exhibition captures the essence of this historic milestone, reflecting the rich heritage and progress of the Turkish Republic. Join us in celebrating this momentous occasion and bidding on these remarkable artworks that encapsulate the spirit of a nation');
 
 -- Inserting Curate
 INSERT INTO Curate (exhibitionID, auctionID) VALUES (1, 1);
