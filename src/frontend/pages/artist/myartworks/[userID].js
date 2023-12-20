@@ -3,7 +3,7 @@ import Navbar from "@/components/Artist/UI/Navbar";
 import styles from "../../../components/Admin/Exhibitions/AdminExhibitionsPage.module.css";
 import ViewMyAuctions from "@/components/Artist/AuctionForms/ViewAuctions";
 import { useRouter } from "next/router";
-import { artistGetEndedAuctionsApiFunction } from "@/pages/api/artist";
+import { artistGetArtistInfoApiFunction, artistGetEndedAuctionsApiFunction } from "@/pages/api/artist";
 import {
   auctionGetOngoingAuctionsApiFunction,
   auctionGetPastAuctionsApiFunction,
@@ -19,7 +19,7 @@ const ArtistMyArtworksPage = (props) => {
   useEffect(() => {
     if (userID) {
       console.log(userID);
-      artistGetEndedAuctionsApiFunction(userID)
+      artistGetArtistInfoApiFunction(userID)
         .then((data) => {
           console.log("ended auctions successful ", data);
           setEndedAuctions(data);

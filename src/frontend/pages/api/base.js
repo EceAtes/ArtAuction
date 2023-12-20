@@ -42,7 +42,7 @@ export const API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW = `${BASE_URL}art-user
 export const API_ART_USER_SEARCH = `${BASE_URL}art-user/search`;
 
 //ARTIST URLS
-export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artist`;
+export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artistInfo`;
 export const API_ARTIST_GET_ENDED_AUCTIONS = `${BASE_URL}artist/getEndedAuctions/`;
 
 //COLLECTOR URLS
