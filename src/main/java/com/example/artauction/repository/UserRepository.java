@@ -1,10 +1,12 @@
 package com.example.artauction.repository;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -198,7 +200,7 @@ public class UserRepository {
     }
 
 
-    public List<Map<String, Object>> getFilteredAuctions(Map<String, String> requestMap) {
+    public List<Map<String, Object>> getFilteredAuctions(Map<String, Object> requestMap) {
         StringBuilder sqlBuilder = new StringBuilder("SELECT a.*, leadingBid " +
                 "FROM (" +
                 "SELECT a.*, " +
@@ -212,52 +214,70 @@ public class UserRepository {
 
         List<Object> params = new ArrayList<>();
         params.add("Leading");
-
-        if (requestMap.get("art_type") != null) {
-            sqlBuilder.append(" AND type = ?");
-            params.add(requestMap.get("art_type"));
+        System.out.println("START");
+        if (requestMap.containsKey("art_type")) {
+            System.out.println("ENTERED");
+            Object artTypesValue = requestMap.get("art_type");
+            System.out.println(artTypesValue);
+            if (artTypesValue instanceof List) {
+                List<String> artTypes = (List<String>) artTypesValue;
+                if (!artTypes.isEmpty()) {
+                    sqlBuilder.append(" AND type IN (");
+                    for (int i = 0; i < artTypes.size(); i++) {
+                        sqlBuilder.append("?");
+                        params.add(artTypes.get(i));
+                        if (i < artTypes.size() - 1) {
+                            sqlBuilder.append(", ");
+                        }
+                    }
+                    sqlBuilder.append(")");
+                }
+            } else {
+                sqlBuilder.append(" AND type = ?");
+                params.add(requestMap.get("art_type"));
+            }
         }
 
-        if (requestMap.get("minBidIncrease") != null) {
+        if (requestMap.containsKey("minBidIncrease") ) {
             sqlBuilder.append(" AND minimumBidIncrease BETWEEN ? AND ?");
             params.add(requestMap.get("minBidIncrease"));
             params.add(requestMap.get("maxBidIncrease"));
         }
 
-        if (requestMap.get("minCreationDate") != null) {
+        if (requestMap.containsKey("minCreationDate") ) {
             sqlBuilder.append(" AND creationDate BETWEEN ? AND ?");
             params.add(requestMap.get("minCreationDate"));
             params.add(requestMap.get("maxCreationDate"));
         }
 
-        if (requestMap.get("minStartDate") != null) {
+        if (requestMap.containsKey("minStartDate") ) {
             sqlBuilder.append(" AND startDate BETWEEN ? AND ?");
             params.add(requestMap.get("minStartDate"));
             params.add(requestMap.get("maxStartDate"));
         }
 
-        if (requestMap.get("minEndDate") != null) {
+        if (requestMap.containsKey("minEndDate")) {
             sqlBuilder.append(" AND endDate BETWEEN ? AND ?");
             params.add(requestMap.get("minEndDate"));
             params.add(requestMap.get("maxEndDate"));
         }
 
-        if (requestMap.get("auction_status") != null) {
+        if (requestMap.containsKey("auction_status")) {
             sqlBuilder.append(" AND auction_status = ?");
             params.add(requestMap.get("auction_status"));
         }
 
-        if (requestMap.get("isEnded") != null) {
+        if (requestMap.containsKey("isEnded")) {
             sqlBuilder.append(" AND isEnded = ?");
             params.add(requestMap.get("isEnded"));
         }
 
-        if (requestMap.get("baseBid") != null) {
+        if (requestMap.containsKey("baseBid")) {
             sqlBuilder.append(" AND baseBid = ?");
             params.add(requestMap.get("baseBid"));
         }
 
-        if (requestMap.get("minLeadingBid") != null) {
+        if (requestMap.containsKey("minLeadingBid")) {
             sqlBuilder.append(" AND leadingBid BETWEEN ? AND ?");
             params.add(requestMap.get("minLeadingBid"));
             params.add(requestMap.get("maxLeadingBid"));
@@ -268,10 +288,18 @@ public class UserRepository {
             params.add(requestMap.get("userID"));
         }
 
+
         if(requestMap.get("userType").equals("Collector")){
-            sqlBuilder.append(" AND auctionID IN (SELECT offer.auctionID FROM offer WHERE collectorID = ?)");
+            sqlBuilder.append(" AND auctionID IN (SELECT offer.auctionID FROM offer NATURAL JOIN bid b WHERE offer.collectorID = ?");
             params.add(requestMap.get("userID"));
+            if(requestMap.containsKey("currentUserLeading") && ((boolean) requestMap.get("currentUserLeading"))){
+                sqlBuilder.append(" AND b.bid_status = ?");
+                params.add("Leading");
+            }
+            sqlBuilder.append(")");
         }
+
+
 
         String sql = sqlBuilder.toString();
         System.out.println(sql);

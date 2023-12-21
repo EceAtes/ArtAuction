@@ -88,16 +88,17 @@ public class ArtUserRepository {
         List<Map<String,Object>> collectors = jdbcTemplate.queryForList(sql);
         return collectors;
     }
+
 //Top artists are those who have received the highest total number of bids across all their artworks or auctions
     public List<Map<String, Object>> seeTopArtists() {
-        String sql = "SELECT A.userID, U.role, U.name, Art.bio, Count(*) as compAucCount " +
+        String sql = "SELECT A.userID, U.role, U.name, Art.bio, count(O.bidID) as TotalBids " +
                 "FROM Artist A " +
                 "NATURAL JOIN User U " +
                 "NATURAL JOIN ArtUser Art " +
-                "JOIN Auction Auc ON Auc.uploaded_by_artist_ID = A.userID " +
-                //"WHERE Auc.isEnded = TRUE " +
+                "JOIN Auction Au ON Au.uploaded_by_artist_ID = A.userID " +
+                "JOIN Offer O ON o.auctionID = Au.auctionID " +
                 "GROUP BY A.userID, U.role, U.name, Art.bio " +
-                "ORDER BY compAucCount DESC";
+                "ORDER BY TotalBids DESC";
 
         List<Map<String,Object>> artists = jdbcTemplate.queryForList(sql);
         return artists;

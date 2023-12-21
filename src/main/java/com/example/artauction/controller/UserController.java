@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/filterAuctions")
-    public List<Map<String, Object>> getFilteredAuctions(@RequestBody(required = true)Map<String,String> requestMap){
+    public List<Map<String, Object>> getFilteredAuctions(@RequestBody(required = true)Map<String,Object> requestMap){
         return userRepository.getFilteredAuctions(requestMap);
     }
 
