@@ -171,9 +171,16 @@ public class AuctionRepository {
         return rows;
     }
 
-    @Scheduled(cron = "*/5 * * * * *") // Runs daily at midnight //@Scheduled(cron = "0 0 0 * * *") //Runs every 5 minutes
+    @Scheduled(cron = "*/5 * * * * *")  //Runs every 5 minutes //@Scheduled(cron = "0 0 0 * * *") // Runs daily at midnight
     public void updateAuctionStatus() {
-        String sql = "UPDATE Auction SET auction_status = 'ended', isEnded = TRUE WHERE endDate <= CURRENT_DATE AND isEnded = FALSE";
+        String sql = "UPDATE Auction " +
+                "SET auction_status = CASE " +
+                "WHEN EXISTS (SELECT 1 FROM Offer WHERE Offer.auctionID = Auction.auctionID) " +
+                "    THEN 'ended' " +
+                "    ELSE 'closed' " +
+                "END, " +
+                "isEnded = TRUE " +
+                "WHERE endDate <= CURRENT_DATE AND isEnded = FALSE;";
         jdbcTemplate.update(sql);
     }
 
