@@ -28,6 +28,11 @@ public class CollectorController {
         this.auctionRepository = auctionRepository;
     }
 
+    @PatchMapping("/collectorInfo/{userID}") //includes auction and account data
+    public List<Map<String,Object>> getCollectorInfo(@PathVariable String userID){
+        return collectorRepository.getCollectorInfo(Integer.parseInt(userID));
+    }
+
     @PostMapping("/bid")
     public ResponseEntity<HttpStatus> bid(@RequestBody(required = true) Map<String, Integer> requestMap){
         return collectorRepository.bid(requestMap.get("collectorID"), requestMap.get("auctionID"), requestMap.get("bidAmount"));

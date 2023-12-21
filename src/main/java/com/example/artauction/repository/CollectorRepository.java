@@ -111,4 +111,16 @@ public class CollectorRepository {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public List<Map<String, Object>> getCollectorInfo(int userID) {
+        String sql = "SELECT u.*, Aus.*, Au.* " +
+                "FROM Collector C " +
+                "JOIN ArtUser Aus ON Aus.userID = C.userID " +
+                "JOIN `User` u ON u.userID = C.userID " +
+                "JOIN Offer O ON O.collectorID = C.UserID " +
+                "JOIN Auction Au ON Au.AuctionID = O.AuctionID " +
+                "WHERE C.userID = ?";
+        List<Map<String,Object>> info = jdbcTemplate.queryForList(sql, userID);
+        return info;
+    }
 }

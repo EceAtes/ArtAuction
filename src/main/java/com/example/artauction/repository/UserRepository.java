@@ -213,7 +213,7 @@ public class UserRepository {
                 "WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
-        params.add("Leading");
+        params.add("Leading");  //leadingle won arasında ayrım gerekirse (won'un fiyatına ulaşamazlarsa) bunu request varaible'ına dönüştür
         System.out.println("START");
         if (requestMap.containsKey("art_type")) {
             System.out.println("ENTERED");
