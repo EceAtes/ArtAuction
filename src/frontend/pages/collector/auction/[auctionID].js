@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from '@/components/Admin/UI/Navbar/Navbar';
+import Navbar from '@/components/Collector/UI/Navbar/Navbar';
 import styles from './AuctionInformationPage.module.css';
 import PlaceBidModal from '@/components/Collector/Auctions/placeBidModal';
 import BidTable from '@/components/Collector/Auctions/bidTable';
