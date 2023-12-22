@@ -177,9 +177,9 @@ public class AuctionRepository {
                 "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid " +
                 "FROM `Auction` a " +
                 "JOIN `User` u ON u.userID = a.uploaded_by_artist_ID " +
-                "WHERE (a.auction_status = ? OR a.auction_status = ?) AND a.isEnded = ? AND a.uploaded_by_artist_ID = ?";
+                "WHERE (a.auction_status = ? OR a.auction_status = ? OR a.auction_status = ? )AND a.isEnded = ? AND a.uploaded_by_artist_ID = ?";
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,  "Leading", "ended", "admin_ok", true , artistID);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,  "Leading", "ended", "admin_ok", "artist_ok", true , artistID);
         return rows;
 
     }
