@@ -160,12 +160,12 @@ INSERT INTO User (name, email, password, role) VALUES ('Collector3', 'collector3
 INSERT INTO Admin (userID, specialization) VALUES (1, 'admin');
 
 -- Inserting ArtUser
-INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (2, 100, 'Passionate artist', 'USA', null);
-INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (3, 150, 'Art enthusiast', 'Canada', null);
-INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (4, 250, 'Passionate artist', 'Turkey', null);
-INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (5, 350, 'Art enthusiast', 'Russia', null);
-INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (6, 450, 'Passionate collector', 'France', null);
-INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (7, 550, 'Art enthusiast', 'Spain', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (2, 1000, 'Passionate artist', 'USA', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (3, 1500, 'Art enthusiast', 'Canada', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (4, 2500, 'Passionate artist', 'Turkey', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (5, 3500, 'Art enthusiast', 'Russia', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (6, 4500, 'Passionate collector', 'France', null);
+INSERT INTO ArtUser (userID, tokens, bio, country, highlighter_adminID) VALUES (7, 5500, 'Art enthusiast', 'Spain', null);
 
 -- Inserting Artist
 INSERT INTO Artist (userID, art_specialization) VALUES (2, 'Renaissance Art');
@@ -199,12 +199,12 @@ INSERT INTO Bid (bidAmount, date) VALUES (1000, '2023-12-15');
 
  
 -- Inserting Auction
-INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Abstract Artwork', 2, '120x120', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful abstract painting.', '2023-12-21', 50, 200);
-INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Classical Artwork', 3, '200x500', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful classical painting.', '2023-12-21', 50, 400);
-INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
-INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 2, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
-INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 3, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
-INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2023-12-21', 1000, 1000);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Abstract Artwork', 2, '120x120', 'Medium', '2003-12-01', '2023-01-10', 'A beautiful abstract painting.', '2023-12-21', 50, 200);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Classical Artwork', 3, '200x500', 'Medium', '2005-12-01', '2023-01-10', 'A beautiful classical painting.', '2023-12-21', 50, 400);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2004-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2025-12-21', 1000, 1000);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 2, '200x100', 'Medium', '2006-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2026-12-21', 1000, 1000);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 3, '200x100', 'Medium', '2008-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2025-12-11', 1000, 1000);
+INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Contemporary Artwork', 4, '200x100', 'Medium', '2002-12-01', '2023-01-10', 'A beautiful contemporary painting.', '2024-12-21', 1000, 1000);
 
 -- Inserting Save
 INSERT INTO Save (collectorID, auctionID) VALUES (5, 1);
