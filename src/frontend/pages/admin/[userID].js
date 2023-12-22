@@ -7,6 +7,7 @@ import { adminHomeApiFunction } from "../api/admin";
 import { artUserSearchApiFunction } from "../api/artuser";
 import SearchEntry from "@/components/Admin/MainPage/SearchEntry/SearchEntry";
 import SearchResult from "@/components/Admin/MainPage/SearchEntry/SearchResults";
+
 const AdminMainPage = (props) => {
   const [searchResult, setSearchResult] = useState(null);
   const [auctionList, setAuctionList] = useState([]);

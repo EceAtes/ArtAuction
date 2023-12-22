@@ -43,12 +43,14 @@ const Navbar = (props) => {
             <a className={styles.navLink}>Exhibitions</a>
           </Link>
         </li>
-        {/* NEED TO BE CHANGED
+        
+        
+        
         <li className={styles.navItem}>
           <Link href={`/${role}/profile/${userID}`} passHref legacyBehavior>
             <a className={styles.navLink}>Profile</a>
           </Link>
-        </li> */}
+        </li> 
         
         <li className={styles.navItem}>
           <Link href="/" passHref legacyBehavior>

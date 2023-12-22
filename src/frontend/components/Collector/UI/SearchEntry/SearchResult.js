@@ -13,12 +13,18 @@ const SearchResult = (props) => {
         <div>
           <h3 className={styles.resultHeader}>Artists</h3>
           {props.searchResult.artists.map((artist, index) => (
+            <Link
+            href={`/artist/Profile/${artist.userID}`}
+            passHref
+            legacyBehavior
+          >
             <p
               className={styles.resultLink}
               key={`artist-${artist.userID}-${index}`}
             >
               {artist.name}
             </p>
+            </Link>
           ))}
         </div>
       )}
@@ -28,12 +34,18 @@ const SearchResult = (props) => {
         <div>
           <h3 className={styles.resultHeader}>Collectors</h3>
           {props.searchResult.collectors.map((collector, index) => (
+            <Link
+            href={`/collector/profile/${collector.userID}`}
+            passHref
+            legacyBehavior
+          >
             <p
               className={styles.resultLink}
               key={`collector-${collector.userID}-${index}`}
             >
               {collector.name}
             </p>
+          </Link>
           ))}
         </div>
       )}

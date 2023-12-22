@@ -38,6 +38,12 @@ export const API_ART_USER_TOP_ARTISTS = `${BASE_URL}art-user/topArtists`;
 export const API_ART_USER_AUCTIONS_FROM_PEOPLE_YOU_FOLLOW = `${BASE_URL}art-user/auctions-from-people-you-follow`;
 export const API_ART_USER_SEARCH = `${BASE_URL}art-user/search`;
 
+export const API_ART_USER_FOLLOW = `${BASE_URL}art-user/follow`;
+export const API_ART_USER_UNFOLLOW = `${BASE_URL}art-user/unfollow`;
+export const API_ART_USER_FOLLOWERS = `${BASE_URL}art-user/followers/`;
+export const API_ART_USER_EDIT_INFO = `${BASE_URL}art-user/editInfo`;
+export const API_ART_USER_GET_SINGLE_ART_USER = `${BASE_URL}art-user/art-users/`;
+
 //ARTIST URLS
 export const API_ARTIST_ARTISTINFO = `${BASE_URL}artist/artistInfo`;
 export const API_ARTIST_GET_ENDED_AUCTIONS = `${BASE_URL}artist/getEndedAuctions/`;
@@ -47,3 +53,19 @@ export const API_ARTIST_PAST_AUCTIONS = `${BASE_URL}artist/pastAuctions/`;
 
 
 //COLLECTOR URLS
+export const API_COLLECTOR_PROFILE = `${BASE_URL}collector/profile`;
+export const API_COLLECTOR_ONGOING_AUCTIONS = `${BASE_URL}collector/ongoingAuctions/`;
+export const API_COLLECTOR_PAST_AUCTIONS = `${BASE_URL}collector/pastAuctions/`;
+export const API_COLLECTOR_SAVED_AUCTIONS = `${BASE_URL}collector/savedAuctions/`;
+export const API_COLLECTOR_LIST_COLLECTIONS = `${BASE_URL}collector/collections/;
+`
+export const API_COLLECTOR_BID = `${BASE_URL}collector/bid`;
+export const API_COLLECTOR_BID_HISTORY = `${BASE_URL}collector/bidHistory`;
+export const API_COLLECTOR_CREATE_COLLECTION = `${BASE_URL}collector/create_col`;
+export const API_COLLECTOR_DELETE_COLLECTION = `${BASE_URL}collector/delete_col`;
+export const API_COLLECTOR_ADD_AUCTION_MENU = `${BASE_URL}collector/add_auction_menu`;
+export const API_COLLECTOR_ADD_AUCTION_TO_COLLECTION = `${BASE_URL}collector/add_auction_to_col`;
+export const API_COLLECTOR_REMOVE_AUCTION_FROM_COLLECTION = `${BASE_URL}collector/remove_auction_from_col`;
+export const API_COLLECTOR_SAVE = `${BASE_URL}collector/save`;
+export const API_COLLECTOR_GET_TOKENS = `${BASE_URL}collector/getTokens`;
+export const API_COLLECTOR_GET_COLLECTOR_INFO = `${BASE_URL}collector/collectorInfo/`;
