@@ -9,20 +9,16 @@ export default function OngoingAuctions({ title, auctions }) {
   const [searchQuery, setSearchQuery] = useState('');
   
   // Filter auctions based on search query
-  const filteredAuctions = auctions.filter((auction) =>
-    auction.auctionName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  //const filteredAuctions = auctions.filter((auction) =>
+  //  auction.auctionName.toLowerCase().includes(searchQuery.toLowerCase())
+  //);
 
-  const auctionItems = filteredAuctions.map((auction) => (
+  const auctionItems = auctions.map((auction) => (
     <AuctionInfo
-      key={auction.id}
-      imageUrl={auction.imageUrl}
-      auctionName={auction.auctionName}
-      artworkType = {auction.artworkType}
-      leadingBid = {auction.leadingBid}
-      minimumBidIncrease = {auction.minimumBidIncrease}
-      creationDate = {auction.creationDate}
-      
+    key={auction.auctionID}
+    auctionID={auction.auctionID}
+    imageUrl={"/photos/loginpage.png"}
+    title={auction.title}
     />
   ));
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,3 +54,4 @@ export default function OngoingAuctions({ title, auctions }) {
     </div>
   );
 }
+

@@ -21,6 +21,7 @@ import {
 import PeopleList from "@/components/Artist/MainPage/PeopleList/PeopleList";
 
 export default function CollectorMainPage() {
+  
   const [searchResult, setSearchResult] = useState(null);
   const [followedPeopleAuctions, setFollowedPeopleAuctions] = useState([]);
   const [popularAuctions, setPopularAuctions] = useState([]);
