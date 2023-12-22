@@ -1,7 +1,14 @@
 import { capitalize } from "@mui/material";
 import styles from "./EditorPick.module.css";
+import { useRouter } from "next/router";
 
 const EditorPick = (props) => {
+  
+  const router = useRouter()
+  const moreButtonHandler = (event) => {
+  
+    router.push(`/admin/information/auctioninfo/${props.auctionID}`);
+  }
   if (props.type == "auction") {
     return (
       <>
@@ -19,7 +26,7 @@ const EditorPick = (props) => {
           </div>
 
           <div className={styles.moreButtonContainer}>
-            <button className={styles.moreButton}>More</button>
+            <button className={styles.moreButton} onClick={moreButtonHandler}>More</button>
           </div>
         </div>
       </>

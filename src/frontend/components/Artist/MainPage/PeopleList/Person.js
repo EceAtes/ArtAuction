@@ -17,7 +17,7 @@ const Person = (props) => {
       </div>
       <h2 className={styles.extraInformation}>
         {props.role == "artist"
-          ? `Completed ${props.TotalBids} auctions`
+          ? `Completed ${props.compAucCount} auctions`
           : `Won ${props.Wins} auctions`}
       </h2>
       <div className={styles.linkContainer}>

@@ -29,6 +29,8 @@ export const API_EDITOR_PICKS_EXHIBITIONS = `${BASE_URL}editors-picks/exhibition
 export const API_AUCTION_GET_SINGLE_AUCTION = `${BASE_URL}auction/`;
 export const API_AUCTION_GET_POPULAR_AUCTIONS = `${BASE_URL}auction/getPopularAuction`;
 export const API_AUCTION_GET_RECENT_AUCTIONS = `${BASE_URL}auction/getRecentAuction`;
+export const API_AUCTION_CREATE = `${BASE_URL}auction/create`;
+export const API_AUCTION_GET_ALL_BID_HISTORY= `${BASE_URL}auction/allBidHistory`;
 
 
 //ART USERS URLS
