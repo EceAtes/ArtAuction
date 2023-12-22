@@ -46,8 +46,8 @@ public class AuctionController {
         return auctionRepository.getAllAuctions();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AuctionDTO> getSingleAuction(@PathVariable String id) {
+    @PatchMapping("/{id}")
+    public List<Map<String, Object>> getSingleAuction(@PathVariable String id) {
         return auctionRepository.getAuction(Integer.parseInt(id));
     }
 

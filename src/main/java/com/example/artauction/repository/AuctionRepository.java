@@ -55,41 +55,15 @@ public class AuctionRepository {
     }
 
     //ongoingde leading bidi ve ended'de winning bid'İ de burdan göndermeliyiz bence ama auctionDTP nasıl olur o zaman bilemedim :/
-    public ResponseEntity<AuctionDTO> getAuction(int auctionID) {
-        String sql = "SELECT * FROM `Auction` WHERE `auctionID` = ?";
-        RowMapper<AuctionDTO> rowMapper = (rs, rowNum) -> {
-            AuctionDTO auction = new AuctionDTO();
-            auction.setAuctionID(auctionID);
-            auction.setTitle(rs.getString("title"));
-            auction.setAuction_status(rs.getString("auction_status"));
-            auction.setUploaded_by_artist_ID(rs.getInt("uploaded_by_artist_ID"));
-            String artistSql = "SELECT name FROM `User` WHERE `userID` = ?";
-            String artistName = jdbcTemplate.queryForObject(artistSql, new Object[]{auction.getUploaded_by_artist_ID()}, String.class);
-            auction.setArtistName(artistName);
-            auction.setType(rs.getString("type"));
-            auction.setSize(rs.getString("size"));
-            auction.setCreationDate(LocalDate.parse(rs.getString("creationDate")));
-            auction.setUploadDate(LocalDate.parse(rs.getString("uploadDate")));
-            auction.setStartDate(LocalDate.parse(rs.getString("startDate")));
-            auction.setDescription(rs.getString("description"));
-            auction.setEndDate(LocalDate.parse(rs.getString("uploadDate")));
-            auction.setEnded(rs.getBoolean("isEnded"));
-            auction.setBaseBid(rs.getInt("baseBid"));
-            auction.setMinimumBidIncrease(rs.getInt("minimumBidIncrease"));
-
-            auction.setVerifier_admin_ID(rs.getObject("verifier_admin_ID") != null ? rs.getInt("verifier_admin_ID") : -1);
-            auction.setHighlighter_admin_ID(rs.getObject("highlighter_admin_id") != null ? rs.getInt("highlighter_admin_id") : -1);          
-
-            return auction;
-        };
-
-        try {
-            
-            return new ResponseEntity<AuctionDTO>(jdbcTemplate.queryForObject(sql, new Object[]{auctionID}, rowMapper), HttpStatus.OK);
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println("No such auction exists");
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public List<Map<String, Object>> getAuction(int auctionID) {
+        String sql = "SELECT A.*, U.name, (SELECT b.bidAmount FROM `Bid` b " +
+                "JOIN `Offer` o ON o.bidID = b.bidID " +
+                "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS leadingBid, " +
+                "(SELECT b.bidAmount FROM `Bid` b " +
+                "JOIN `Offer` o ON o.bidID = b.bidID " +
+                "WHERE o.auctionID = a.auctionID AND b.bid_status = ?) AS winnerBid  FROM `Auction` A JOIN `User` U ON A.uploaded_by_artist_ID = U.userID WHERE A.`auctionID` = ?";
+        List<Map<String,Object>> auction = jdbcTemplate.queryForList(sql, "Leading", "Won", auctionID);
+        return auction;
     }
 
     public List<Map<String, Object>> listHighlightedAuctions() {
