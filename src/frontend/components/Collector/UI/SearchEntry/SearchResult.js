@@ -14,7 +14,7 @@ const SearchResult = (props) => {
           <h3 className={styles.resultHeader}>Artists</h3>
           {props.searchResult.artists.map((artist, index) => (
             <Link
-            href={`/artist/Profile/${artist.userID}`}
+            href={`/artist/profile/${artist.userID}`}
             passHref
             legacyBehavior
           >

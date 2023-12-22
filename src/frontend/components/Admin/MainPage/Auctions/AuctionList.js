@@ -18,7 +18,7 @@ const AuctionList = (props) => {
     setSortModalOpen(false);
   };
 
-  const handleSortFunction = (event,choice) => {
+  const handleSortFunction = (event, choice) => {
     event.preventDefault();
     let sortedAuctions = [...auctions];
 
@@ -49,9 +49,10 @@ const AuctionList = (props) => {
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
         <h1 className={styles.listHeader}>Auctions</h1>
-        <button className={styles.filterButton}>
+        {/*<button className={styles.filterButton}>
           <TuneIcon fontSize="medium"></TuneIcon>
-        </button>
+        </button> */}
+
         <button className={styles.filterButton} onClick={handleSortModalOpen}>
           <FilterListIcon fontSize="medium"></FilterListIcon>
         </button>

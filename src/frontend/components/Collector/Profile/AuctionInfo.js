@@ -21,7 +21,7 @@ const AuctionInfo = (props) => {
       <div className={styles.imageContainer}>
         <img src={props.imageUrl} alt="Auction" />
       </div>
-      <h3 className={styles.auctionHeader}>{props.auctionName}</h3>
+      <h3 className={styles.auctionHeader}>{props.title}</h3>
       <h4> {props.artworkType}</h4>
       <h4> {props.leadingBid} </h4>
       <button className={styles.moreButton} onClick={handleMoreClick} >More</button>

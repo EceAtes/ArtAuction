@@ -1,7 +1,7 @@
 import TuneIcon from "@mui/icons-material/Tune";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
-import styles from "./ApproveAuctionList.module.css"
+import styles from "./ApproveAuctionList.module.css";
 import SortModal from "./SortModal";
 import ApproveAuction from "./ApproveAuction";
 
@@ -47,9 +47,10 @@ const ApproveAuctionList = (props) => {
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
         <h1 className={styles.listHeader}>Auction Approve</h1>
-        <button className={styles.filterButton}>
+        {/* <button className={styles.filterButton}>
           <TuneIcon fontSize="medium"></TuneIcon>
-        </button>
+        </button>*/}
+
         <button className={styles.filterButton} onClick={handleSortModalOpen}>
           <FilterListIcon fontSize="medium"></FilterListIcon>
         </button>
@@ -71,7 +72,7 @@ const ApproveAuctionList = (props) => {
             description={auction.description}
             artistId={auction.uploaded_by_artist_ID}
             artistName={auction.name}
-            leadingBid = {auction.leadingBid}
+            leadingBid={auction.leadingBid}
             artistImageUrl={"/photos/signuppage.png"}
           />
         ))}
