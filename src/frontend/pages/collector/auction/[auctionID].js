@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from '@/components/Admin/UI/Navbar/Navbar';
+import Navbar from '@/components/Collector/UI/Navbar/Navbar';
 import styles from './AuctionInformationPage.module.css';
 import PlaceBidModal from '@/components/Collector/Auctions/placeBidModal';
 import BidTable from '@/components/Collector/Auctions/bidTable';
@@ -88,7 +88,6 @@ export default function AuctionInformationPage(props){
                                 <li> Type:  {auction.type}</li>
                                 <li> Size: {auction.size}</li>
                                 <li> Creation Date: {auction.creationDate}</li>
-                                <li> Creation Place: {auction.artworkCreationPlace}</li>
                                 <li> Auction End Date: {auction.endDate}</li>
                             </ul>
                             <label className = {styles.leadingBidLabel}> Leading Bid: {leadingBid}</label>

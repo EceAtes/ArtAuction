@@ -152,7 +152,7 @@ export const collectorBidHistoryApiFunction = async (
       },
     });
     if (res.ok) {
-      return res.text();
+      return res.json();
     } else {
       throw new Error("collector bid history failed!");
     }
@@ -283,7 +283,7 @@ export const collectorGetTokenApiFunction = async (
       },
     });
     if (res.ok) {
-      return res.text();
+      return res.json();
     } else {
       throw new Error("collector get token failed!");
     }
@@ -299,7 +299,7 @@ export const collectorGetTokenApiFunction = async (
     });
   
     if (res.ok) {
-      return res.text();
+      return res.json();
     } else {
       throw new Error("get single COLLECTOR failed!");
     }
