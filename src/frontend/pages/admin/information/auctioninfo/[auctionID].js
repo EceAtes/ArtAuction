@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { auctionGetSingleAuctionApiFunction } from "@/pages/api/auction";
 
 const auctionInfoPage = (props) => {
-  const [auction, setAuction] = useState(null);
+  const [auction, setAuction] = useState();
   const router = useRouter();
   const { auctionID } = router.query;
 

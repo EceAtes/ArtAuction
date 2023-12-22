@@ -39,7 +39,7 @@ const ArtistMyArtworksPage = (props) => {
           return artistGetNotApprovedAuctionsApiFunction(userID);
         })
         .then((data) => {
-          console.log("sold Auctions successful ", data);
+          console.log("not approved Auctions successful ", data);
           setNotApprovedAuctions(data);
         })
         .catch((error) => {

@@ -1,0 +1,60 @@
+.placeBidModalOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeBidModalContent {
+
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 50%;
+}
+.content label {
+  font-weight: bold;
+}
+
+.titles{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns with equal width */
+   /* Adjust the gap between columns */
+}
+.radioButtons{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+.placeBidButton{
+  display: block;
+
+  margin: 10px auto; /* Center the button horizontally */
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+  background-color: #e95793;
+  border: 2px solid transparent;
+  text-align: center; /* Center the text within the button */
+}
+.customBid{
+  display: block;
+  margin: 10px auto; /* Center the button horizontally */
+  padding: 10px;
+  color: black;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+  border: 2px solid transparent;
+  text-align: right; /* Center the text within the button */
+}

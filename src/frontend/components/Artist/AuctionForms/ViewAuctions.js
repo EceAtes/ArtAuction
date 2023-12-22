@@ -11,7 +11,7 @@ export default function ViewMyAuctions(props) {
         {props.endedAuctions.length > 0 ? (
           <AuctionList
             auctions={props.endedAuctions}
-            title={"Ended Auctions"}
+            title={"Ended/Sold Auctions"}
           />
         ) : (
           <h2
@@ -39,7 +39,7 @@ export default function ViewMyAuctions(props) {
           </h2>
         )}
         {props.pastAuctions.length > 0 ? (
-          <AuctionList auctions={props.soldAuctions} title={"Sold Auctions"} />
+          <AuctionList auctions={props.pastAuctions} title={"Sold Auctions"} />
         ) : (
           <h2
             style={{
@@ -53,7 +53,7 @@ export default function ViewMyAuctions(props) {
         {props.notApprovedAuctions.length > 0 ? (
           <AuctionList
             auctions={props.notApprovedAuctions}
-            title={"Sold Auctions"}
+            title={"Not Approved Auctions"}
           />
         ) : (
           <h2
