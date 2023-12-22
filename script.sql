@@ -197,7 +197,7 @@ INSERT INTO Bid (bidAmount, date) VALUES (800, '2023-12-15');
 INSERT INTO Bid (bidAmount, date) VALUES (900, '2023-12-15');
 INSERT INTO Bid (bidAmount, date) VALUES (1000, '2023-12-15');
 
-
+ 
 -- Inserting Auction
 INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Abstract Artwork', 2, '120x120', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful abstract painting.', '2023-12-21', 50, 200);
 INSERT INTO Auction (title, uploaded_by_artist_ID, type, size, creationDate, uploadDate, description, endDate, minimumBidIncrease, baseBid) VALUES ('Classical Artwork', 3, '200x500', 'Medium', '2022-12-01', '2023-01-10', 'A beautiful classical painting.', '2023-12-21', 50, 400);
