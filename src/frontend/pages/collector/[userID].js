@@ -134,7 +134,7 @@ export default function CollectorMainPage() {
         {topCollectors.length > 0 ? (
           <PeopleList title="Top Collectors" peopleList={topCollectors} />
         ) : (
-          <h2>No collector</h2>
+          <h2></h2>
         )}
       </div>
       <div>

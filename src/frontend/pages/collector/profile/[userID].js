@@ -26,7 +26,7 @@ const CollectorInfo = (props) => {
   const [pastAuction, setPastAuction] = useState(null);
   const [savedAuction, setSavedAuction] = useState(null);
   const [follower, setFollower] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   const router = useRouter();
   const { userID } = router.query;
@@ -109,8 +109,8 @@ const CollectorInfo = (props) => {
             alt={`Profile of Lady Gaga`}
           />
           <div className={styles.collectorInfo}>
-            {user ? <h1>{user[0].name}</h1> : <h1>no name</h1>}
-            {user ? <p>{user[0].bio}</p> : <p>no name</p>}
+            {user[0] ? <h1>{user[0].name}</h1> : <h1>no name</h1>}
+            {user[0] ? <p>{user[0].bio}</p> : <p>no name</p>}
             <button className={styles.button} onClick={handleFollowers}>
               See Followers
             </button>

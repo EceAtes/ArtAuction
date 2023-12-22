@@ -16,7 +16,7 @@ const PeopleList = (props) => {
             name={person.name}
             role={person.role}
             Wins = {person.Wins}
-            compAucCount = {person.compAucCount}
+            TotalBids = {person.TotalBids}
             bio={person.bio}
           />
         ))}
