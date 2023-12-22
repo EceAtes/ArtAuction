@@ -94,7 +94,7 @@ export const collectorGetAllCollectionsApiFunction = async (userID) => {
   //GET singleCollection AUCTIONS
 export const collectorGetSingleCollectionApiFunction = async (collectionID) => {
     const res = await fetch(API_COLLECTOR_LIST_COLLECTIONS + collectionID, {
-      method: "GET",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },

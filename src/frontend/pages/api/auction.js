@@ -1,9 +1,9 @@
-import { API_AUCTION_GET_ONGOING_AUCTIONS, API_AUCTION_GET_PAST_AUCTIONS, API_AUCTION_GET_POPULAR_AUCTIONS, API_AUCTION_GET_RECENT_AUCTIONS, API_AUCTION_GET_SAVED_AUCTIONS, API_AUCTION_GET_SINGLE_AUCTION } from "./base";
+import { API_AUCTION_GET_ALL_BID_HISTORY, API_AUCTION_GET_ONGOING_AUCTIONS, API_AUCTION_GET_PAST_AUCTIONS, API_AUCTION_GET_POPULAR_AUCTIONS, API_AUCTION_GET_RECENT_AUCTIONS, API_AUCTION_GET_SAVED_AUCTIONS, API_AUCTION_GET_SINGLE_AUCTION } from "./base";
 
 //GET SINGLE AUCTION
 export const auctionGetSingleAuctionApiFunction = async (auctionID) => {
   const res = await fetch(API_AUCTION_GET_SINGLE_AUCTION + auctionID, {
-    method: "GET",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
@@ -45,3 +45,17 @@ export const auctionGetRecentAuctionsApiFunction = async () => {
   }
 };
 
+export const auctionGetAllBidHistiory = async (id) => {
+  const res = await fetch(API_AUCTION_GET_ALL_BID_HISTORY, {
+    method: "PATCH",
+    body: JSON.stringify({auctionID:id}),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("auction bid history failed!");
+  }
+};

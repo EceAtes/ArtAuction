@@ -19,6 +19,7 @@ import {
   artUsersGetTopCollectorsApiFunction,
 } from "../api/artuser";
 import PeopleList from "@/components/Artist/MainPage/PeopleList/PeopleList";
+import OngoingAuctions from "./profile/OngoingAuction";
 
 export default function CollectorMainPage() {
   
@@ -110,7 +111,7 @@ export default function CollectorMainPage() {
 
       <div className={styles.container}>
         {followedPeopleAuctions.length > 0 ? (
-          <AuctionList
+          <OngoingAuctions
             auctions={followedPeopleAuctions}
             title={"Auctions From People You Follow"}
           />
@@ -119,13 +120,13 @@ export default function CollectorMainPage() {
         )}
 
         {popularAuctions.length > 0 ? (
-          <AuctionList auctions={popularAuctions} title={"Popular Auctions"} />
+          <OngoingAuctions auctions={popularAuctions} title={"Popular Auctions"} />
         ) : (
           <h2>No popular auction</h2>
         )}
 
         {recentAuctions.length > 0 ? (
-          <AuctionList auctions={recentAuctions} title={"Recent Auctions"} />
+          <OngoingAuctions auctions={recentAuctions} title={"Recent Auctions"} />
         ) : (
           <h2>No recent auctions</h2>
         )}
