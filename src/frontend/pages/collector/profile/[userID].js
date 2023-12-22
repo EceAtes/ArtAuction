@@ -22,7 +22,7 @@ import {
 } from "@/pages/api/auction";
 
 const CollectorInfo = (props) => {
-  const [ongoingAuction, setOngoingAuction] = useState(null);
+  const [ongoingAuction, setOngoingAuction] = useState([]);
   const [pastAuction, setPastAuction] = useState(null);
   const [savedAuction, setSavedAuction] = useState(null);
   const [follower, setFollower] = useState(null);
@@ -53,15 +53,12 @@ const CollectorInfo = (props) => {
         .then((data) => {
           console.log("followed auctions successful ", data);
           setFollowedPeopleAuctions(data);
-          return auctionGetPopularAuctionsApiFunction();
+          return collectorGetOngoingAuctionsApiFunction(userID);
         })
+
         .then((data) => {
-          console.log("popular auctions successful ", data);
-          setPopularAuctions(data);
-          return auctionGetRecentAuctionsApiFunction();
-        })
-        .then((data) => {
-          console.log("recent auctions successful ", data);
+          console.log("ongoing auctions successful ", data);
+          setOngoingAuction(data);
           // Assuming collectorGetCollectorInfoApiFunction takes a collectorID as an argument
           return collectorGetCollectorInfoApiFunction(userID);
         })
@@ -121,13 +118,13 @@ const CollectorInfo = (props) => {
           </div>
         </div>
         <div className={styles.auction}>
-          {popularAuctions.length > 0 ? (
+          {ongoingAuction.length > 0 ? (
             <OngoingAuctions
-              auctions={popularAuctions}
-              title={"Ongoing Auctions"}
+              auctions={ongoingAuction}
+              title={"Auctions"}
             ></OngoingAuctions>
           ) : (
-            <h2>No popular auction</h2>
+            <h1 className={styles.title}>No Ongoing auction</h1>
           )}
         </div>
       </div>

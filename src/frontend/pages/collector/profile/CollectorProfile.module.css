@@ -71,3 +71,8 @@
 .auction{
   width: 70%;
 }
+
+.title {
+  font-size: 50px;
+  margin-top: 50px;
+}
