@@ -293,7 +293,7 @@ export const collectorGetTokenApiFunction = async (
   export const collectorGetCollectorInfoApiFunction = async (userID) => {
     const res = await fetch(API_COLLECTOR_GET_COLLECTOR_INFO + userID, {
       method: "PATCH",
-      headers: {
+      headers: { 
         "Content-Type": "application/json",
       },
     });

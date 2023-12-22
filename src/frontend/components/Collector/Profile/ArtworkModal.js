@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styles from './ArtworkModal.module.css'; // Create a corresponding CSS file
+import { auctionGetPopularAuctionsApiFunction } from '@/pages/api/auction';
 
 const startDate = new Date('2023-01-01');
 const endDate = new Date('2023-12-31');
 
-const ArtworkModal = ({ isOpen, onClose }) => {
+const ArtworkModal = ({ isOpen, onClose,onFilterUpdate }) => {
   const [artworkType, setArtworkType] = useState([]);
   const [leadingBid, setLeadingBid] = useState('');
   const [creationDate, setCreationDate] = useState('');
@@ -18,7 +19,7 @@ const ArtworkModal = ({ isOpen, onClose }) => {
   const [selectedStartDate, setSelectedStartDate] = React.useState(startDate);
   const [selectedDate, setSelectedDate] = React.useState(startDate);
   const [selectedEndDate, setSelectedEndDate] = useState(startDate);
-
+  const [allAuctions,setAllAuctions] = useState();
   const dateRange = (endDate - startDate) / (1000 * 60 * 60 * 24); // Calculate the range in days
 
   const handleEndDateChange = (e) => {
@@ -42,15 +43,49 @@ const ArtworkModal = ({ isOpen, onClose }) => {
     setSelectedStartDate(newStartDate);
   };
 
-  const handleSubmit = () => {
-    // Handle the submission of selected values
-    console.log('Selected Artwork Type:', artworkType);
-    console.log('Selected Leading Bid:', leadingBid);
-    console.log('Selected Creation Date:', creationDate);
-
-    // Close the modal
-    onClose();
+  const handleSubmit = async () => {
+    try {
+      // Fetch data from the API
+      const data = await auctionGetPopularAuctionsApiFunction();
+      console.log(data);
+  
+      // Set the fetched data to the state variable
+      setAllAuctions(data);
+  
+      // Apply filters based on the selected values
+      const filteredAuctions = data.filter((auction) => {
+        if (artworkType.length > 0 && !artworkType.includes(auction.artworkType)) {
+          return false;
+        }
+  
+        if (leadingBid === 'custom' && (auction.leadingBid < lowBid || auction.leadingBid > highBid)) {
+          return false;
+        }
+  
+        if (creationDate && auction.creationDate < selectedStartDate) {
+          return false;
+        }
+  
+        if (minimumBidIncrease === 'custom' && (auction.minimumBidIncrease < lowMinimumBidIncrease || auction.minimumBidIncrease > highMinimumBidIncrease)) {
+          return false;
+        }
+  
+        // Add similar conditions for other filters as needed
+        // ...
+  
+        return true;
+      });
+  
+      // Pass the filtered data to the parent component
+      onFilterUpdate(filteredAuctions);
+  
+      // Set the filtered data to the state variable
+      //setPopularAuctions(filteredAuctions);
+    } catch (error) {
+      console.error('Error fetching or filtering popular auctions:', error.message);
+    }
   };
+  
   const handleCheckboxChange = (value) => {
     if (artworkType.includes(value)) {
       setArtworkType(artworkType.filter((type) => type !== value));
