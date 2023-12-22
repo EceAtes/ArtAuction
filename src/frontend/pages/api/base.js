@@ -33,6 +33,7 @@ export const API_AUCTION_CREATE = `${BASE_URL}auction/create`;
 export const API_AUCTION_GET_ALL_BID_HISTORY= `${BASE_URL}auction/allBidHistory`;
 
 
+
 //ART USERS URLS
 export const API_ART_USER_FILTER_PEOPLE = `${BASE_URL}art-user/filter-people`;
 export const API_ART_USER_TOP_COLLECTORS = `${BASE_URL}art-user/topCollectors`;

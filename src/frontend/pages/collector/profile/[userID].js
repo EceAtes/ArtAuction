@@ -121,7 +121,7 @@ const CollectorInfo = (props) => {
           {ongoingAuction.length > 0 ? (
             <OngoingAuctions
               auctions={ongoingAuction}
-              title={"Auctions"}
+              title={"Participated Auctions"}
             ></OngoingAuctions>
           ) : (
             <h1 className={styles.title}>No Ongoing auction</h1>

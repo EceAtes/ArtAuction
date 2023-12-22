@@ -13,10 +13,10 @@ const BidTable = ({ bids }) => {
         </thead>
         <tbody>
         {bids.map((bid) => (
-          <tr key={bid.id}>
-            <td>{bid.status}</td>
-            <td>${bid.amount}</td>
-            <td>{bid.timePlaced}</td>
+          <tr key={bid.bidID}>
+            <td>{bid.bid_status}</td>
+            <td>${bid.bidAmount}</td>
+            <td>{bid.date}</td>
           </tr>
         ))}
       </tbody>
