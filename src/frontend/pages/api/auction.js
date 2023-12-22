@@ -3,7 +3,7 @@ import { API_AUCTION_GET_ONGOING_AUCTIONS, API_AUCTION_GET_PAST_AUCTIONS, API_AU
 //GET SINGLE AUCTION
 export const auctionGetSingleAuctionApiFunction = async (auctionID) => {
   const res = await fetch(API_AUCTION_GET_SINGLE_AUCTION + auctionID, {
-    method: "GET",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
