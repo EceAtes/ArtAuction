@@ -105,7 +105,7 @@ const CollectorInfo = (props) => {
         <div className={styles.collectorBox}>
           <img
             className={styles.profilePicture}
-            src="./yoongi.jpg"
+            src="/photos/signuppage.png"
             alt={`Profile of Lady Gaga`}
           />
           <div className={styles.collectorInfo}>
