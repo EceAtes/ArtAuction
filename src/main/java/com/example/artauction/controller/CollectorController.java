@@ -53,7 +53,7 @@ public class CollectorController {
         return null;
     }
 
-    @GetMapping(path= "/collections/{collection_id}")
+    @PatchMapping(path= "/collections/{collection_id}")
     public CollectionDTO listSingleCollection(@PathVariable String collection_id){
         try{
             return collectionRepository.listSingleCollection(Integer.parseInt(collection_id));
