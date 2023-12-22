@@ -7,22 +7,29 @@ import ArtworkModal from '@/components/Collector/Profile/ArtworkModal';
 
 export default function OngoingAuctions({ title, auctions }) {
   const [searchQuery, setSearchQuery] = useState('');
-  
+  const [filteredAuctions, setFilteredAuctions] = useState([]);
   // Filter auctions based on search query
   //const filteredAuctions = auctions.filter((auction) =>
   //  auction.auctionName.toLowerCase().includes(searchQuery.toLowerCase())
   //);
 
-  const auctionItems = auctions.map((auction) => (
+  const auctionsToRender = filteredAuctions.length > 0 ? filteredAuctions : auctions;
+
+  const auctionItems = auctionsToRender.map((auction) => (
     <AuctionInfo
-    key={auction.auctionID}
-    auctionID={auction.auctionID}
-    imageUrl={"/photos/loginpage.png"}
-    title={auction.title}
+      key={auction.auctionID}
+      auctionID={auction.auctionID}
+      imageUrl={"/photos/loginpage.png"}
+      title={auction.title}
     />
   ));
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+  const handleFilterUpdate = (filteredData) => {
+    // Update the state variable with the filtered data
+    setFilteredAuctions(filteredData);
+  };
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -47,7 +54,7 @@ export default function OngoingAuctions({ title, auctions }) {
             <button className={styles.button} onClick={openModal}>
                 FILTER
             </button>
-            <ArtworkModal isOpen={isModalOpen} onClose={closeModal} />
+            <ArtworkModal isOpen={isModalOpen} onClose={closeModal} onFilterUpdate={handleFilterUpdate}/>
         </div>
         <div className={styles.auctionListContainer}>{auctionItems}</div>
       </div>
