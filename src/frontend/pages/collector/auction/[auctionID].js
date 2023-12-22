@@ -88,7 +88,6 @@ export default function AuctionInformationPage(props){
                                 <li> Type:  {auction.type}</li>
                                 <li> Size: {auction.size}</li>
                                 <li> Creation Date: {auction.creationDate}</li>
-                                <li> Creation Place: {auction.artworkCreationPlace}</li>
                                 <li> Auction End Date: {auction.endDate}</li>
                             </ul>
                             <label className = {styles.leadingBidLabel}> Leading Bid: {leadingBid}</label>

@@ -47,9 +47,9 @@ const ProposalList = (props) => {
     <div className={styles.mainContainer}>
       <div className={styles.listHeaderContainer}>
         <h1 className={styles.listHeader}>Auction Proposals</h1>
-        <button className={styles.filterButton}>
+         {/* <button className={styles.filterButton}>
           <TuneIcon fontSize="medium"></TuneIcon>
-        </button>
+        </button>*/}
         <button className={styles.filterButton} onClick={handleSortModalOpen}>
           <FilterListIcon fontSize="medium"></FilterListIcon>
         </button>
