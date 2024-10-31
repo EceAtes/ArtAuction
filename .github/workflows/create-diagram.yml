@@ -1,3 +1,18 @@
-actions/checkout
-githubocto/repo-visualizer
-![Visualization of the codebase](./diagram.svg)
+name: Create Diagram
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-diagram:
+    runs-on: windows-latest  # This line is essential
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Visualize Repository
+        uses: githubocto/repo-visualizer@main
+        with:
+          output: ./diagram.svg
